@@ -1,0 +1,1 @@
+{"version":3,"file":"wdi5-object.d.ts","sourceRoot":"","sources":["../../src/lib/wdi5-object.ts"],"names":[],"mappings":"AAKA;;GAEG;AACH,qBAAa,UAAU;IACnB,OAAO,CAAC,KAAK,CAAK;IAClB,OAAO,CAAC,gBAAgB,CAAI;IAC5B,OAAO,CAAC,WAAW,CAAM;gBAEb,IAAI,KAAA,EAAE,eAAe,KAAA,EAAE,MAAM,KAAA;IAkBlC,OAAO;IAId,OAAO,CAAC,uBAAuB;YAMjB,mBAAmB;IAejC,OAAO,CAAC,oBAAoB;IAY5B,OAAO,CAAC,qBAAqB;CAahC"}
