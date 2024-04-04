@@ -1,0 +1,33 @@
+<mvc:View
+    controllerName="com.myorg.myapp.controller.Main"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    core:require="{
+        formatter: 'com/myorg/myapp/model/formatter'
+    }"
+>
+    <Page id="page">
+        <customHeader>
+            <Bar class="topBlueBar">
+                <contentMiddle>
+                    <Title
+                        text="{i18n>appTitle}"
+                        class="whiteText"
+                    />
+                </contentMiddle>
+            </Bar>
+        </customHeader>
+        <Shell>
+            <mvc:View
+                viewName="com.myorg.myapp.view.TitleRefreshBar"
+                type="XML"
+            />
+            <!-- <mvc:View
+                viewName="com.myorg.myapp.view.Table"
+                type="XML"
+            /> -->
+        </Shell>
+    </Page>
+</mvc:View>
