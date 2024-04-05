@@ -22,7 +22,7 @@
         </customHeader>
 
         <!-- <Shell> -->
-        <HBox class="sapUiLargeMarginBeginEnd ">
+        <HBox class="sapUiLargeMarginBeginEnd sapUiLargeMarginBottom">
             <FlexBox direction="Column">
                 <mvc:View
                     viewName="com.myorg.myapp.view.TitleRefreshBar"
@@ -31,6 +31,7 @@
                 <FlexBox
                     justifyContent="SpaceBetween"
                     alignItems="Center"
+                    class="sapUiSmallMarginTop sapUiSmallMarginBeginEnd sapUiSmallMarginBottom"
                 >
                     <mvc:View
                         viewName="com.myorg.myapp.view.Date"

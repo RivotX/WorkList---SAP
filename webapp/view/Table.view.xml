@@ -9,66 +9,86 @@
         formatter: 'com/myorg/myapp/model/formatter'
     }"
 >
-    <table:Table id="sampleTable">
+    <table:Table
+        id="sampleTable"
+        rows="{ path:'data>/results'}"
+        class="myTable"
+    >
         <table:columns>
+            <table:Column>
+                <Label text='' />
+                <table:template>
+                    <core:Icon src="sap-icon://product" />
+                </table:template>
+            </table:Column>
+
             <table:Column>
                 <Label text='{i18n>1Col}' />
                 <table:template>
-                    <Text text="{data>PACKAGE_ID}" />
+                    <Text text="{data>OBJID}" />
                 </table:template>
             </table:Column>
+
             <table:Column>
                 <Label text='{i18n>2Col}' />
                 <table:template>
-                    <Text text="a" />
+                    <Text text="{data>PACKAGE_NAME}" />
                 </table:template>
             </table:Column>
+
             <table:Column>
                 <Label text='{i18n>3Col}' />
                 <table:template>
-                    <Text text="a" />
+                    <Text text="{data>DESCRIPTION}" />
                 </table:template>
             </table:Column>
+
             <table:Column>
                 <Label text='{i18n>4Col}' />
                 <table:template>
-                    <Text text="a" />
+                    <Text text="{data>STATUS}" />
                 </table:template>
             </table:Column>
+
             <table:Column>
                 <Label text='{i18n>5Col}' />
                 <table:template>
-                    <Text text="a" />
+                    <Text text="{data>CREATION_DATE}" />
                 </table:template>
             </table:Column>
+
             <table:Column>
                 <Label text='{i18n>6Col}' />
                 <table:template>
-                    <Text text="a" />
+                    <Text text="??????" />
                 </table:template>
             </table:Column>
+
             <table:Column>
                 <Label text='{i18n>7Col}' />
                 <table:template>
-                    <Text text="a" />
+                    <Text text="{data>VARIABLE_01}%" />
                 </table:template>
             </table:Column>
+
             <table:Column>
                 <Label text='{i18n>8Col}' />
                 <table:template>
-                    <Text text="a" />
+                    <Text text="{data>VARIABLE_02}" />
                 </table:template>
             </table:Column>
+
             <table:Column>
-                <Label text='{i18n>9Col}' />
+                <Label text='{i18n>type}' />
                 <table:template>
-                    <Text text="a" />
+                    <Text text="{data>TYPE_PACKAGE}" />
                 </table:template>
             </table:Column>
+
             <table:Column>
-                <Label text='{i18n>10Col}' />
+                <Label text='{i18n>Priority}' />
                 <table:template>
-                    <Text text="a" />
+                    <Text text="{data>PRIORITY}" />
                 </table:template>
             </table:Column>
         </table:columns>

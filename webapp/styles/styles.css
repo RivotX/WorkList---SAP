@@ -40,6 +40,7 @@
 	display: flex !important;
 	justify-content: space-between !important;
 	align-items: center !important;
+	background-color: #f5f6f7 !important;
 }
 
 .TableButton {
@@ -48,4 +49,8 @@
 	padding-top: 4px !important;
 	padding-bottom: 4px !important;
 	color: aliceblue !important;
+}
+.sapUiTableVSbContainer, .sapUiTableVSbHeader {
+	display: none;
+	width: 0px !important;
 }
