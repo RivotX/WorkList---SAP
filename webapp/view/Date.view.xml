@@ -1,0 +1,20 @@
+<!-- view for the timedate, format dd/mm/yyyy -->
+<mvc:View
+    controllerName="com.myorg.myapp.controller.Date"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    core:require="{ formatter: 'com/myorg/myapp/model/formatter' }"
+>
+    <HBox class="sapUiSmallMarginTop">
+        <core:Icon
+            src="sap-icon://message-information"
+            color="blue"
+            size="1rem"
+            class="sapUiTinyMarginEnd"
+        />
+
+        <Text text="{path: '/date'}" />
+    </HBox>
+</mvc:View>

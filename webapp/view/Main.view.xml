@@ -1,4 +1,5 @@
 <mvc:View
+    xmlns:layout="sap.ui.layout"
     controllerName="com.myorg.myapp.controller.Main"
     displayBlock="true"
     xmlns="sap.m"
@@ -13,21 +14,39 @@
             <Bar class="topBlueBar">
                 <contentMiddle>
                     <Title
-                        text="{i18n>appTitle}"
+                        text='{i18n>appTitle}'
                         class="whiteText"
                     />
                 </contentMiddle>
             </Bar>
         </customHeader>
         <Shell>
-            <mvc:View
-                viewName="com.myorg.myapp.view.TitleRefreshBar"
-                type="XML"
-            />
+            <FlexBox direction="Column">
+                <mvc:View
+                    viewName="com.myorg.myapp.view.TitleRefreshBar"
+                    type="XML"
+                />
+
+                <mvc:View
+                    viewName="com.myorg.myapp.view.Date"
+                    type="XML"
+                />
+            </FlexBox>
+
             <!-- <mvc:View
                 viewName="com.myorg.myapp.view.Table"
                 type="XML"
             /> -->
         </Shell>
+        <footer>
+            <Bar class="topBlueBar">
+                <contentMiddle>
+                    <Text
+                        text='{i18n>footerText}'
+                        class="whiteText"
+                    />
+                </contentMiddle>
+            </Bar>
+        </footer>
     </Page>
 </mvc:View>
