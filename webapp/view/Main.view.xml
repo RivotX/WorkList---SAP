@@ -20,24 +20,32 @@
                 </contentMiddle>
             </Bar>
         </customHeader>
-        <Shell>
+
+        <!-- <Shell> -->
             <FlexBox direction="Column">
                 <mvc:View
                     viewName="com.myorg.myapp.view.TitleRefreshBar"
                     type="XML"
                 />
-
+                <FlexBox
+                    justifyContent="SpaceBetween"
+                    alignItems="Center"
+                >
+                    <mvc:View
+                        viewName="com.myorg.myapp.view.Date"
+                        type="XML"
+                    />
+                    <mvc:View
+                        viewName="com.myorg.myapp.view.TableControls"
+                        type="XML"
+                    />
+                </FlexBox>
                 <mvc:View
-                    viewName="com.myorg.myapp.view.Date"
+                    viewName="com.myorg.myapp.view.Table"
                     type="XML"
                 />
             </FlexBox>
-
-            <!-- <mvc:View
-                viewName="com.myorg.myapp.view.Table"
-                type="XML"
-            /> -->
-        </Shell>
+        <!-- </Shell> -->
         <footer>
             <Bar class="topBlueBar">
                 <contentMiddle>

@@ -20,8 +20,9 @@
                 icon="sap-icon://refresh"
                 text="{i18n>refreshButtonText}"
                 iconFirst="false"
-                class="roundedButton"
+                class="infoIcon"
             />
         </contentRight>
     </Bar>
 </mvc:View>
+<!-- roundedButton -->

@@ -1,0 +1,31 @@
+<mvc:View
+    controllerName="com.myorg.myapp.controller.TableControls"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    core:require="{ formatter: 'com/myorg/myapp/model/formatter' }"
+>
+    <HBox>
+        <Button
+            icon="sap-icon://clear-filter"
+            text="{i18n>ClearFiltersText}"
+            class="TableButton"
+        />
+        <Button
+            icon="sap-icon://add-product"
+            text="{i18n>AddPackageText}"
+            class="TableButton"
+        />
+        <Button
+            icon="sap-icon://refresh"
+            text="{i18n>refreshButtonText}"
+            class="TableButton "
+        />
+        <Button
+            icon="sap-icon://delete"
+            text="{i18n>DeleteText}"
+            class="TableButton"
+        />
+    </HBox>
+</mvc:View>
