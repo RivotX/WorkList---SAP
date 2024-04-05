@@ -22,6 +22,7 @@
         </customHeader>
 
         <!-- <Shell> -->
+        <HBox class="sapUiLargeMarginBeginEnd ">
             <FlexBox direction="Column">
                 <mvc:View
                     viewName="com.myorg.myapp.view.TitleRefreshBar"
@@ -45,6 +46,7 @@
                     type="XML"
                 />
             </FlexBox>
+        </HBox>
         <!-- </Shell> -->
         <footer>
             <Bar class="topBlueBar">

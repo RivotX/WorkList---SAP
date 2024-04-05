@@ -4,9 +4,10 @@ sap.ui.define(
 		"use strict";
 
 		return BaseController.extend("com.myorg.myapp.controller.Table", {
-			//function to refresh the title
-			refreshTitle: function () {
-				MessageBox.show("Title Refreshed!");
+			onInit: function () {
+				var oModel = new sap.ui.model.json.JSONModel();
+				oModel.loadData("model/data.json").then(console.log("LoadData ejecutado"));
+				this.getView().setModel(oModel, "model");
 			},
 		});
 	}

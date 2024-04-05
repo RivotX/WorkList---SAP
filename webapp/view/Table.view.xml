@@ -12,13 +12,61 @@
     <table:Table id="sampleTable">
         <table:columns>
             <table:Column>
-                <Label text="First Name" />
+                <Label text='{i18n>1Col}' />
+                <table:template>
+                    <Text text="{data>PACKAGE_ID}" />
+                </table:template>
+            </table:Column>
+            <table:Column>
+                <Label text='{i18n>2Col}' />
                 <table:template>
                     <Text text="a" />
                 </table:template>
             </table:Column>
             <table:Column>
-                <Label text="Last Name" />
+                <Label text='{i18n>3Col}' />
+                <table:template>
+                    <Text text="a" />
+                </table:template>
+            </table:Column>
+            <table:Column>
+                <Label text='{i18n>4Col}' />
+                <table:template>
+                    <Text text="a" />
+                </table:template>
+            </table:Column>
+            <table:Column>
+                <Label text='{i18n>5Col}' />
+                <table:template>
+                    <Text text="a" />
+                </table:template>
+            </table:Column>
+            <table:Column>
+                <Label text='{i18n>6Col}' />
+                <table:template>
+                    <Text text="a" />
+                </table:template>
+            </table:Column>
+            <table:Column>
+                <Label text='{i18n>7Col}' />
+                <table:template>
+                    <Text text="a" />
+                </table:template>
+            </table:Column>
+            <table:Column>
+                <Label text='{i18n>8Col}' />
+                <table:template>
+                    <Text text="a" />
+                </table:template>
+            </table:Column>
+            <table:Column>
+                <Label text='{i18n>9Col}' />
+                <table:template>
+                    <Text text="a" />
+                </table:template>
+            </table:Column>
+            <table:Column>
+                <Label text='{i18n>10Col}' />
                 <table:template>
                     <Text text="a" />
                 </table:template>

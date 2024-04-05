@@ -20,7 +20,7 @@
                 icon="sap-icon://refresh"
                 text="{i18n>refreshButtonText}"
                 iconFirst="false"
-                class="infoIcon"
+                class="roundedButton"
             />
         </contentRight>
     </Bar>
