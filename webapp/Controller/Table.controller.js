@@ -9,6 +9,7 @@ sap.ui.define(
 		"use strict";
 
 		return BaseController.extend("com.myorg.myapp.controller.Table", {
+			formatter: Formatter, // make the formatter available in the view
 			onInit: function () {
 				var oModel = new sap.ui.model.json.JSONModel();
 				oModel.attachRequestCompleted(function () {
@@ -20,9 +21,12 @@ sap.ui.define(
 
 				var data = this.getJson();
 				this.getView().setModel(new JSONModel(data), "data");
-				// Call DateFormat and log the result
-				var formattedDate = Formatter.DateFormat(1483315200000);
-				console.log(formattedDate); //creo que esta bien pero no coincide?
+
+				// var dateObj = { CREATION_DATE: "/Date(1483315200000)/" }; // example date object
+				// var formattedDate = Formatter.DateFormat(dateObj.CREATION_DATE);
+				// console.log(formattedDate); // logs the date in the "dd/MM/yyyy" format
+
+
 				
 			},
 

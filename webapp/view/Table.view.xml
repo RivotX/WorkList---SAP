@@ -46,14 +46,23 @@
             <table:Column>
                 <Label text='{i18n>4Col}' />
                 <table:template>
-                    <Text text="{data>STATUS}" />
+                    <!-- <Text text="{data>STATUS}" />  #6cd331-->
+                    <core:Icon
+                        src="sap-icon://circle-task-2"
+                        
+                    />
                 </table:template>
             </table:Column>
 
             <table:Column>
                 <Label text='{i18n>5Col}' />
                 <table:template>
-                    <Text text="{data>CREATION_DATE}" />
+                    <Text
+                        text="{
+                        path: 'data>CREATION_DATE',
+                        formatter: '.formatter.DateFormat'
+                    }"
+                    />
                 </table:template>
             </table:Column>
 
@@ -67,28 +76,48 @@
             <table:Column>
                 <Label text='{i18n>7Col}' />
                 <table:template>
-                    <Text text="{data>VARIABLE_01}%" />
+                    <Text
+                        text="{
+                path: 'data>data>VARIABLE_01',
+                formatter: '.formatter.NumberFormat2'
+                }"
+                    />
                 </table:template>
             </table:Column>
 
             <table:Column>
                 <Label text='{i18n>8Col}' />
                 <table:template>
-                    <Text text="{data>VARIABLE_02}" />
+                    <Text
+                        text="{
+                path: 'data>data>VARIABLE_02',
+                formatter: '.formatter.NumberFormatt'
+                }"
+                    />
                 </table:template>
             </table:Column>
 
             <table:Column>
                 <Label text='{i18n>type}' />
                 <table:template>
-                    <Text text="{data>TYPE_PACKAGE}" />
+                    <Text
+                        text="{
+                    path: 'data>data>TYPE_PACKAGE',
+                    formatter: '.formatter.TypeFormat'
+                    }"
+                    />
                 </table:template>
             </table:Column>
 
             <table:Column>
                 <Label text='{i18n>Priority}' />
                 <table:template>
-                    <Text text="{data>PRIORITY}" />
+                    <core:Icon
+                        color="#6cd331"
+                        src="{path: 'data>PRIORITY',
+                         formatter: '.formatter.PriorityFormat'}"
+                        class="iconoCentro"
+                    />
                 </table:template>
             </table:Column>
         </table:columns>

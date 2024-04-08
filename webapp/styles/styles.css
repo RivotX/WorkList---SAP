@@ -50,7 +50,16 @@
 	padding-bottom: 4px !important;
 	color: aliceblue !important;
 }
-.sapUiTableVSbContainer, .sapUiTableVSbHeader {
+.sapUiTableVSbContainer,
+.sapUiTableVSbHeader {
 	display: none;
 	width: 0px !important;
+}
+.iconoCentro {
+	display: flex !important;
+	justify-content: center !important;
+}
+
+.greenIcon {
+    color: rgb(21, 163, 21) !important;
 }
