@@ -21,13 +21,12 @@ sap.ui.define(
 
 				var data = this.getJson();
 				this.getView().setModel(new JSONModel(data), "data");
+				
+				console.log(Formatter.TimeOnFormat("PT00H00M20S"))
 
 				// var dateObj = { CREATION_DATE: "/Date(1483315200000)/" }; // example date object
 				// var formattedDate = Formatter.DateFormat(dateObj.CREATION_DATE);
 				// console.log(formattedDate); // logs the date in the "dd/MM/yyyy" format
-
-
-				
 			},
 
 			getJson: function () {
@@ -511,6 +510,16 @@ sap.ui.define(
 					],
 				};
 				return data;
+			},
+			onAfterRendering: function () {
+				var oTable = this.getView().byId("sampleTable");
+				var iCount = oTable.getBinding("rows").getLength(); //por que da 24? xd
+				var oResourceBundle = this.getView()
+					.getModel("i18n")
+					.getResourceBundle();
+
+				var sText = oResourceBundle.getText("Tentries", [iCount]);
+				this.getView().byId("entriesCounter").setText(sText);
 			},
 		});
 	}

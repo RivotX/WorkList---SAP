@@ -50,11 +50,11 @@
 	padding-bottom: 4px !important;
 	color: aliceblue !important;
 }
-.sapUiTableVSbContainer,
+/* .sapUiTableVSbContainer,
 .sapUiTableVSbHeader {
 	display: none;
 	width: 0px !important;
-}
+} */
 .iconoCentro {
 	display: flex !important;
 	justify-content: center !important;

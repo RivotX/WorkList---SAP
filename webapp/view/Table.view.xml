@@ -47,10 +47,7 @@
                 <Label text='{i18n>4Col}' />
                 <table:template>
                     <!-- <Text text="{data>STATUS}" />  #6cd331-->
-                    <core:Icon
-                        src="sap-icon://circle-task-2"
-                        
-                    />
+                    <core:Icon src="sap-icon://circle-task-2" />
                 </table:template>
             </table:Column>
 
@@ -69,7 +66,9 @@
             <table:Column>
                 <Label text='{i18n>6Col}' />
                 <table:template>
-                    <Text text="??????" />
+                    <Text
+                        text="{path: 'data>STIME', formatter: '.formatter.TimeOnFormat'}"
+                    />
                 </table:template>
             </table:Column>
 
@@ -78,7 +77,7 @@
                 <table:template>
                     <Text
                         text="{
-                path: 'data>data>VARIABLE_01',
+                path: 'data>VARIABLE_01',
                 formatter: '.formatter.NumberFormat2'
                 }"
                     />
@@ -122,4 +121,6 @@
             </table:Column>
         </table:columns>
     </table:Table>
+
+    <Text id="entriesCounter" />
 </mvc:View>

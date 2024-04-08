@@ -60,5 +60,28 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 			var formattedNumber = oNumberFormat.format(number) + "%";
 			return formattedNumber.replace(".", ",");
 		},
+		TimeOnFormat: function (duration) {
+			var match = duration.match(/PT(\d+)?H(\d+)?M(\d+)?S/);
+
+			match = match.slice(1).map(function (value) {
+				if (value != null) {
+					return parseInt(value);
+				} else {
+					return 0;
+				}
+			});
+			console.log(match);
+
+			var hours = match[0]
+			var minutes = match[1] 
+			var seconds = match[2] 
+
+			// Pad the minutes and seconds with leading zeros if needed
+			hours = hours.toString().padStart(2, "0");
+			minutes = minutes.toString().padStart(2, "0");
+			seconds = seconds.toString().padStart(2, "0");
+
+			return hours + ":" + minutes + ":" + seconds;
+		},
 	};
 });
