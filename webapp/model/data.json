@@ -15,7 +15,7 @@
                 "STATUS": "S",
                 "AGENT": "",
                 "STIME": "PT00H00M00S",
-                "CREATION_DATE": "/Date(1483315200000)/",
+                "CREATION_DATE": "/Date(1483315200000)  /",
                 "PRIORITY": "X",
                 "VARIABLE_01": "20.000",
                 "VARIABLE_02": "0.000"

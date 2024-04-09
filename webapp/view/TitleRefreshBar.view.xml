@@ -8,7 +8,7 @@
         formatter: 'com/myorg/myapp/model/formatter'
     }"
 >
-    <Bar class="secondBar">
+    <Bar class="secondBar ">
         <contentLeft>
             <Title
                 text="{i18n>SubHeaderTitle}"

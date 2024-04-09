@@ -11,23 +11,20 @@
 >
     <Page id="page">
         <customHeader>
-            <Bar class="topBlueBar">
+            <Bar class="">
                 <contentMiddle>
-                    <Title
-                        text='{i18n>appTitle}'
-                        class="whiteText"
+                    <mvc:View
+                        viewName="com.myorg.myapp.view.TitleRefreshBar"
+                        type="XML"
                     />
                 </contentMiddle>
             </Bar>
         </customHeader>
 
-        <!-- <Shell> -->
-        <HBox class="sapUiLargeMarginBeginEnd sapUiLargeMarginBottom">
+        <HBox
+            class="sapUiLargeMarginBeginEnd sapUiLargeMarginBottom paddingtop10px"
+        >
             <FlexBox direction="Column">
-                <mvc:View
-                    viewName="com.myorg.myapp.view.TitleRefreshBar"
-                    type="XML"
-                />
                 <FlexBox
                     justifyContent="SpaceBetween"
                     alignItems="Center"
@@ -48,9 +45,9 @@
                 />
             </FlexBox>
         </HBox>
-        <!-- </Shell> -->
+
         <footer>
-            <Bar class="topBlueBar">
+            <Bar class="botBlueBar">
                 <contentMiddle>
                     <Text
                         text='{i18n>footerText}'

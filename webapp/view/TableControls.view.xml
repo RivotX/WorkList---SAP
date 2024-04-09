@@ -10,22 +10,27 @@
         <Button
             icon="sap-icon://clear-filter"
             text="{i18n>ClearFiltersText}"
-            class="TableButton sapUiSmallMarginBegin"
+            class=" sapUiSmallMarginBegin"
         />
         <Button
             icon="sap-icon://add-product"
             text="{i18n>AddPackageText}"
-            class="TableButton sapUiSmallMarginBegin"
+            class="sapUiSmallMarginBegin"
+            press=".onAddProduct"
         />
         <Button
             icon="sap-icon://refresh"
             text="{i18n>refreshButtonText}"
-            class="TableButton sapUiSmallMarginBegin"
+            class="sapUiSmallMarginBegin"
         />
         <Button
             icon="sap-icon://delete"
             text="{i18n>DeleteText}"
-            class="TableButton sapUiSmallMarginBegin"
+            class="sapUiSmallMarginBegin"
+        />
+        <Button
+            icon="sap-icon://download"
+            class="sapUiSmallMarginBegin"
         />
     </HBox>
 </mvc:View>

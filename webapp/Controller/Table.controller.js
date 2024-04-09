@@ -21,8 +21,8 @@ sap.ui.define(
 
 				var data = this.getJson();
 				this.getView().setModel(new JSONModel(data), "data");
-				
-				console.log(Formatter.TimeOnFormat("PT00H00M20S"))
+
+				console.log(Formatter.TimeOnFormat("PT00H00M20S"));
 
 				// var dateObj = { CREATION_DATE: "/Date(1483315200000)/" }; // example date object
 				// var formattedDate = Formatter.DateFormat(dateObj.CREATION_DATE);

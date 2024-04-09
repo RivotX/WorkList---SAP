@@ -16,13 +16,15 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 			const oResourceBundle = this.getOwnerComponent()
 				.getModel("i18n")
 				.getResourceBundle();
+			// const oResourceBundle = sap.ui.getCore().getLibraryResourceBundle("com.myorg.myapp");
+			// console.log("aa",oResourceBundle);
 
 			if (type === "N") {
-				return oResourceBundle.getText("statusN");
+				return oResourceBundle.getText("typeN");
 			} else if (type === "U") {
-				return "Ultra Fast";
+				return oResourceBundle.getText("typeU");
 			} else if (type === "F") {
-				return "Fast";
+				return oResourceBundle.getText("typeF");
 			} else {
 				return "Unknown";
 			}
@@ -36,9 +38,13 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 
 		StatusFormat: function (status) {
 			if (status === "S") {
-				return "greenIcon";
-			} else {
-				return "Unknown";
+				return "#6cd331";
+			} else if (status === "E") {
+				return "gray";
+			} else if (status === "A") {
+				return "rgb(230, 197, 52)";
+			} else if (status === "R") {
+				return "red";
 			}
 		},
 
@@ -72,9 +78,9 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 			});
 			console.log(match);
 
-			var hours = match[0]
-			var minutes = match[1] 
-			var seconds = match[2] 
+			var hours = match[0];
+			var minutes = match[1];
+			var seconds = match[2];
 
 			// Pad the minutes and seconds with leading zeros if needed
 			hours = hours.toString().padStart(2, "0");

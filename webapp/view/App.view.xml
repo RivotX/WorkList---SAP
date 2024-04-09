@@ -1,9 +1,34 @@
 <mvc:View
-	controllerName="com.myorg.myapp.controller.App"
-	displayBlock="true"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc">
+    controllerName="com.myorg.myapp.controller.App"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+>
+    <tnt:ToolPage>
+        <tnt:header>
+            <tnt:ToolHeader
+                id="shellLikeToolHeader"
+                class="topBlueBar whiteText  "
+            >
+                <mvc:XMLView
+                    viewName="com.myorg.myapp.view.Header"
+                    type="XML"
+                />
+            </tnt:ToolHeader>
+        </tnt:header>
 
-	<App id="app" />
-
+        <tnt:mainContents>
+            <NavContainer
+                id="pageContainer"
+                initialPage="page1"
+            >
+                <pages>
+                    <App id="app" />
+                </pages>
+              
+            </NavContainer>
+        </tnt:mainContents>
+        
+    </tnt:ToolPage>
 </mvc:View>

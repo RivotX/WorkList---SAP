@@ -22,37 +22,40 @@
                 </table:template>
             </table:Column>
 
-            <table:Column>
-                <Label text='{i18n>1Col}' />
+            <table:Column sortProperty="OBJID">
+                <Label text='{i18n>PackageID}' />
                 <table:template>
                     <Text text="{data>OBJID}" />
                 </table:template>
             </table:Column>
 
-            <table:Column>
-                <Label text='{i18n>2Col}' />
+            <table:Column filterProperty="PACKAGE_NAME">
+                <Label text='{i18n>PackageName}' />
                 <table:template>
                     <Text text="{data>PACKAGE_NAME}" />
                 </table:template>
             </table:Column>
 
             <table:Column>
-                <Label text='{i18n>3Col}' />
+                <Label text='{i18n>Desc}' />
                 <table:template>
                     <Text text="{data>DESCRIPTION}" />
                 </table:template>
             </table:Column>
 
             <table:Column>
-                <Label text='{i18n>4Col}' />
+                <Label text='{i18n>State}' />
                 <table:template>
-                    <!-- <Text text="{data>STATUS}" />  #6cd331-->
-                    <core:Icon src="sap-icon://circle-task-2" />
+                    <core:Icon
+                        src="sap-icon://circle-task-2"
+                        color="{path: 'data>STATUS', formatter: '.formatter.StatusFormat'}"
+                        class="iconoCentro"
+                    />
                 </table:template>
             </table:Column>
 
             <table:Column>
-                <Label text='{i18n>5Col}' />
+                <Label text='{i18n>CreationDate}' />
                 <table:template>
                     <Text
                         text="{
@@ -64,7 +67,7 @@
             </table:Column>
 
             <table:Column>
-                <Label text='{i18n>6Col}' />
+                <Label text='{i18n>TimeOn}' />
                 <table:template>
                     <Text
                         text="{path: 'data>STIME', formatter: '.formatter.TimeOnFormat'}"
@@ -73,7 +76,7 @@
             </table:Column>
 
             <table:Column>
-                <Label text='{i18n>7Col}' />
+                <Label text='{i18n>Progress}' />
                 <table:template>
                     <Text
                         text="{
@@ -85,7 +88,7 @@
             </table:Column>
 
             <table:Column>
-                <Label text='{i18n>8Col}' />
+                <Label text='{i18n>Amount}' />
                 <table:template>
                     <Text
                         text="{
@@ -96,12 +99,15 @@
                 </table:template>
             </table:Column>
 
-            <table:Column>
+            <table:Column
+                filterProperty="TYPE_PACKAGE"
+                filterType="sap.ui.model.type.String"
+            >
                 <Label text='{i18n>type}' />
                 <table:template>
                     <Text
                         text="{
-                    path: 'data>data>TYPE_PACKAGE',
+                    path: 'data>TYPE_PACKAGE',
                     formatter: '.formatter.TypeFormat'
                     }"
                     />

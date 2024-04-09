@@ -1,18 +1,34 @@
-.topBlueBar {
+.topBlueBar,
+.botBlueBar,
+.sapTntToolPageHeader {
 	background-color: #1d2d3e !important;
 	color: white !important;
-	padding-left: 1% !important;
-	padding-right: 1% !important;
+	border-radius: 0px !important;
+}
+.botBlueBar {
+	height: 50px !important;
+}
+.sapTntToolPage {
+	padding: 0px !important;
+}
+.sapMSFSSI{
+	display: none !important;
 }
 
 .whiteText {
 	color: white !important;
 }
+.whiteIcon .sapMBtnIcon {
+	color: white !important;
+}
+.h40px{
+	height: 90px !important;
+}
 
 .roundedButton > span {
 	border-radius: 20px;
 	background-color: rgb(255, 255, 255) !important;
-	border: 1px solid #0854a0 !important;
+	border: 0.0625rem solid #bcc3ca !important;
 	padding-left: 14px !important;
 	padding-right: 14px !important;
 	padding-top: 0px !important;
@@ -43,13 +59,6 @@
 	background-color: #f5f6f7 !important;
 }
 
-.TableButton {
-	border-radius: 20px;
-	background-color: rgb(255, 255, 255) !important;
-	padding-top: 4px !important;
-	padding-bottom: 4px !important;
-	color: aliceblue !important;
-}
 /* .sapUiTableVSbContainer,
 .sapUiTableVSbHeader {
 	display: none;
@@ -58,8 +67,4 @@
 .iconoCentro {
 	display: flex !important;
 	justify-content: center !important;
-}
-
-.greenIcon {
-    color: rgb(21, 163, 21) !important;
 }
