@@ -78,12 +78,23 @@
           "pattern": "",
           "name": "main",
           "target": "main"
+        },
+        {
+          "pattern": "Table",
+          "name": "Table",
+          "target": "Table"
         }
       ],
       "targets": {
         "main": {
+          "viewType": "XML",
           "viewId": "main",
           "viewName": "Main"
+        },
+        "Table": {
+          "viewType": "XML",
+          "viewId": "Table",
+          "viewName": "Table"
         }
       }
     }

@@ -14,6 +14,48 @@
         rows="{ path:'data>/results'}"
         class="myTable"
     >
+        <table:extension>
+            <FlexBox
+                justifyContent="SpaceBetween"
+                alignItems="Center"
+                class="sapUiSmallMarginTop sapUiSmallMarginBeginEnd sapUiSmallMarginBottom"
+            >
+                <mvc:View
+                    viewName="com.myorg.myapp.view.Date"
+                    type="XML"
+                />
+                <HBox>
+                    <Button
+                        icon="sap-icon://clear-filter"
+                        text="{i18n>ClearFiltersText}"
+                        class=" sapUiSmallMarginBegin"
+                        press=".onClearFilters"
+                    />
+                    <Button
+                        icon="sap-icon://add-product"
+                        text="{i18n>AddPackageText}"
+                        class="sapUiSmallMarginBegin"
+                        press=".onAddProduct"
+                    />
+                    <Button
+                        icon="sap-icon://refresh"
+                        text="{i18n>refreshButtonText}"
+                        class="sapUiSmallMarginBegin"
+                    />
+                    <Button
+                        icon="sap-icon://delete"
+                        text="{i18n>DeleteText}"
+                        class="sapUiSmallMarginBegin"
+                        press=".onDelete"
+                    />
+                    <Button
+                        icon="sap-icon://download"
+                        class="sapUiSmallMarginBegin"
+                    />
+                </HBox>
+            </FlexBox>
+        </table:extension>
+
         <table:columns>
             <table:Column>
                 <Label text='' />
@@ -22,28 +64,34 @@
                 </table:template>
             </table:Column>
 
-            <table:Column sortProperty="OBJID">
+            <table:Column
+                sortProperty="OBJID"
+                filterProperty="OBJID"
+            >
                 <Label text='{i18n>PackageID}' />
                 <table:template>
                     <Text text="{data>OBJID}" />
                 </table:template>
             </table:Column>
 
-            <table:Column filterProperty="PACKAGE_NAME">
+            <table:Column
+                filterProperty="PACKAGE_NAME"
+                sortProperty="PACKAGE_NAME"
+            >
                 <Label text='{i18n>PackageName}' />
                 <table:template>
                     <Text text="{data>PACKAGE_NAME}" />
                 </table:template>
             </table:Column>
 
-            <table:Column>
+            <table:Column sortProperty="DESCRIPTION">
                 <Label text='{i18n>Desc}' />
                 <table:template>
                     <Text text="{data>DESCRIPTION}" />
                 </table:template>
             </table:Column>
 
-            <table:Column>
+            <table:Column sortProperty="STATUS">
                 <Label text='{i18n>State}' />
                 <table:template>
                     <core:Icon
@@ -54,7 +102,7 @@
                 </table:template>
             </table:Column>
 
-            <table:Column>
+            <table:Column sortProperty="CREATION_DATE">
                 <Label text='{i18n>CreationDate}' />
                 <table:template>
                     <Text
@@ -66,7 +114,7 @@
                 </table:template>
             </table:Column>
 
-            <table:Column>
+            <table:Column sortProperty="STIME">
                 <Label text='{i18n>TimeOn}' />
                 <table:template>
                     <Text
@@ -75,7 +123,7 @@
                 </table:template>
             </table:Column>
 
-            <table:Column>
+            <table:Column sortProperty="VARIABLE_01">
                 <Label text='{i18n>Progress}' />
                 <table:template>
                     <Text
@@ -87,12 +135,12 @@
                 </table:template>
             </table:Column>
 
-            <table:Column>
+            <table:Column sortProperty="VARIABLE_02">
                 <Label text='{i18n>Amount}' />
                 <table:template>
                     <Text
                         text="{
-                path: 'data>data>VARIABLE_02',
+                path: 'data>VARIABLE_02',
                 formatter: '.formatter.NumberFormatt'
                 }"
                     />
@@ -102,6 +150,7 @@
             <table:Column
                 filterProperty="TYPE_PACKAGE"
                 filterType="sap.ui.model.type.String"
+                sortProperty="TYPE_PACKAGE"
             >
                 <Label text='{i18n>type}' />
                 <table:template>
@@ -114,7 +163,7 @@
                 </table:template>
             </table:Column>
 
-            <table:Column>
+            <table:Column sortProperty="PRIORITY">
                 <Label text='{i18n>Priority}' />
                 <table:template>
                     <core:Icon

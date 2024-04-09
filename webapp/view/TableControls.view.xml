@@ -11,6 +11,7 @@
             icon="sap-icon://clear-filter"
             text="{i18n>ClearFiltersText}"
             class=" sapUiSmallMarginBegin"
+            press=".onClearFilters"
         />
         <Button
             icon="sap-icon://add-product"
@@ -27,6 +28,8 @@
             icon="sap-icon://delete"
             text="{i18n>DeleteText}"
             class="sapUiSmallMarginBegin"
+            press=".onDelete"
+
         />
         <Button
             icon="sap-icon://download"

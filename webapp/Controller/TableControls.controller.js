@@ -52,5 +52,22 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 			}
 			this.oAddProductDialog.open();
 		},
+		onDelete: function () {
+			//delete selected rows from the sapui5 table
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			var oView = oRouter.getView("Table"); // replace "viewName" with the actual name of your view
+			var oTable = oView.byId("sampleTable");
+
+			var aSelectedItems = oTable.getSelectedItems();
+			console.log(aSelectedItems);
+		},
+		onClearFilters: function () {
+			//clear filters from the sapui5 table
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			var oView = oRouter.getView("Table"); // replace "viewName" with the actual name of your view
+			var oTable = oView.byId("sampleTable");
+
+			oTable.getBinding("items").filter([]);
+		},
 	});
 });

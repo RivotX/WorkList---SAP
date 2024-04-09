@@ -521,6 +521,71 @@ sap.ui.define(
 				var sText = oResourceBundle.getText("Tentries", [iCount]);
 				this.getView().byId("entriesCounter").setText(sText);
 			},
+			onAddProduct: function () {
+				if (!this.oAddProductDialog) {
+					var oResourceBundle = this.getOwnerComponent()
+						.getModel("i18n")
+						.getResourceBundle();
+
+					// Create a new Dialog
+					this.oAddProductDialog = new sap.m.Dialog({
+						title: oResourceBundle.getText("AddPtitle"),
+						content: [
+							new sap.m.Label({ text: oResourceBundle.getText("PackageID") }),
+							new sap.m.Input({ id: "inputID" }), //deberia generarse automaticamente
+
+							new sap.m.Label({ text: oResourceBundle.getText("PackageName") }),
+							new sap.m.Input({ id: "inputName" }),
+							new sap.m.Label({ text: oResourceBundle.getText("Desc") }),
+							new sap.m.Input({ id: "inputDesc" }),
+							//status label and input. States only can be "Success", "Warning", "Error", "None"
+							// new sap.m.Label({ text: oResourceBundle.getText("State") }),
+							// ?=?=
+							new sap.m.Label({ text: oResourceBundle.getText("Amount") }),
+							new sap.m.Input({ id: "inputAmount" }),
+							// ... add more input fields for the rest of the properties
+						],
+						beginButton: new sap.m.Button({
+							text: "OK",
+							press: this.onAddProduct.bind(this),
+						}),
+						endButton: new sap.m.Button({
+							text: "Cancel",
+							press: function () {
+								this.oAddProductDialog.close();
+							}.bind(this),
+						}),
+					});
+				}
+				this.oAddProductDialog.open();
+			},
+			onDelete: function () {
+				//function that delete all the selected rows from the table with id sampletable
+				var oTable = this.getView().byId("sampleTable");
+				var oModel = this.getView().getModel("data");
+				var data = oModel.getData();
+			
+				var oItems = oTable.getSelectedIndices();
+				var i, path, idx;
+				
+				for (i = oItems.length - 1; i >= 0; --i) {
+					var id = oItems[i];
+
+					path = oTable.getContextByIndex(id).sPath;
+
+					idx = parseInt(path.substring(path.lastIndexOf("/") + 1));
+
+					data.results.splice(idx, 1); // Modify this line
+				}
+				console.log(data)
+				oModel.setData(data);
+			},
+
+			onClearFilters: function () {
+				//clear all the filters from the sapui5 table
+				var oTable = this.getView().byId("sampleTable");
+				oTable.getBinding("rows").filter([]);
+			},
 		});
 	}
 );

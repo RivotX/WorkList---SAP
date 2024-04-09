@@ -24,26 +24,10 @@
         <HBox
             class="sapUiLargeMarginBeginEnd sapUiLargeMarginBottom paddingtop10px"
         >
-            <FlexBox direction="Column">
-                <FlexBox
-                    justifyContent="SpaceBetween"
-                    alignItems="Center"
-                    class="sapUiSmallMarginTop sapUiSmallMarginBeginEnd sapUiSmallMarginBottom"
-                >
-                    <mvc:View
-                        viewName="com.myorg.myapp.view.Date"
-                        type="XML"
-                    />
-                    <mvc:View
-                        viewName="com.myorg.myapp.view.TableControls"
-                        type="XML"
-                    />
-                </FlexBox>
-                <mvc:View
-                    viewName="com.myorg.myapp.view.Table"
-                    type="XML"
-                />
-            </FlexBox>
+            <mvc:View
+                viewName="com.myorg.myapp.view.Table"
+                type="XML"
+            />
         </HBox>
 
         <footer>
