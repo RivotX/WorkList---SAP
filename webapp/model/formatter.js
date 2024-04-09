@@ -45,6 +45,8 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 				return "rgb(230, 197, 52)";
 			} else if (status === "R") {
 				return "red";
+			} else {
+				return "transparent";
 			}
 		},
 

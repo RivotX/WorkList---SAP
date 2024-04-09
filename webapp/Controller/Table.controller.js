@@ -560,24 +560,40 @@ sap.ui.define(
 				this.oAddProductDialog.open();
 			},
 			onDelete: function () {
-				//function that delete all the selected rows from the table with id sampletable
 				var oTable = this.getView().byId("sampleTable");
 				var oModel = this.getView().getModel("data");
 				var data = oModel.getData();
-			
+
 				var oItems = oTable.getSelectedIndices();
-				var i, path, idx;
-				
+				var i, path, idx, item;
+				var forbiddenItemEncountered = false; // Add a flag to track forbidden items
+
 				for (i = oItems.length - 1; i >= 0; --i) {
 					var id = oItems[i];
 
 					path = oTable.getContextByIndex(id).sPath;
-
 					idx = parseInt(path.substring(path.lastIndexOf("/") + 1));
 
-					data.results.splice(idx, 1); // Modify this line
+					item = data.results[idx];
+					console.log(item);
+					if (item.STATUS === "R" || item.STATUS === "E") {
+						console.log(item.STATUS);
+						data.results.splice(idx, 1); // Remove the item if the STATUS is 'R' or 'E'
+					} else {
+						forbiddenItemEncountered = true;
+						// Set the flag to true if a forbidden item is encountered
+					}
 				}
-				console.log(data)
+
+				// Display the MessageBox only once after the loop if a forbidden item was encountered
+				if (forbiddenItemEncountered) {
+					var oBundle = this.getView().getModel("i18n").getResourceBundle();
+					var sMsg = oBundle.getText("errorDelete");
+					console.log("aaaaaaaaaaaaaaaaa", oBundle);
+					MessageBox.error(sMsg);
+				}
+
+				console.log(data);
 				oModel.setData(data);
 			},
 
