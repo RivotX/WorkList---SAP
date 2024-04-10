@@ -1,0 +1,68 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+>
+    <Dialog
+        id="addPackageDialog"
+        title="{i18n>AddPtitle}"
+    >
+        <f:SimpleForm
+            id="addPackageForm"
+            editable="true"
+            layout="ResponsiveGridLayout"
+            labelSpanXL="3"
+            labelSpanL="3"
+            labelSpanM="3"
+            labelSpanS="12"
+            adjustLabelSpan="false"
+            emptySpanXL="4"
+            emptySpanL="4"
+            emptySpanM="4"
+            emptySpanS="0"
+            columnsXL="1"
+            columnsL="1"
+            columnsM="1"
+            singleContainerFullSize="false"
+        >
+            <f:content>
+                <Label text="{i18n>PackageID}" />
+                <Input id="inputID" />
+
+                <Label text="{i18n>PackageName}" />
+                <Input id="inputName" />
+
+                <Label text="{i18n>Desc}" />
+                <Input id="inputDesc" />
+
+                <Label text="{i18n>Amount}" />
+                <Input id="inputAmount" />
+
+                <Label text="{i18n>State}" />
+                <Input id="inputState" />
+
+                <Label text="{i18n>CreationDate}" />
+                <DatePicker
+                    id="DP1"
+                    placeholder="Enter Date"
+                    change="handleChange"
+                    class="sapUiSmallMarginBottom"
+                    displayFormat="dd/MM/yyyy"
+                />
+            </f:content>
+        </f:SimpleForm>
+        <beginButton>
+            <Button
+                text="OK"
+                press=".onAddProduct"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Cancel"
+                press=".onCloseDialog"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

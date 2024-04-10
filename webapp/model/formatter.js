@@ -9,7 +9,7 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 				});
 				return oDateFormat.format(new Date(timestamp));
 			} else {
-				return date;
+				return "";
 			}
 		},
 		TypeFormat: function (type) {

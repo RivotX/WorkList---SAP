@@ -37,11 +37,7 @@
                         class="sapUiSmallMarginBegin"
                         press=".onAddProduct"
                     />
-                    <Button
-                        icon="sap-icon://refresh"
-                        text="{i18n>refreshButtonText}"
-                        class="sapUiSmallMarginBegin"
-                    />
+                 
                     <Button
                         icon="sap-icon://delete"
                         text="{i18n>DeleteText}"
@@ -82,7 +78,7 @@
                 <table:template>
                     <Text text="{data>PACKAGE_NAME}" />
                 </table:template>
-            </table:Column>
+            </table:Column> 
 
             <table:Column sortProperty="DESCRIPTION">
                 <Label text='{i18n>Desc}' />
@@ -161,7 +157,7 @@
                     }"
                     />
                 </table:template>
-            </table:Column>
+            </table:Column> 
 
             <table:Column sortProperty="PRIORITY">
                 <Label text='{i18n>Priority}' />
