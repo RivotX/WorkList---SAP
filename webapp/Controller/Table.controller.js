@@ -597,7 +597,7 @@ sap.ui.define(
 				var aCols = this.createColumnConfig();
 
 				var aContexts = oBinding.getContexts();
-				var aData = aContexts.map(function (oContext) {
+				var aData = aContexts.map((oContext) => {
 					return oContext.getObject();
 				});
 
