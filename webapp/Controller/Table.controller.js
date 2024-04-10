@@ -592,14 +592,18 @@ sap.ui.define(
 
 			onExport: function () {
 				var oTable = this.getView().byId("sampleTable");
-				var oModel = this.getView().getModel("data");
-				var oData = oModel.getData();
+				var oBinding = oTable.getBinding("rows"); // Get the binding object
 
 				var aCols = this.createColumnConfig();
 
+				var aContexts = oBinding.getContexts();
+				var aData = aContexts.map(function (oContext) {
+					return oContext.getObject();
+				});
+
 				var oSettings = {
 					workbook: { columns: aCols },
-					dataSource: oData.results,
+					dataSource: aData, // get the currently displayed rows
 					fileName: "TableExport.xlsx",
 				};
 
@@ -614,17 +618,17 @@ sap.ui.define(
 					.getResourceBundle();
 
 				var aCols = [];
-				
-				aCols.push({
-					label: oResourceBundle.getText("Desc"),
-					property: "DESCRIPTION",
-					type: EdmType.String,
-				});
 				aCols.push({
 					label: oResourceBundle.getText("PackageID"),
 					property: "OBJID",
 					type: EdmType.String,
 				});
+				aCols.push({
+					label: oResourceBundle.getText("Desc"),
+					property: "DESCRIPTION",
+					type: EdmType.String,
+				});
+
 				aCols.push({
 					label: oResourceBundle.getText("CreationDate"),
 					property: "CREATION_DATE",
