@@ -52,13 +52,18 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 
 		NumberFormatt: function (number) {
 			//format to …nn,ddd (3 decimals and ‘,’)
+			number = parseFloat(number).toFixed(3);
 
 			var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
 				maxFractionDigits: 3,
 				groupingEnabled: true,
 			});
 			var formattedNumber = oNumberFormat.format(number);
-			return formattedNumber.replace(".", ",");
+			formattedNumber = formattedNumber.replace(".", ",");
+
+			// Remove leading zeros
+
+			return formattedNumber;
 		},
 		NumberFormat2: function (number) {
 			var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({

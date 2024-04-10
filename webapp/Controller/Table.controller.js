@@ -11,16 +11,14 @@ sap.ui.define(
 		return BaseController.extend("com.myorg.myapp.controller.Table", {
 			formatter: Formatter, // make the formatter available in the view
 			onInit: function () {
-				var oModel = new sap.ui.model.json.JSONModel();
-			
-
 				var data = this.getJson();
+
+				data.results = data.results.map((item) => {
+					// Convert VARIABLE_02 to float and add it as a new field
+					item.VARIABLE_02_float = parseFloat(item.VARIABLE_02);
+					return item;
+				});
 				this.getView().setModel(new JSONModel(data), "data");
-
-
-				// var dateObj = { CREATION_DATE: "/Date(1483315200000)/" }; // example date object
-				// var formattedDate = Formatter.DateFormat(dateObj.CREATION_DATE);
-				// console.log(formattedDate); // logs the date in the "dd/MM/yyyy" format
 			},
 
 			getJson: function () {
@@ -507,7 +505,7 @@ sap.ui.define(
 			},
 			onAfterRendering: function () {
 				var oTable = this.getView().byId("sampleTable");
-				var iCount = oTable.getBinding("rows").getLength(); 
+				var iCount = oTable.getBinding("rows").getLength();
 				var oResourceBundle = this.getView()
 					.getModel("i18n")
 					.getResourceBundle();
