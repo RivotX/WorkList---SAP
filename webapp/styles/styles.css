@@ -5,6 +5,7 @@
 	color: white !important;
 	border-radius: 0px !important;
 }
+
 .botBlueBar {
 	height: 50px !important;
 }
@@ -24,7 +25,9 @@
 .h40px{
 	height: 90px !important;
 }
-
+#__component0---main--page-cont{
+	overflow: hidden !important;
+}
 .roundedButton > span {
 	border-radius: 20px;
 	background-color: rgb(255, 255, 255) !important;

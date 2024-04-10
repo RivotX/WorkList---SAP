@@ -13,6 +13,7 @@
         id="sampleTable"
         rows="{ path:'data>/results'}"
         class="myTable"
+        visibleRowCount="15"
     >
         <table:extension>
             <FlexBox
@@ -66,7 +67,11 @@
             >
                 <Label text='{i18n>PackageID}' />
                 <table:template>
-                    <Text text="{data>OBJID}" />
+                    <Text
+                        text="{data>OBJID}"
+                        renderWhitespace="false"
+                        wrapping="false"
+                    />
                 </table:template>
             </table:Column>
 
@@ -76,14 +81,22 @@
             >
                 <Label text='{i18n>PackageName}' />
                 <table:template>
-                    <Text text="{data>PACKAGE_NAME}" />
+                    <Text
+                        text="{data>PACKAGE_NAME}"
+                        renderWhitespace="false"
+                        wrapping="false"
+                    />
                 </table:template>
             </table:Column>
 
             <table:Column sortProperty="DESCRIPTION">
                 <Label text='{i18n>Desc}' />
                 <table:template>
-                    <Text text="{data>DESCRIPTION}" />
+                    <Text
+                        text="{data>DESCRIPTION}"
+                        renderWhitespace="false"
+                        wrapping="false"
+                    />
                 </table:template>
             </table:Column>
 
@@ -106,6 +119,8 @@
                         path: 'data>CREATION_DATE',
                         formatter: '.formatter.DateFormat'
                     }"
+                        renderWhitespace="false"
+                        wrapping="false"
                     />
                 </table:template>
             </table:Column>

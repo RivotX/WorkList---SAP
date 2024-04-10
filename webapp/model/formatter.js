@@ -69,7 +69,7 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 			return formattedNumber.replace(".", ",");
 		},
 		TimeOnFormat: function (duration) {
-			if (duration !== null) {
+			if (duration !== null && duration !== undefined) {
 				var match = duration.match(/PT(\d+)?H(\d+)?M(\d+)?S/);
 
 				match = match.slice(1).map(function (value) {
@@ -91,8 +91,8 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 				seconds = seconds.toString().padStart(2, "0");
 
 				return hours + ":" + minutes + ":" + seconds;
-			} else{
-				return "notime"
+			} else {
+				return "notime";
 			}
 		},
 	};

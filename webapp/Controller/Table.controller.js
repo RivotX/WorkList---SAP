@@ -473,7 +473,7 @@ sap.ui.define(
 							ACTIVE: "Y",
 							CALCULATION: "",
 							TYPE_PACKAGE: "N",
-							STATUS: "ME3",
+							STATUS: "",
 							AGENT: "S",
 							STIME: "PT00H00M00S",
 							CREATION_DATE: "/Date(1492646400000)/",

@@ -21,14 +21,12 @@
             </Bar>
         </customHeader>
 
-        <HBox
-            class="sapUiLargeMarginBeginEnd sapUiLargeMarginBottom paddingtop10px"
-        >
+       
             <mvc:View
                 viewName="com.myorg.myapp.view.Table"
                 type="XML"
             />
-        </HBox>
+      
 
         <footer>
             <Bar class="botBlueBar">
