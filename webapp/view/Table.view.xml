@@ -48,6 +48,7 @@
                     <Button
                         icon="sap-icon://download"
                         class="sapUiSmallMarginBegin"
+                        press=".onExport"
                     />
                 </HBox>
             </FlexBox>

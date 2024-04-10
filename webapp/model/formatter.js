@@ -84,7 +84,6 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 						return 0;
 					}
 				});
-				console.log(match);
 
 				var hours = match[0];
 				var minutes = match[1];

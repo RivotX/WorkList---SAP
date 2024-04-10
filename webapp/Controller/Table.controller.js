@@ -4,9 +4,19 @@ sap.ui.define(
 		"sap/m/MessageBox",
 		"sap/ui/model/json/JSONModel",
 		"../model/formatter",
+		"sap/ui/export/library",
+		"sap/ui/export/Spreadsheet",
 	],
-	function (BaseController, MessageBox, JSONModel, Formatter) {
+	function (
+		BaseController,
+		MessageBox,
+		JSONModel,
+		Formatter,
+		exportLibrary,
+		Spreadsheet
+	) {
 		"use strict";
+		var EdmType = exportLibrary.EdmType;
 
 		return BaseController.extend("com.myorg.myapp.controller.Table", {
 			formatter: Formatter, // make the formatter available in the view
@@ -513,6 +523,7 @@ sap.ui.define(
 				var sText = oResourceBundle.getText("Tentries", [iCount]);
 				this.getView().byId("entriesCounter").setText(sText);
 			},
+
 			onAddProduct: function () {
 				if (!this.oAddProductDialog) {
 					this.oAddProductDialog = sap.ui.xmlfragment(
@@ -527,43 +538,7 @@ sap.ui.define(
 			onCloseDialog: function () {
 				this.oAddProductDialog.close();
 			},
-			// if (!this.oAddProductDialog) {
-			// 	var oResourceBundle = this.getOwnerComponent()
-			// 		.getModel("i18n")
-			// 		.getResourceBundle();
 
-			// 	// Create a new Dialog
-			// 	this.oAddProductDialog = new sap.m.Dialog({
-			// 		title: oResourceBundle.getText("AddPtitle"),
-			// 		content: [
-			// 			new sap.m.Label({ text: oResourceBundle.getText("PackageID") }),
-			// 			new sap.m.Input({ id: "inputID" }), //deberia generarse automaticamente
-
-			// 			new sap.m.Label({ text: oResourceBundle.getText("PackageName") }),
-			// 			new sap.m.Input({ id: "inputName" }),
-			// 			new sap.m.Label({ text: oResourceBundle.getText("Desc") }),
-			// 			new sap.m.Input({ id: "inputDesc" }),
-			// 			//status label and input. States only can be "Success", "Warning", "Error", "None"
-			// 			// new sap.m.Label({ text: oResourceBundle.getText("State") }),
-			// 			// ?=?=
-			// 			new sap.m.Label({ text: oResourceBundle.getText("Amount") }),
-			// 			new sap.m.Input({ id: "inputAmount" }),
-			// 			// ... add more input fields for the rest of the properties
-			// 		],
-			// 		beginButton: new sap.m.Button({
-			// 			text: "OK",
-			// 			press: this.onAddProduct.bind(this),
-			// 		}),
-			// 		endButton: new sap.m.Button({
-			// 			text: "Cancel",
-			// 			press: function () {
-			// 				this.oAddProductDialog.close();
-			// 			}.bind(this),
-			// 		}),
-			// 	});
-			// }
-			// this.oAddProductDialog.open();
-			// },
 			onDelete: function () {
 				var oTable = this.getView().byId("sampleTable");
 				var oModel = this.getView().getModel("data");
@@ -603,9 +578,94 @@ sap.ui.define(
 			},
 
 			onClearFilters: function () {
-				//clear all the filters from the sapui5 table
+				// Clear all the filters from the sapui5 table
 				var oTable = this.getView().byId("sampleTable");
 				oTable.getBinding("rows").filter([]);
+
+				// Set every column's sorted and filtered attribute to false
+				var aColumns = oTable.getColumns();
+				for (var i = 0; i < aColumns.length; i++) {
+					aColumns[i].setSorted(false);
+					aColumns[i].setFiltered(false);
+				}
+			},
+
+			onExport: function () {
+				var oTable = this.getView().byId("sampleTable");
+				var oModel = this.getView().getModel("data");
+				var oData = oModel.getData();
+
+				var aCols = this.createColumnConfig();
+
+				var oSettings = {
+					workbook: { columns: aCols },
+					dataSource: oData.results,
+					fileName: "TableExport.xlsx",
+				};
+
+				var oSheet = new Spreadsheet(oSettings);
+				oSheet.build().finally(function () {
+					oSheet.destroy();
+				});
+			},
+			createColumnConfig: function () {
+				var oResourceBundle = this.getView()
+					.getModel("i18n")
+					.getResourceBundle();
+
+				var aCols = [];
+				
+				aCols.push({
+					label: oResourceBundle.getText("Desc"),
+					property: "DESCRIPTION",
+					type: EdmType.String,
+				});
+				aCols.push({
+					label: oResourceBundle.getText("PackageID"),
+					property: "OBJID",
+					type: EdmType.String,
+				});
+				aCols.push({
+					label: oResourceBundle.getText("CreationDate"),
+					property: "CREATION_DATE",
+					type: EdmType.Date,
+				});
+				aCols.push({
+					label: oResourceBundle.getText("TimeOn"),
+					property: "STIME",
+					type: EdmType.Time,
+				});
+				aCols.push({
+					label: oResourceBundle.getText("State"),
+					property: "STATUS",
+					type: EdmType.String,
+				});
+
+				aCols.push({
+					label: oResourceBundle.getText("Progress"),
+					property: "VARIABLE_01",
+					type: EdmType.Number,
+					scale: 3,
+				});
+
+				aCols.push({
+					label: oResourceBundle.getText("Amount"),
+					property: "VARIABLE_02_float",
+					type: EdmType.Number,
+					scale: 3,
+				});
+				aCols.push({
+					label: oResourceBundle.getText("type"),
+					property: "TYPE_PACKAGE",
+					type: EdmType.String,
+				});
+				aCols.push({
+					label: oResourceBundle.getText("Priority"),
+					property: "PRIORITY",
+					type: EdmType.String,
+				});
+
+				return aCols;
 			},
 		});
 	}
