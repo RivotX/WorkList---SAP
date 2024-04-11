@@ -29,6 +29,17 @@ sap.ui.define(
 					return item;
 				});
 				this.getView().setModel(new JSONModel(data), "data");
+
+				var oTable = this.getView().byId("sampleTable");
+				var oBinding = oTable.getBinding("rows");
+
+				// Listen for the change event on the rows binding
+				oBinding.attachChange(
+					function () {
+						// Update the entries counter whenever the list of items changes
+						this.entriesCounter();
+					}.bind(this)
+				);
 			},
 
 			getJson: function () {
@@ -513,7 +524,12 @@ sap.ui.define(
 				};
 				return data;
 			},
+
 			onAfterRendering: function () {
+				this.entriesCounter();
+			},
+
+			entriesCounter: function () {
 				var oTable = this.getView().byId("sampleTable");
 				var iCount = oTable.getBinding("rows").getLength();
 				var oResourceBundle = this.getView()
@@ -540,6 +556,8 @@ sap.ui.define(
 			},
 
 			onDelete: function () {
+				var that = this; // Store a reference to the controller
+
 				var oTable = this.getView().byId("sampleTable");
 				var oModel = this.getView().getModel("data");
 				var data = oModel.getData();
@@ -547,6 +565,8 @@ sap.ui.define(
 				var oItems = oTable.getSelectedIndices();
 				var i, path, idx, item;
 				var forbiddenItemEncountered = false; // Add a flag to track forbidden items
+				var deleteItemFlag = false; // Add a flag to track if an item is aviable for deletion
+				var itemsToDelete = []; // Array to store indices of items to be deleted
 
 				for (i = oItems.length - 1; i >= 0; --i) {
 					var id = oItems[i];
@@ -558,7 +578,8 @@ sap.ui.define(
 					console.log(item);
 					if (item.STATUS === "R" || item.STATUS === "E") {
 						console.log(item.STATUS);
-						data.results.splice(idx, 1); // Remove the item if the STATUS is 'R' or 'E'
+						deleteItemFlag = true;
+						itemsToDelete.push(idx); // Store the index of the item to be deleted
 					} else {
 						forbiddenItemEncountered = true;
 						// Set the flag to true if a forbidden item is encountered
@@ -569,12 +590,66 @@ sap.ui.define(
 				if (forbiddenItemEncountered) {
 					var oBundle = this.getView().getModel("i18n").getResourceBundle();
 					var sMsg = oBundle.getText("errorDelete");
-					console.log("aaaaaaaaaaaaaaaaa", oBundle);
 					MessageBox.error(sMsg);
 				}
 
-				console.log(data);
-				oModel.setData(data);
+				// If deleteItemFlag is true, display a dialog to ask for justification
+				if (deleteItemFlag) {
+					var oTextArea = new sap.m.TextArea({
+						placeholder: "Enter deletion justification here...",
+						width: "100%",
+						liveChange: function (oEvent) {
+							var sText = oEvent.getParameter("value");
+							var parent = oEvent.getSource().getParent();
+							parent.getBeginButton().setEnabled(sText.length > 0);
+						},
+					});
+
+					var oDialog = new sap.m.Dialog({
+						title: "Confirm Deletion",
+						type: "Message",
+						content: [
+							new sap.m.Label({
+								text: "Please provide a justification for the deletion:",
+								labelFor: oTextArea,
+							}),
+							oTextArea,
+						],
+						beginButton: new sap.m.Button({
+							text: "Submit",
+							enabled: false,
+							press: function () {
+								var sText = oTextArea.getValue();
+								// sText contains the justification text entered by the user
+								console.log("user justification: ", sText);
+								console.log("item a borrar---->", itemsToDelete);
+
+								// Create a new array that only includes the items you want to keep
+								data.results = data.results.filter(function (item, index) {
+									// Only include the item if its index is not in the itemsToDelete array
+									return itemsToDelete.indexOf(index) === -1;
+								});
+								console.log(data);
+								oModel.setData(data);
+								oModel.refresh(true);
+								that.entriesCounter();
+
+								oDialog.close();
+							},
+						}),
+						endButton: new sap.m.Button({
+							text: "Cancel",
+							press: function () {
+								oDialog.close();
+							},
+						}),
+						afterClose: function () {
+							oDialog.destroy();
+						},
+					});
+
+					oDialog.open();
+				}
 			},
 
 			onClearFilters: function () {
@@ -671,6 +746,18 @@ sap.ui.define(
 
 				return aCols;
 			},
+			// onFilter: function () {
+			// 	var oTable = this.getView().byId("sampleTable");
+			// 	var oBinding = oTable.getBinding("rows");
+			// 	var aFilters = []; // Add your filters here
+
+			// 	// Apply the filters to the binding
+			// 	oBinding.filter(aFilters);
+
+			// 	// Get the number of currently displayed items
+			// 	var iCount = oBinding.getCurrentContexts().length;
+			// 	console.log("filter", iCount);
+			// },
 		});
 	}
 );

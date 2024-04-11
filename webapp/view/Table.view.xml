@@ -14,6 +14,7 @@
         rows="{ path:'data>/results'}"
         class="myTable"
         visibleRowCount="15"
+        filter="onFilter"
     >
         <table:extension>
             <FlexBox
