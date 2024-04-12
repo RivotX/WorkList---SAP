@@ -13,19 +13,30 @@
         <customHeader>
             <Bar class="">
                 <contentMiddle>
-                    <mvc:View
-                        viewName="com.myorg.myapp.view.TitleRefreshBar"
-                        type="XML"
-                    />
+                    <Bar class="secondBar ">
+                        <contentLeft>
+                            <Title
+                                text="{i18n>SubHeaderTitle}"
+                                class="PackageControlTitle"
+                            />
+                        </contentLeft>
+                        <contentRight>
+                            <Button
+                                icon="sap-icon://refresh"
+                                text="{i18n>refreshButtonText}"
+                                iconFirst="false"
+                                class="roundedButton"
+                            />
+                        </contentRight>
+                    </Bar>
                 </contentMiddle>
             </Bar>
         </customHeader>
 
-        <mvc:View
-            viewName="com.myorg.myapp.view.Table"
+        <core:Fragment
+            fragmentName="com.myorg.myapp.fragments.Table"
             type="XML"
         />
-       
 
         <footer>
             <Bar class="botBlueBar">

@@ -4,6 +4,7 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:tnt="sap.tnt"
+    xmlns:core="sap.ui.core"
 >
     <tnt:ToolPage>
         <tnt:header>
@@ -11,8 +12,8 @@
                 id="shellLikeToolHeader"
                 class="topBlueBar whiteText  "
             >
-                <mvc:XMLView
-                    viewName="com.myorg.myapp.view.Header"
+                <core:Fragment
+                    fragmentName="com.myorg.myapp.fragments.Header"
                     type="XML"
                 />
             </tnt:ToolHeader>
@@ -26,10 +27,7 @@
                 <pages>
                     <App id="app" />
                 </pages>
-              
             </NavContainer>
         </tnt:mainContents>
-        
     </tnt:ToolPage>
-    
 </mvc:View>

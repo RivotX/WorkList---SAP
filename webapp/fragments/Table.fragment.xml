@@ -1,9 +1,6 @@
-<mvc:View
+<core:FragmentDefinition
     xmlns:table="sap.ui.table"
-    controllerName="com.myorg.myapp.controller.Table"
-    displayBlock="true"
     xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     core:require="{
         formatter: 'com/myorg/myapp/model/formatter'
@@ -22,8 +19,12 @@
                 alignItems="Center"
                 class="sapUiSmallMarginTop sapUiSmallMarginBeginEnd sapUiSmallMarginBottom"
             >
-                <mvc:View
+                <!-- <mvc:View
                     viewName="com.myorg.myapp.view.Date"
+                    type="XML"
+                /> -->
+                <core:Fragment
+                    fragmentName="com.myorg.myapp.fragments.Date"
                     type="XML"
                 />
                 <HBox>
@@ -229,4 +230,4 @@
     </table:Table>
 
     <Text id="entriesCounter" />
-</mvc:View>
+</core:FragmentDefinition>
