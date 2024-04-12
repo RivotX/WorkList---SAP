@@ -13,20 +13,22 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 			}
 		},
 		TypeFormat: function (type) {
-			const oResourceBundle = this.getOwnerComponent()
-				.getModel("i18n")
-				.getResourceBundle();
-			// const oResourceBundle = sap.ui.getCore().getLibraryResourceBundle("com.myorg.myapp");
-			// console.log("aa",oResourceBundle);
-
-			if (type === "N") {
-				return oResourceBundle.getText("typeN");
-			} else if (type === "U") {
-				return oResourceBundle.getText("typeU");
-			} else if (type === "F") {
-				return oResourceBundle.getText("typeF");
+			if (type) {
+				// const oResourceBundle = this.getOwnerComponent()
+				// 	.getModel("i18n")
+				// 	.getResourceBundle();
+				var oResourceBundle = sap.ui.getCore().getModel("i18n").getResourceBundle();
+				if (type === "N") {
+					return oResourceBundle.getText("typeN");
+				} else if (type === "U") {
+					return oResourceBundle.getText("typeU");
+				} else if (type === "F") {
+					return oResourceBundle.getText("typeF");
+				} else {
+					return "Unknown";
+				}
 			} else {
-				return "Unknown";
+				return "unknown";
 			}
 		},
 

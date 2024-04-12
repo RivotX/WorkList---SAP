@@ -814,10 +814,8 @@ sap.ui.define(
 
 						buttons: [
 							new sap.m.Button({
-								text: "Close",
-								press: function () {
-									this._oDialog.close();
-								}.bind(this),
+								text: "Reset",
+								press: function () {}.bind(this),
 							}),
 							//save button
 							new sap.m.Button({
@@ -839,19 +837,67 @@ sap.ui.define(
 										oCells.forEach((oCell) => {
 											var oBindingContext = oCell.getBindingContext();
 											if (oBindingContext) {
-												var sColumnName =
-													oBindingContext.getObject().dataCol;
+												var sColumnName = oBindingContext.getObject().dataCol;
+												var sFormatter = oBindingContext.getObject().formatter;
 
-													console.log("sColumnName", sColumnName);
+												// get the formatter function
+												var fnFormatter = this.formatter[sFormatter];
 
 												// create a new column
-												var oColumn = new sap.ui.table.Column({
-													label: sColumnName,
-													template: new sap.m.Text({
-														text: "{data>" + sColumnName +"}",
-														
-													}),
-												});
+												var oColumn;
+												if (sColumnName === "PRIORITY") {
+													// create an icon for the PRIORITY column
+													oColumn = new sap.ui.table.Column({
+														label: sColumnName,
+														template: new sap.ui.core.Icon({
+															src: {
+																path: "data>" + sColumnName,
+																formatter: fnFormatter, // use the formatter function
+															},
+														})
+															.addStyleClass("GreenPriority")
+															.addStyleClass("iconoCentro"),
+													});
+												} else if (sColumnName === "STATUS") {
+													// create an icon for the STATUS column
+													oColumn = new sap.ui.table.Column({
+														label: sColumnName,
+														template: new sap.ui.core.Icon({
+															src: "sap-icon://circle-task-2",
+														})
+															.bindProperty("color", {
+																//bind color to icon
+																path: "data>" + sColumnName,
+																formatter: function (status) {
+																	// use the formatter function to determine the color
+																	if (status === "S") {
+																		return "#6cd331";
+																	} else if (status === "E") {
+																		return "gray";
+																	} else if (status === "A") {
+																		return "rgb(230, 197, 52)";
+																	} else if (status === "R") {
+																		return "red";
+																	} else {
+																		return "transparent";
+																	}
+																},
+															})
+															.addStyleClass("iconoCentro"),
+													});
+												} else {
+													// create a text for other columns
+													oColumn = new sap.ui.table.Column({
+														label: sColumnName,
+														template: new sap.m.Text({
+															text: {
+																path: "data>" + sColumnName,
+																formatter: fnFormatter, // use the formatter function
+															},
+															wrapping: false,
+														}),
+													});
+												}
 
 												// add the column to the app's table
 												oAppTable.addColumn(oColumn);
@@ -859,6 +905,13 @@ sap.ui.define(
 										});
 									});
 
+									this._oDialog.close();
+								}.bind(this),
+							}),
+
+							new sap.m.Button({
+								text: "Close",
+								press: function () {
 									this._oDialog.close();
 								}.bind(this),
 							}),
@@ -871,24 +924,6 @@ sap.ui.define(
 
 				// open the dialog
 				this._oDialog.open();
-				// var oView = this.getView();
-
-				// // create the dialog lazily
-				// if (!this._oDialog) {
-				// 	// create a view with its own controller
-				// 	var oDialogView = sap.ui.view({
-				// 		viewName: "com.myorg.myapp.view.CcustomColumns",
-				// 		type: sap.ui.core.mvc.ViewType.XML,
-				// 	});
-
-				// 	// get the dialog from the view
-				// 	this._oDialog = oDialogView.byId("DialogCustColumns");
-
-				// 	oView.addDependent(this._oDialog);
-				// 	this._oDialog.open();
-				// } else {
-				// 	this._oDialog.open();
-				// }
 			},
 		});
 	}

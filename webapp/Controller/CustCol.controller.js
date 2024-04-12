@@ -63,16 +63,35 @@ sap.ui.define(
 
 			initSampleProductsModel: function () {
 				var oData = [
-					{ column: "PACKAGE ID", dataCol: "OBJID", formatter: '.formatter.PriorityFormat' },
+					{
+						column: "PACKAGE ID",
+						dataCol: "OBJID",
+					},
 					{ column: "PACKAGE_NAME", dataCol: "PACKAGE_NAME" },
 					{ column: "DESCRIPTION", dataCol: "DESCRIPTION" },
-					{ column: "STATUS", dataCol: "STATUS" },
-					{ column: "CREATED DATE", dataCol: "CREATION_DATE" },
-					{ column: "TIME ON", dataCol: "STIME" },
-					{ column: "PROGRESS", dataCol: "VARIABLE_01" },
-					{ column: "AMOUNT ", dataCol: "VARIABLE_02" },
-					{ column: "TYPE", dataCol: "TYPE_PACKAGE" },
-					{ column: "PRIORITY", dataCol: "PRIORITY",formatter: '.formatter.PriorityFormat'  },
+					{ column: "STATUS", dataCol: "STATUS", formatter: "StatusFormat" },
+					{
+						column: "CREATED DATE",
+						dataCol: "CREATION_DATE",
+						formatter: "DateFormat",
+					},
+					{ column: "TIME ON", dataCol: "STIME", formatter: "TimeOnFormat" },
+					{
+						column: "PROGRESS",
+						dataCol: "VARIABLE_01",
+						formatter: "NumberFormat2",
+					},
+					{
+						column: "AMOUNT ",
+						dataCol: "VARIABLE_02",
+						formatter: "NumberFormatt",
+					},
+					{ column: "TYPE", dataCol: "TYPE_PACKAGE", formatter: "TypeFormat" },
+					{
+						column: "PRIORITY",
+						dataCol: "PRIORITY",
+						formatter: "PriorityFormat",
+					},
 				];
 
 				// prepare and initialize the rank property
