@@ -21,12 +21,11 @@
             </Bar>
         </customHeader>
 
+        <mvc:View
+            viewName="com.myorg.myapp.view.Table"
+            type="XML"
+        />
        
-            <mvc:View
-                viewName="com.myorg.myapp.view.Table"
-                type="XML"
-            />
-      
 
         <footer>
             <Bar class="botBlueBar">

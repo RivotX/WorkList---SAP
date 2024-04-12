@@ -6,6 +6,7 @@ sap.ui.define(
 		"../model/formatter",
 		"sap/ui/export/library",
 		"sap/ui/export/Spreadsheet",
+		"sap/ui/core/util/File",
 	],
 	function (
 		BaseController,
@@ -13,13 +14,15 @@ sap.ui.define(
 		JSONModel,
 		Formatter,
 		exportLibrary,
-		Spreadsheet
+		Spreadsheet,
+		File
 	) {
 		"use strict";
 		var EdmType = exportLibrary.EdmType;
 
 		return BaseController.extend("com.myorg.myapp.controller.Table", {
 			formatter: Formatter, // make the formatter available in the view
+
 			onInit: function () {
 				var data = this.getJson();
 
@@ -30,6 +33,8 @@ sap.ui.define(
 				});
 				this.getView().setModel(new JSONModel(data), "data");
 
+				sap.ui.getCore().setModel(new JSONModel(data), "data"); // set the model on the core with a name
+				//console log the sap ui get core model data
 				var oTable = this.getView().byId("sampleTable");
 				var oBinding = oTable.getBinding("rows");
 
@@ -575,9 +580,7 @@ sap.ui.define(
 					idx = parseInt(path.substring(path.lastIndexOf("/") + 1));
 
 					item = data.results[idx];
-					console.log(item);
 					if (item.STATUS === "R" || item.STATUS === "E") {
-						console.log(item.STATUS);
 						deleteItemFlag = true;
 						itemsToDelete.push(idx); // Store the index of the item to be deleted
 					} else {
@@ -660,7 +663,6 @@ sap.ui.define(
 				// Set every column's sorted and filtered attribute to false
 				var aColumns = oTable.getColumns();
 				for (var i = 0; i < aColumns.length; i++) {
-					aColumns[i].setSorted(false);
 					aColumns[i].setFiltered(false);
 				}
 			},
@@ -696,6 +698,11 @@ sap.ui.define(
 				aCols.push({
 					label: oResourceBundle.getText("PackageID"),
 					property: "OBJID",
+					type: EdmType.String,
+				});
+				aCols.push({
+					label: oResourceBundle.getText("PackageName"),
+					property: "PACKAGE_NAME",
 					type: EdmType.String,
 				});
 				aCols.push({
@@ -746,18 +753,143 @@ sap.ui.define(
 
 				return aCols;
 			},
-			// onFilter: function () {
-			// 	var oTable = this.getView().byId("sampleTable");
-			// 	var oBinding = oTable.getBinding("rows");
-			// 	var aFilters = []; // Add your filters here
+			onDownload: function () {
+				var oResourceBundle = this.getView()
+					.getModel("i18n")
+					.getResourceBundle();
 
-			// 	// Apply the filters to the binding
-			// 	oBinding.filter(aFilters);
+				var oTable = this.getView().byId("sampleTable");
+				var oBinding = oTable.getBinding("rows");
+				var aContexts = oBinding.getContexts();
+				var aData = aContexts.map((oContext) => {
+					return oContext.getObject();
+				});
 
-			// 	// Get the number of currently displayed items
-			// 	var iCount = oBinding.getCurrentContexts().length;
-			// 	console.log("filter", iCount);
-			// },
+				// Define your column headers
+				var aCols = [
+					"OBJID",
+					"PACKAGE_NAME",
+					"DESCRIPTION",
+					"STATUS",
+					"CREATION_DATE",
+					"STIME",
+					"VARIABLE_01",
+					"VARIABLE_02_float",
+					"TYPE_PACKAGE",
+					"PRIORITY",
+				];
+
+				// Convert the data to CSV
+				var csvContent = aCols.join(",") + "\n";
+
+				aData.forEach((oRow) => {
+					var aRow = [];
+					//add the values of the row
+					aCols.forEach((sCol) => {
+						aRow.push(oRow[sCol]);
+					});
+					csvContent += aRow.join(",") + "\n";
+				});
+
+				// Download the CSV
+				File.save(csvContent, "TableExport", "csv", "text/csv");
+			},
+			onCustomizeColumns: function () {
+				var oView = this.getView();
+
+				// create the dialog lazily
+				if (!this._oDialog) {
+					// create a view with its own controller
+					var oDialogView = sap.ui.view({
+						viewName: "com.myorg.myapp.view.CustomColumns",
+						type: sap.ui.core.mvc.ViewType.XML,
+					});
+
+					// create the dialog
+					this._oDialog = new sap.m.Dialog({
+						title: "Customize Columns",
+						content: [oDialogView],
+						contentHeight: "52%", // set the height of the dialog
+						contentWidth: "52%", // set the height of the dialog
+
+						buttons: [
+							new sap.m.Button({
+								text: "Close",
+								press: function () {
+									this._oDialog.close();
+								}.bind(this),
+							}),
+							//save button
+							new sap.m.Button({
+								text: "Save",
+								press: function () {
+									// get the selected rows
+									var oTable = oDialogView.byId("table2");
+									var aRows = oTable.getRows();
+
+									// get the app's table
+									var oAppTable = this.byId("sampleTable");
+
+									// remove all columns from the app's table
+									oAppTable.removeAllColumns();
+
+									// add the selected columns to the app's table
+									aRows.forEach((oRow) => {
+										var oCells = oRow.getCells();
+										oCells.forEach((oCell) => {
+											var oBindingContext = oCell.getBindingContext();
+											if (oBindingContext) {
+												var sColumnName =
+													oBindingContext.getObject().dataCol;
+
+													console.log("sColumnName", sColumnName);
+
+												// create a new column
+												var oColumn = new sap.ui.table.Column({
+													label: sColumnName,
+													template: new sap.m.Text({
+														text: "{data>" + sColumnName +"}",
+														
+													}),
+												});
+
+												// add the column to the app's table
+												oAppTable.addColumn(oColumn);
+											}
+										});
+									});
+
+									this._oDialog.close();
+								}.bind(this),
+							}),
+						],
+					});
+
+					// connect dialog to the root view of this component (models, lifecycle)
+					oView.addDependent(this._oDialog);
+				}
+
+				// open the dialog
+				this._oDialog.open();
+				// var oView = this.getView();
+
+				// // create the dialog lazily
+				// if (!this._oDialog) {
+				// 	// create a view with its own controller
+				// 	var oDialogView = sap.ui.view({
+				// 		viewName: "com.myorg.myapp.view.CcustomColumns",
+				// 		type: sap.ui.core.mvc.ViewType.XML,
+				// 	});
+
+				// 	// get the dialog from the view
+				// 	this._oDialog = oDialogView.byId("DialogCustColumns");
+
+				// 	oView.addDependent(this._oDialog);
+				// 	this._oDialog.open();
+				// } else {
+				// 	this._oDialog.open();
+				// }
+			},
 		});
 	}
 );

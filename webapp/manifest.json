@@ -40,7 +40,14 @@
       "minUI5Version": "1.122.1",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.ui.table": {}
+      }
+    },
+    "config": {
+      "sample": {
+        "stretch": true,
+        "files": ["View.view.xml", "Controller.controller.js", "manifest.json"]
       }
     },
 

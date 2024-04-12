@@ -7,7 +7,7 @@ sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "./model/models"], fu
 		},
 		init: function () {
 			// call the base component's init function
-			UIComponent.prototype.init.call(this); // create the views based on the url/hash
+			UIComponent.prototype.init.call(this, arguments); // create the views based on the url/hash
 
 			// create the device model
 			this.setModel(models.createDeviceModel(), "device");

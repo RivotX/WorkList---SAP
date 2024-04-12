@@ -28,6 +28,12 @@
                 />
                 <HBox>
                     <Button
+                        icon="sap-icon://provision"
+                        text="{i18n>CustomizeButon}"
+                        class="sapUiSmallMarginBegin"
+                        press=".onCustomizeColumns"
+                    />
+                    <Button
                         icon="sap-icon://clear-filter"
                         text="{i18n>ClearFiltersText}"
                         class=" sapUiSmallMarginBegin"
@@ -46,11 +52,25 @@
                         class="sapUiSmallMarginBegin"
                         press=".onDelete"
                     />
-                    <Button
+                    <MenuButton
                         icon="sap-icon://download"
-                        class="sapUiSmallMarginBegin"
-                        press=".onExport"
-                    />
+                        class=" sapUiSmallMarginBegin"
+                    >
+                        <menu>
+                            <Menu itemSelected="onMenuAction">
+                                <MenuItem
+                                    text="Download"
+                                    icon="sap-icon://save"
+                                    press=".onDownload"
+                                />
+                                <MenuItem
+                                    text="Export"
+                                    icon="sap-icon://action"
+                                    press=".onExport"
+                                />
+                            </Menu>
+                        </menu>
+                    </MenuButton>
                 </HBox>
             </FlexBox>
         </table:extension>
