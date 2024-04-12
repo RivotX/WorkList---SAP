@@ -671,7 +671,7 @@ sap.ui.define(
 				var oTable = this.getView().byId("sampleTable");
 				var oBinding = oTable.getBinding("rows"); // Get the binding object
 
-				var aCols = this.createColumnConfig();
+				var aCols = this.createColumnConfig(oTable);
 
 				var aContexts = oBinding.getContexts();
 				var aData = aContexts.map((oContext) => {
@@ -689,81 +689,40 @@ sap.ui.define(
 					oSheet.destroy();
 				});
 			},
-			createColumnConfig: function () {
+			createColumnConfig: function (oTable) {
 				var oResourceBundle = this.getView()
 					.getModel("i18n")
 					.getResourceBundle();
 
 				var aCols = [];
-				aCols.push({
-					label: oResourceBundle.getText("PackageID"),
-					property: "OBJID",
-					type: EdmType.String,
-				});
-				aCols.push({
-					label: oResourceBundle.getText("PackageName"),
-					property: "PACKAGE_NAME",
-					type: EdmType.String,
-				});
-				aCols.push({
-					label: oResourceBundle.getText("Desc"),
-					property: "DESCRIPTION",
-					type: EdmType.String,
-				});
 
-				aCols.push({
-					label: oResourceBundle.getText("CreationDate"),
-					property: "CREATION_DATE",
-					type: EdmType.Date,
-				});
-				aCols.push({
-					label: oResourceBundle.getText("TimeOn"),
-					property: "STIME",
-					type: EdmType.Time,
-				});
-				aCols.push({
-					label: oResourceBundle.getText("State"),
-					property: "STATUS",
-					type: EdmType.String,
-				});
+				// Get the columns from the table
+				var aTableCols = oTable.getColumns();
 
-				aCols.push({
-					label: oResourceBundle.getText("Progress"),
-					property: "VARIABLE_01",
-					type: EdmType.Number,
-					scale: 3,
-				});
+				aTableCols.forEach((oColumn) => {
+					var sProperty = oColumn.getSortProperty();
 
-				aCols.push({
-					label: oResourceBundle.getText("Amount"),
-					property: "VARIABLE_02_float",
-					type: EdmType.Number,
-					scale: 3,
-				});
-				aCols.push({
-					label: oResourceBundle.getText("type"),
-					property: "TYPE_PACKAGE",
-					type: EdmType.String,
-				});
-				aCols.push({
-					label: oResourceBundle.getText("Priority"),
-					property: "PRIORITY",
-					type: EdmType.String,
+					aCols.push({
+						label: oColumn.getLabel().getText(),
+						property: sProperty,
+						type: EdmType.String, // Adjust this based on the actual type of the column
+					});
 				});
 
 				return aCols;
 			},
+
 			onDownload: function () {
 				var oResourceBundle = this.getView()
 					.getModel("i18n")
 					.getResourceBundle();
 
-				var oTable = this.getView().byId("sampleTable");
-				var oBinding = oTable.getBinding("rows");
-				var aContexts = oBinding.getContexts();
-				var aData = aContexts.map((oContext) => {
-					return oContext.getObject();
-				});
+				// Get the model
+				var oModel = this.getView().getModel("data");
+				// Get the data from the model
+				var aData = oModel.getData();
+				console.log("omodel", oModel);
+				console.log("adata", aData);
 
 				// Define your column headers
 				var aCols = [
@@ -782,7 +741,7 @@ sap.ui.define(
 				// Convert the data to CSV
 				var csvContent = aCols.join(",") + "\n";
 
-				aData.forEach((oRow) => {
+				aData.results.forEach((oRow) => {
 					var aRow = [];
 					//add the values of the row
 					aCols.forEach((sCol) => {
@@ -857,6 +816,10 @@ sap.ui.define(
 														})
 															.addStyleClass("GreenPriority")
 															.addStyleClass("iconoCentro"),
+														sortProperty: sColumnName,
+														filterProperty: sColumnName,
+														autoResizable: true,
+														flexible: true,
 													});
 												} else if (sColumnName === "STATUS") {
 													// create an icon for the STATUS column
@@ -884,6 +847,10 @@ sap.ui.define(
 																},
 															})
 															.addStyleClass("iconoCentro"),
+														sortProperty: sColumnName,
+														filterProperty: sColumnName,
+														autoResizable: true,
+														flexible: true,
 													});
 												} else {
 													// create a text for other columns
@@ -896,6 +863,10 @@ sap.ui.define(
 															},
 															wrapping: false,
 														}),
+														sortProperty: sColumnName,
+														filterProperty: sColumnName,
+														autoResizable: true,
+														flexible: true,
 													});
 												}
 

@@ -102,6 +102,9 @@
           "viewType": "XML",
           "viewId": "Table",
           "viewName": "Table"
+        },
+        "detail": {
+          
         }
       }
     }
