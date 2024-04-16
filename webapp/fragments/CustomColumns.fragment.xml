@@ -5,6 +5,7 @@
     xmlns:core="sap.ui.core"
     xmlns:m="sap.m"
     height="100%"
+    id="customColumnsFragment"
 >
     <m:Page
         showHeader="false"
@@ -75,6 +76,7 @@
                         press="moveToTable1"
                     />
                 </m:VBox>
+                <!-- table2 -->
                 <Table
                     id="table2"
                     selectionMode="Single"

@@ -27,20 +27,47 @@
             singleContainerFullSize="false"
         >
             <f:content>
-                <Label text="{i18n>PackageID}" />
-                <Input id="inputID" />
+                <!-- <Label text="{i18n>PackageID}" />
+                <Input id="inputID" /> -->
 
                 <Label text="{i18n>PackageName}" />
-                <Input id="inputName" />
+                <Input
+                    id="inputName"
+                    value="{selectModel>/Name}"
+                    required="true"
+                />
 
                 <Label text="{i18n>Desc}" />
-                <Input id="inputDesc" />
-
-                <Label text="{i18n>Amount}" />
-                <Input id="inputAmount" />
+                <Input
+                    id="inputDesc"
+                    value="{selectModel>/Description}"
+                    required="true"
+                />
 
                 <Label text="{i18n>State}" />
-                <Input id="inputState" />
+                <Select
+                    forceSelection="true"
+                    selectedKey="{/Status}"
+                >
+                    <items>
+                        <core:Item
+                            key="Red"
+                            text="{i18n>Red}"
+                        />
+                        <core:Item
+                            key="Green"
+                            text="{i18n>Green}"
+                        />
+                        <core:Item
+                            key="Gray"
+                            text="{i18n>Gray}"
+                        />
+                        <core:Item
+                            key="Yellow"
+                            text="{i18n>Yellow}"
+                        />
+                    </items>
+                </Select>
 
                 <Label text="{i18n>CreationDate}" />
                 <DatePicker
@@ -49,13 +76,56 @@
                     change="handleChange"
                     class="sapUiSmallMarginBottom"
                     displayFormat="dd/MM/yyyy"
+                    value="{selectModel>/Creation_date}"
+                />
+                <Label text="{i18n>Progress}" />
+                <Input
+                    id="inputProgress"
+                    value="{selectModel>/Progress}"
+                    required="true"
+                />
+
+                <Label text="{i18n>Amount}" />
+                <Input
+                    id="inputAmount"
+                    value="{selectModel>/Amount}"
+                    required="true"
+                />
+                <Label text="{i18n>type}" />
+                <Select
+                    forceSelection="true"
+                    selectedKey="{/Type}"
+                >
+                    <items>
+                        <core:Item
+                            key="Normal"
+                            text="{i18n>typeN}"
+                        />
+                        <core:Item
+                            key="Ultra"
+                            text="{i18n>typeU}"
+                        />
+                        <core:Item
+                            key="Fast"
+                            text="{i18n>typeF}"
+                        />
+                    </items>
+                </Select>
+                <Label
+                    text="{i18n>Priority}"
+                    class="sapUiTinyMarginEnd"
+                />
+                <Switch
+                    id="switchPrio"
+                    type="AcceptReject"
+                    state="{/Priority}"
                 />
             </f:content>
         </f:SimpleForm>
         <beginButton>
             <Button
                 text="OK"
-                press=".onAddProduct"
+                press=".onConfirm"
             />
         </beginButton>
         <endButton>

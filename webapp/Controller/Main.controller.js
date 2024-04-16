@@ -130,10 +130,6 @@ sap.ui.define(
 				);
 				var oView = this.getView();
 
-				// set explored app's demo model on this sample
-				this.oProductsModel = this.initSampleProductsModel();
-				oView.setModel(this.oProductsModel);
-
 				sap.ui.require(
 					["sap/ui/table/sample/TableExampleUtils"],
 					function (TableExampleUtils) {
@@ -678,8 +674,54 @@ sap.ui.define(
 						this
 					);
 					this.getView().addDependent(this.oAddProductDialog);
+
+					var oDate = new Date();
+					var sFormattedDate = oDate.toLocaleDateString("en-GB");
+					// Create a new JSON model
+					var oModel = new sap.ui.model.json.JSONModel({
+						Name: "",
+						Description: "",
+						Status: "Red",
+						Creation_date: sFormattedDate,
+						Progress: null,
+						Amount: null,
+						Type: "Normal",
+						Priority: true,
+					});
+
+					var oSwitch = this.byId("switchPrio"); // Replace with the ID of your switch
+					oSwitch.setState(true);
+					// Set the model to the dialog
+					this.getView().setModel(oModel, "selectModel");
 				}
 				this.oAddProductDialog.open();
+			},
+			onConfirm: function () {
+				// Get the model data
+				var oData = this.getView().getModel("selectModel").getData();
+				var oResourceBundle = this.getView()
+					.getModel("i18n")
+					.getResourceBundle();
+
+				// Check if any input is empty
+				for (var sProperty in oData) {
+					if (!oData[sProperty]) {
+						sap.m.MessageBox.error(
+							oResourceBundle.getText("NotEmptyError", [sProperty])
+						);
+						return;
+					} else if (
+						(sProperty === "Progress" || sProperty === "Amount") &&
+						typeof oData[sProperty] !== "number"
+					) {
+						sap.m.MessageBox.error(
+							"The input for " + sProperty + " must be a number."
+						);
+						return;
+					}
+				}
+
+				console.log(oData);
 			},
 			onCloseDialog: function () {
 				this.oAddProductDialog.close();
@@ -880,6 +922,8 @@ sap.ui.define(
 			},
 			onCustomizeColumns: function () {
 				var oView = this.getView();
+				this.oProductsModel = this.initSampleProductsModel();
+				this.getView().setModel(this.oProductsModel);
 				if (!this._oDialog) {
 					// Load the fragment
 					sap.ui.core.Fragment.load({
@@ -923,6 +967,7 @@ sap.ui.define(
 												oCells.forEach((oCell) => {
 													var oBindingContext = oCell.getBindingContext();
 													if (oBindingContext) {
+														var ColumnName = oBindingContext.getObject().column;
 														var sColumnName =
 															oBindingContext.getObject().dataCol;
 														var sFormatter =
@@ -936,7 +981,7 @@ sap.ui.define(
 														if (sColumnName === "PRIORITY") {
 															// create an icon for the PRIORITY column
 															oColumn = new sap.ui.table.Column({
-																label: sColumnName,
+																label: ColumnName,
 																template: new sap.ui.core.Icon({
 																	src: {
 																		path: "data>" + sColumnName,
@@ -953,7 +998,7 @@ sap.ui.define(
 														} else if (sColumnName === "STATUS") {
 															// create an icon for the STATUS column
 															oColumn = new sap.ui.table.Column({
-																label: sColumnName,
+																label: ColumnName,
 																template: new sap.ui.core.Icon({
 																	src: "sap-icon://circle-task-2",
 																})
@@ -984,7 +1029,7 @@ sap.ui.define(
 														} else {
 															// create a text for other columns
 															oColumn = new sap.ui.table.Column({
-																label: sColumnName,
+																label: ColumnName,
 																template: new sap.m.Text({
 																	text: {
 																		path: "data>" + sColumnName,
@@ -1018,6 +1063,46 @@ sap.ui.define(
 								],
 							});
 
+							// //-------------- comentar esto -------------------------
+							// // Get the main table
+							// var oMainTable = this.byId("sampleTable");
+
+							// // Check if the main table is defined
+							// if (!oMainTable) {
+							// 	console.error("Main table with id sampleTable is not found.");
+							// 	return;
+							// }
+
+							// // Get the current columns of the main table
+							// var aColumns = oMainTable.getColumns();
+
+							// // Extract the column names (headers)
+							// var aColumnNames = aColumns.map(function (oColumn) {
+							// 	return {
+							// 		column: oColumn.getLabel().getText(),
+							// 		Rank: this.config.initialRank,
+							// 	};
+							// }, this);
+
+							// // Create a new model with the column names
+							// var oModel = new sap.ui.model.json.JSONModel({
+							// 	ProductCollection: aColumnNames,
+							// });
+
+							// // Get the tables in the dialog
+							// var oTable1 = sap.ui.core.Fragment.byId(
+							// 	"customColumnsFragment",
+							// 	"table1"
+							// );
+							// var oTable2 = sap.ui.core.Fragment.byId(
+							// 	"customColumnsFragment",
+							// 	"table2"
+							// );
+
+							// // Set the new model on the tables in the dialog
+							// oTable1.setModel(oModel);
+							// oTable2.setModel(oModel);
+
 							// connect dialog to the root view of this component (models, lifecycle)
 							oView.addDependent(this._oDialog);
 							this._oDialog.open();
@@ -1049,50 +1134,63 @@ sap.ui.define(
 				},
 			},
 			initSampleProductsModel: function () {
-				var oData = [
-					{
-						column: "PACKAGE ID",
-						dataCol: "OBJID",
-					},
-					{ column: "PACKAGE_NAME", dataCol: "PACKAGE_NAME" },
-					{ column: "DESCRIPTION", dataCol: "DESCRIPTION" },
-					{ column: "STATUS", dataCol: "STATUS", formatter: "StatusFormat" },
-					{
-						column: "CREATED DATE",
-						dataCol: "CREATION_DATE",
-						formatter: "DateFormat",
-					},
-					{ column: "TIME ON", dataCol: "STIME", formatter: "TimeOnFormat" },
-					{
-						column: "PROGRESS",
-						dataCol: "VARIABLE_01",
-						formatter: "NumberFormat2",
-					},
-					{
-						column: "AMOUNT ",
-						dataCol: "VARIABLE_02",
-						formatter: "NumberFormatt",
-					},
-					{ column: "TYPE", dataCol: "TYPE_PACKAGE", formatter: "TypeFormat" },
-					{
-						column: "PRIORITY",
-						dataCol: "PRIORITY",
-						formatter: "PriorityFormat",
-					},
-				];
+				// Get the main table
+				var oMainTable = this.byId("sampleTable");
 
-				// prepare and initialize the rank property
-				oData.forEach(function (oProduct) {
-					oProduct.Rank = this.config.initialRank;
+				// Check if the main table is defined
+				if (!oMainTable) {
+					console.error("Main table with id sampleTable is not found.");
+					return;
+				}
+
+				// Get the current columns of the main table
+				var aColumns = oMainTable.getColumns();
+
+				// Extract the column names (headers)
+				var aColumnNames = aColumns.map(function (oColumn) {
+					var oCell = oColumn.getTemplate();
+					var oBindingInfo =
+						oCell &&
+						(oCell.getBindingInfo("text") ||
+							oCell.getBindingInfo("value") ||
+							oCell.getBindingInfo("src") ||
+							oCell.getBindingInfo("color"));
+					var sDataCol = oBindingInfo ? oBindingInfo.parts[0].path : "";
+					var sFormatter =
+						oBindingInfo &&
+						oBindingInfo.formatter &&
+						oBindingInfo.formatter.name;
+					if (sFormatter && sFormatter.startsWith("bound ")) {
+						sFormatter = sFormatter.substring(6);
+					}
+					var isVisible = oColumn.getVisible();
+					return {
+						column: oColumn.getLabel().getText(),
+						dataCol: sDataCol,
+						Rank: this.config.initialRank,
+						formatter: sFormatter,
+						visibleColumns: isVisible ? oColumn.getLabel().getText() : "",
+						hiddenColumns: isVisible ? "" : oColumn.getLabel().getText(),
+					};
 				}, this);
 
-				var oModel = new JSONModel();
-				oModel.setData({ ProductCollection: oData });
+				// Create a new model with the column names
+				var oModel = new sap.ui.model.json.JSONModel({
+					ProductCollection: aColumnNames,
+				});
+
 				return oModel;
 			},
 
 			getSelectedRowContext: function (sTableId, fnCallback) {
-				var oTable = this.byId(sTableId);
+				var oTable = sap.ui.core.Fragment.byId(
+					"customColumnsFragment",
+					sTableId
+				);
+				if (!oTable) {
+					console.error("Table with id " + sTableId + " is not found.");
+					return;
+				}
 				var iSelectedIndex = oTable.getSelectedIndex();
 
 				if (iSelectedIndex === -1) {
@@ -1200,7 +1298,10 @@ sap.ui.define(
 
 			moveToTable2: function () {
 				this.getSelectedRowContext("table1", function (oSelectedRowContext) {
-					var oTable2 = this.byId("table2");
+					var oTable2 = sap.ui.core.Fragment.byId(
+						"customColumnsFragment",
+						"table2"
+					);
 					var oFirstRowContext = oTable2.getContextByIndex(0);
 
 					// insert always as a first row
