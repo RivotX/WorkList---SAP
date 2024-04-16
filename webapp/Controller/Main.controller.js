@@ -944,7 +944,6 @@ sap.ui.define(
 										text: "Reset",
 										press: function () {}.bind(this),
 									}),
-									//save button
 									new sap.m.Button({
 										text: "Save",
 										press: function () {
@@ -958,102 +957,46 @@ sap.ui.define(
 											// get the app's table
 											var oAppTable = this.byId("sampleTable");
 
-											// remove all columns from the app's table
-											oAppTable.removeAllColumns();
+											// get all columns from the app's table
+											var aColumns = oAppTable.getColumns();
 
-											// add the selected columns to the app's table
-											aRows.forEach((oRow) => {
-												var oCells = oRow.getCells();
-												oCells.forEach((oCell) => {
-													var oBindingContext = oCell.getBindingContext();
-													if (oBindingContext) {
-														var ColumnName = oBindingContext.getObject().column;
-														var sColumnName =
-															oBindingContext.getObject().dataCol;
-														var sFormatter =
-															oBindingContext.getObject().formatter;
-
-														// get the formatter function
-														var fnFormatter = this.formatter[sFormatter];
-
-														// create a new column
-														var oColumn;
-														if (sColumnName === "PRIORITY") {
-															// create an icon for the PRIORITY column
-															oColumn = new sap.ui.table.Column({
-																label: ColumnName,
-																template: new sap.ui.core.Icon({
-																	src: {
-																		path: "data>" + sColumnName,
-																		formatter: fnFormatter, // use the formatter function
-																	},
-																})
-																	.addStyleClass("GreenPriority")
-																	.addStyleClass("iconoCentro"),
-																sortProperty: sColumnName,
-																filterProperty: sColumnName,
-																autoResizable: true,
-																flexible: true,
-															});
-														} else if (sColumnName === "STATUS") {
-															// create an icon for the STATUS column
-															oColumn = new sap.ui.table.Column({
-																label: ColumnName,
-																template: new sap.ui.core.Icon({
-																	src: "sap-icon://circle-task-2",
-																})
-																	.bindProperty("color", {
-																		//bind color to icon
-																		path: "data>" + sColumnName,
-																		formatter: function (status) {
-																			// use the formatter function to determine the color
-																			if (status === "S") {
-																				return "#6cd331";
-																			} else if (status === "E") {
-																				return "gray";
-																			} else if (status === "A") {
-																				return "rgb(230, 197, 52)";
-																			} else if (status === "R") {
-																				return "red";
-																			} else {
-																				return "transparent";
-																			}
-																		},
-																	})
-																	.addStyleClass("iconoCentro"),
-																sortProperty: sColumnName,
-																filterProperty: sColumnName,
-																autoResizable: true,
-																flexible: true,
-															});
-														} else {
-															// create a text for other columns
-															oColumn = new sap.ui.table.Column({
-																label: ColumnName,
-																template: new sap.m.Text({
-																	text: {
-																		path: "data>" + sColumnName,
-																		formatter: fnFormatter, // use the formatter function
-																	},
-																	wrapping: false,
-																}),
-																sortProperty: sColumnName,
-																filterProperty: sColumnName,
-																autoResizable: true,
-																flexible: true,
-															});
-														}
-
-														// add the column to the app's table
-														oAppTable.addColumn(oColumn);
-													}
-												});
+											// hide all columns
+											aColumns.forEach(function (oColumn) {
+												oColumn.setVisible(false);
 											});
 
+											// get the selected column names in the order they are selected
+											var aSelectedColumnNames = aRows.map(function (oRow) {
+												var oCell = oRow.getCells()[0]; // Assuming the column name is in the first cell
+												var oBindingContext = oCell.getBindingContext();
+												return oBindingContext
+													? oBindingContext.getObject().column
+													: null;
+											});
+
+											
+											// show and reorder the selected columns
+											aSelectedColumnNames.forEach(function (
+												sColumnName,
+												iIndex
+											) {
+												// find the column in the app's table
+												var oColumn = aColumns.find(function (oColumn) {
+													return oColumn.getLabel().getText() === sColumnName;
+												});
+
+												// show the column and move it to the correct position
+												if (oColumn) {
+													oColumn.setVisible(true);
+													oAppTable.removeColumn(oColumn);
+													oAppTable.insertColumn(oColumn, iIndex);
+												}
+											});
 											this._oDialog.close();
 										}.bind(this),
 									}),
 
+				
 									new sap.m.Button({
 										text: "Close",
 										press: function () {
@@ -1063,51 +1006,10 @@ sap.ui.define(
 								],
 							});
 
-							// //-------------- comentar esto -------------------------
-							// // Get the main table
-							// var oMainTable = this.byId("sampleTable");
-
-							// // Check if the main table is defined
-							// if (!oMainTable) {
-							// 	console.error("Main table with id sampleTable is not found.");
-							// 	return;
-							// }
-
-							// // Get the current columns of the main table
-							// var aColumns = oMainTable.getColumns();
-
-							// // Extract the column names (headers)
-							// var aColumnNames = aColumns.map(function (oColumn) {
-							// 	return {
-							// 		column: oColumn.getLabel().getText(),
-							// 		Rank: this.config.initialRank,
-							// 	};
-							// }, this);
-
-							// // Create a new model with the column names
-							// var oModel = new sap.ui.model.json.JSONModel({
-							// 	ProductCollection: aColumnNames,
-							// });
-
-							// // Get the tables in the dialog
-							// var oTable1 = sap.ui.core.Fragment.byId(
-							// 	"customColumnsFragment",
-							// 	"table1"
-							// );
-							// var oTable2 = sap.ui.core.Fragment.byId(
-							// 	"customColumnsFragment",
-							// 	"table2"
-							// );
-
-							// // Set the new model on the tables in the dialog
-							// oTable1.setModel(oModel);
-							// oTable2.setModel(oModel);
-
-							// connect dialog to the root view of this component (models, lifecycle)
+						
 							oView.addDependent(this._oDialog);
 							this._oDialog.open();
 
-							// open the dialog
 						}.bind(this)
 					);
 				} else {
@@ -1145,9 +1047,10 @@ sap.ui.define(
 
 				// Get the current columns of the main table
 				var aColumns = oMainTable.getColumns();
+				aColumns.reverse();
 
-				// Extract the column names (headers)
-				var aColumnNames = aColumns.map(function (oColumn) {
+				// Extract the column properties
+				var aColumnNames = aColumns.map(function (oColumn, iIndex) {
 					var oCell = oColumn.getTemplate();
 					var oBindingInfo =
 						oCell &&
@@ -1156,21 +1059,17 @@ sap.ui.define(
 							oCell.getBindingInfo("src") ||
 							oCell.getBindingInfo("color"));
 					var sDataCol = oBindingInfo ? oBindingInfo.parts[0].path : "";
-					var sFormatter =
-						oBindingInfo &&
-						oBindingInfo.formatter &&
-						oBindingInfo.formatter.name;
-					if (sFormatter && sFormatter.startsWith("bound ")) {
-						sFormatter = sFormatter.substring(6);
-					}
+
 					var isVisible = oColumn.getVisible();
+					var iRank = isVisible
+						? this.config.rankAlgorithm.Before(this.config.initialRank + iIndex)
+						: this.config.initialRank;
+
 					return {
 						column: oColumn.getLabel().getText(),
 						dataCol: sDataCol,
-						Rank: this.config.initialRank,
-						formatter: sFormatter,
-						visibleColumns: isVisible ? oColumn.getLabel().getText() : "",
-						hiddenColumns: isVisible ? "" : oColumn.getLabel().getText(),
+						Rank: iRank,
+						visible: isVisible,
 					};
 				}, this);
 
