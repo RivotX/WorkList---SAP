@@ -19,10 +19,6 @@
                 alignItems="Center"
                 class="sapUiSmallMarginTop sapUiSmallMarginBeginEnd sapUiSmallMarginBottom"
             >
-                <!-- <mvc:View
-                    viewName="com.myorg.myapp.view.Date"
-                    type="XML"
-                /> -->
                 <core:Fragment
                     fragmentName="com.myorg.myapp.fragments.Date"
                     type="XML"
@@ -80,7 +76,10 @@
             <table:Column>
                 <Label text='' />
                 <table:template>
-                    <core:Icon src="sap-icon://product" />
+                    <core:Icon
+                        src="sap-icon://product"
+                        press="onDetail"
+                    />
                 </table:template>
             </table:Column>
 

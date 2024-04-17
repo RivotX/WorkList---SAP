@@ -87,9 +87,9 @@
           "target": "main"
         },
         {
-          "pattern": "Table",
-          "name": "Table",
-          "target": "Table"
+          "pattern": "detail/{OBJID}",
+          "name": "detail",
+          "target": "detail"
         }
       ],
       "targets": {
@@ -98,13 +98,10 @@
           "viewId": "main",
           "viewName": "Main"
         },
-        "Table": {
-          "viewType": "XML",
-          "viewId": "Table",
-          "viewName": "Table"
-        },
+        
         "detail": {
-          
+          "viewId": "detail",
+          "viewName": "Detail"
         }
       }
     }

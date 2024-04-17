@@ -128,21 +128,21 @@ sap.ui.define(
 						this.entriesCounter();
 					}.bind(this)
 				);
-				var oView = this.getView();
-
-				sap.ui.require(
-					["sap/ui/table/sample/TableExampleUtils"],
-					function (TableExampleUtils) {
-						var oTb = oView.byId("infobar");
-						oTb.addContent(new ToolbarSpacer());
-						oTb.addContent(
-							TableExampleUtils.createInfoButton("sap/ui/table/sample/DnD")
-						);
-					},
-					function (oError) {
-						/*ignore*/
-					}
-				);
+				
+				// var oView = this.getView();
+				// sap.ui.require(
+				// 	["sap/ui/table/sample/TableExampleUtils"],
+				// 	function (TableExampleUtils) {
+				// 		var oTb = oView.byId("infobar");
+				// 		oTb.addContent(new ToolbarSpacer());
+				// 		oTb.addContent(
+				// 			TableExampleUtils.createInfoButton("sap/ui/table/sample/DnD")
+				// 		);
+				// 	},
+				// 	function (oError) {
+				// 		/*ignore*/
+				// 	}
+				// );
 			},
 			getJson: function () {
 				const data = {
@@ -836,10 +836,18 @@ sap.ui.define(
 
 			onExport: function () {
 				var oTable = this.getView().byId("sampleTable");
+
+				// Get the columns from the table
+				var aTableCols = oTable.getColumns();
+
+				// Filter out the invisible columns
+				var aVisibleCols = aTableCols.filter(function (oColumn) {
+					return oColumn.getVisible();
+				});
+
+				var aCols = this.createColumnConfig(aVisibleCols);
+
 				var oBinding = oTable.getBinding("rows"); // Get the binding object
-
-				var aCols = this.createColumnConfig(oTable);
-
 				var aContexts = oBinding.getContexts();
 				var aData = aContexts.map((oContext) => {
 					return oContext.getObject();
@@ -856,17 +864,14 @@ sap.ui.define(
 					oSheet.destroy();
 				});
 			},
-			createColumnConfig: function (oTable) {
+			createColumnConfig: function (aColumns) {
 				var oResourceBundle = this.getView()
 					.getModel("i18n")
 					.getResourceBundle();
 
 				var aCols = [];
 
-				// Get the columns from the table
-				var aTableCols = oTable.getColumns();
-
-				aTableCols.forEach((oColumn) => {
+				aColumns.forEach((oColumn) => {
 					var sProperty = oColumn.getSortProperty();
 
 					aCols.push({
@@ -942,7 +947,57 @@ sap.ui.define(
 								buttons: [
 									new sap.m.Button({
 										text: "Reset",
-										press: function () {}.bind(this),
+										press: function () {
+											sap.m.MessageBox.warning(
+												"Would you like to restore the default column settings?",
+												{
+													actions: [
+														sap.m.MessageBox.Action.YES,
+														sap.m.MessageBox.Action.NO,
+													],
+													onClose: function (sAction) {
+														if (sAction === sap.m.MessageBox.Action.YES) {
+															const defaultColumns = [
+																{ name: "OBJID", label: "PACKAGE ID" },
+																{ name: "STATUS", label: "STATUS" },
+																{ name: "AMOUNT", label: "AMOUNT" },
+																{ name: "TYPE_PACKAGE", label: "TYPE" },
+																{ name: "PRIORITY", label: "PRIORITY" },
+															];
+
+															// get the app's table
+															var oAppTable = this.byId("sampleTable");
+
+															// get all columns from the app's table
+															var aColumns = oAppTable.getColumns();
+
+															// hide all columns
+															aColumns.forEach(function (oColumn) {
+																oColumn.setVisible(false);
+															});
+
+															// show the default columns
+															defaultColumns.forEach(function (oDefaultColumn) {
+																// find the column in the app's table
+																var oColumn = aColumns.find(function (oColumn) {
+																	return (
+																		oColumn.getLabel().getText() ===
+																		oDefaultColumn.label
+																	);
+																});
+
+																// show the column
+																if (oColumn) {
+																	oColumn.setVisible(true);
+																}
+															});
+
+															this._oDialog.close();
+														}
+													}.bind(this),
+												}
+											);
+										}.bind(this),
 									}),
 									new sap.m.Button({
 										text: "Save",
@@ -974,7 +1029,6 @@ sap.ui.define(
 													: null;
 											});
 
-											
 											// show and reorder the selected columns
 											aSelectedColumnNames.forEach(function (
 												sColumnName,
@@ -996,7 +1050,6 @@ sap.ui.define(
 										}.bind(this),
 									}),
 
-				
 									new sap.m.Button({
 										text: "Close",
 										press: function () {
@@ -1006,10 +1059,8 @@ sap.ui.define(
 								],
 							});
 
-						
 							oView.addDependent(this._oDialog);
 							this._oDialog.open();
-
 						}.bind(this)
 					);
 				} else {
@@ -1046,7 +1097,11 @@ sap.ui.define(
 				}
 
 				// Get the current columns of the main table
+				// var aColumns = oMainTable.getColumns();
 				var aColumns = oMainTable.getColumns();
+				aColumns = aColumns.filter(function (oColumn) {
+					return oColumn.getLabel().getText() !== "";
+				});
 				aColumns.reverse();
 
 				// Extract the column properties
@@ -1262,6 +1317,45 @@ sap.ui.define(
 
 			moveDown: function () {
 				this.moveSelectedRow("Down");
+			},
+			onDetail: function (oEvent) {
+				// Get the icon that was pressed
+				var oIcon = oEvent.getSource();
+
+				// Get the parent row of the icon
+				var oRow = oIcon.getParent();
+
+				// Get the binding context of the row
+				var oContext = oRow.getBindingContext("data");
+
+				// Check if oContext is not undefined
+				if (oContext) {
+					// Get the ID of the selected item
+					var sId = oContext.getProperty("OBJID");
+					var sStatus = oContext.getProperty("STATUS");
+
+					const oRouter = this.getOwnerComponent().getRouter();
+
+					if (sStatus === "R") {
+						oRouter.navTo("detail", {
+							OBJID: sId,
+						});
+					} else {
+						// Get the hash for the detail page
+						var sHash = oRouter.getURL("detail", {
+							OBJID: sId,
+						});
+
+						// Construct the full URL for the detail page
+						var sUrl =
+							window.location.origin + window.location.pathname + "#" + sHash;
+
+						// Open the detail page in a new tab
+						window.open(sUrl, "_blank");
+					}
+				} else {
+					console.log("The row does not have a binding context.");
+				}
 			},
 		});
 	}

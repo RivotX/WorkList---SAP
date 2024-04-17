@@ -1,0 +1,290 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:m="sap.m"
+    controllerName="com.myorg.myapp.controller.Detail"
+    height="100%"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <!-- <m:Page > -->
+    <ObjectPageLayout
+        id="ObjectPageLayout"
+        enableLazyLoading="true"
+        beforeNavigate="onBeforeNavigate"
+        useIconTabBar="true"
+        showTitleInHeaderContent="true"
+        upperCaseAnchorBar="false"
+        sectionChange="onSectionChange"
+        class="DetailBackgroundColor"
+    >
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title
+                        text="{i18n>Package}"
+                        wrapping="true"
+                    />
+                </expandedHeading>
+
+                <snappedHeading>
+                    <m:FlexBox
+                        fitContainer="true"
+                        alignItems="Center"
+                    >
+                        <m:Title
+                            text="{i18n>Package}"
+                            wrapping="true"
+                        />
+                    </m:FlexBox>
+                </snappedHeading>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+
+        <headerContent>
+            <m:VBox class="sapUiSmallMargin">
+                <f:Form
+                    id="FormChangeColumn_threeGroups234"
+                    editable="false"
+                >
+                    <f:title>
+                        <core:Title text="Supplier" />
+                    </f:title>
+                    <f:layout>
+                        <f:ColumnLayout
+                            columnsM="2"
+                            columnsL="3"
+                            columnsXL="4"
+                        />
+                    </f:layout>
+                    <f:formContainers>
+                        <f:FormContainer title="Address">
+                            <f:formElements>
+                                <f:FormElement label="Name">
+                                    <f:fields>
+                                        <m:Input
+                                            value="s"
+                                            id="name"
+                                            editable="false"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="Street">
+                                    <f:fields>
+                                        <m:Input value="{Street}" />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="Street">
+                                    <f:fields>
+                                        <m:Input value="{Street}" />
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                        <f:FormContainer title="Contact">
+                            <f:formElements>
+                                <f:FormElement label="Twitter">
+                                    <f:fields>
+                                        <m:Input value="{Twitter}" />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="Email">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{Email}"
+                                            type="Email"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="Tel.">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{Tel}"
+                                            type="Tel"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                        <f:FormContainer title="Other">
+                            <f:formElements>
+                                <f:FormElement label="SMS">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{Sms}"
+                                            type="Tel"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="Mobile">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{Mobile}"
+                                            type="Tel"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="Pager">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{Pager}"
+                                            type="Tel"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                    </f:formContainers>
+                </f:Form>
+            </m:VBox>
+            <!-- <layout:VerticalLayout class="">
+                    <m:HBox>
+                        <m:Text text="ID:" />
+                        <m:Text text="{OBJID}" />
+                    </m:HBox>
+                    <m:HBox>
+                        <m:Text text="ID:" />
+                        <m:Text text="123123123123" />
+                    </m:HBox>
+                    <m:HBox>
+                        <m:Text text="ID:" />
+                        <m:Text text="123123123123" />
+                    </m:HBox>
+                </layout:VerticalLayout>
+                <layout:VerticalLayout  class="">
+                    <m:HBox>
+                        <m:Text text="ID:" />
+                        <m:Text text="123123123123" />
+                    </m:HBox>
+                    <m:HBox>
+                        <m:Text text="ID:" />
+                        <m:Text text="123123123123" />
+                    </m:HBox>
+                   
+                </layout:VerticalLayout>
+                <layout:VerticalLayout class="">
+                    <m:HBox>
+                        <m:Text text="ID:" />
+                        <m:Text text="123123123123" />
+                    </m:HBox>
+                    <m:HBox>
+                        <m:Text text="ID:" />
+                        <m:Text text="123123123123" />
+                    </m:HBox>
+                    <m:HBox>
+                        <m:Text text="ID:" />
+                        <m:Text text="123123123123" />
+                    </m:HBox>
+                </layout:VerticalLayout>
+            </m:FlexBox> -->
+        </headerContent>
+
+        <sections>
+            <ObjectPageSection
+                titleUppercase="false"
+                id="goals"
+                title="2014 Goals Plan"
+            >
+                <subSections>
+                    <ObjectPageSubSection
+                        id="goalsSS1"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <m:Text text="aadasd" />
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection
+                titleUppercase="false"
+                id="personal"
+                title="Personal"
+            >
+                <subSections>
+                    <ObjectPageSubSection
+                        id="personalSS1"
+                        title="Connect"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <m:Text text="aadasd" />
+                            <m:Text text="aadasd" />
+                        </blocks>
+                    </ObjectPageSubSection>
+
+                    <ObjectPageSubSection
+                        id="personalSS2"
+                        title="Payment information"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <m:Text text="aadasd" />
+                        </blocks>
+                        <moreBlocks>
+                            <m:Text text="aadasd" />
+                        </moreBlocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection
+                titleUppercase="false"
+                id="employment"
+                title="Employment"
+            >
+                <subSections>
+                    <ObjectPageSubSection
+                        id="employmentSS1"
+                        title="Job information"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <m:Text text="aadasd" />
+                        </blocks>
+                    </ObjectPageSubSection>
+
+                    <ObjectPageSubSection
+                        id="employmentSS2"
+                        title="Employee Details"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <m:Text text="aadasd" />
+                        </blocks>
+                        <moreBlocks>
+                            <m:Text text="aadasd" />
+                            <m:Text text="aadasd" />
+                        </moreBlocks>
+                    </ObjectPageSubSection>
+
+                    <ObjectPageSubSection
+                        id="employmentSS3"
+                        title="Job Relationship"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <m:Text text="aadasd" />
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+            <ObjectPageSection
+                titleUppercase="false"
+                id="connections"
+                title="Connections"
+            >
+                <subSections>
+                    <ObjectPageSubSection
+                        id="connectionsSS1"
+                        titleUppercase="false"
+                    />
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
+    <!-- </m:Page> -->
+</mvc:View>

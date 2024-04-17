@@ -17,7 +17,10 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 				// const oResourceBundle = this.getOwnerComponent()
 				// 	.getModel("i18n")
 				// 	.getResourceBundle();
-				var oResourceBundle = sap.ui.getCore().getModel("i18n").getResourceBundle();
+				var oResourceBundle = sap.ui
+					.getCore()
+					.getModel("i18n")
+					.getResourceBundle();
 				if (type === "N") {
 					return oResourceBundle.getText("typeN");
 				} else if (type === "U") {
@@ -100,6 +103,11 @@ sap.ui.define(["sap/ui/core/format/NumberFormat"], function (NumberFormat) {
 			} else {
 				return "notime";
 			}
+		},
+		packageWithId: function (sPackage, sId) {
+			console.log("Package: ", sPackage);
+			console.log("ID: ", sId);
+			return sPackage + " (" + sId + ")";
 		},
 	};
 });

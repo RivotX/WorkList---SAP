@@ -26,6 +26,7 @@
             >
                 <pages>
                     <App id="app" />
+                   
                 </pages>
             </NavContainer>
         </tnt:mainContents>

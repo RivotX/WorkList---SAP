@@ -81,5 +81,13 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 .red{
 	color: red !important;
 }
+.DetailHeaderFlexbox{
+	padding-left: 4rem !important;
+	padding-right: 4rem !important;
+}
+
+#__component0---detail--ObjectPageLayout{
+	background-color: #314c66 !important;
+}
 
 
