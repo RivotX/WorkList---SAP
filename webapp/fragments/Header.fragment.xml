@@ -23,18 +23,7 @@
     </Title>
 
     <ToolbarSpacer />
-    <SearchField
-        width="16rem"
-        id="searchField"
-        class="whiteIcon"
-    >
-        <layoutData>
-            <OverflowToolbarLayoutData
-                priority="Low"
-                group="1"
-            />
-        </layoutData>
-    </SearchField>
+
     <ToolbarSpacer id="spacer">
         <layoutData>
             <OverflowToolbarLayoutData

@@ -24,6 +24,7 @@
             showTitleInHeaderContent="true"
             upperCaseAnchorBar="false"
             sectionChange="onSectionChange"
+            headerContentPinnable="false"
             class="DetailBackgroundColor"
         >
             <headerTitle>
@@ -67,7 +68,7 @@
                                 emptySpanM="0"
                                 emptySpanS="0"
                                 columnsXL="3"
-                                columnsL="3"
+                                columnsL="2"
                                 columnsM="2"
                                 singleContainerFullSize="false"
                             />
@@ -81,6 +82,7 @@
                                                 value="{detailData>/item/OBJID}"
                                                 id="PackageID"
                                                 editable="false"
+                                                class="Blanco"
                                             />
                                         </f:fields>
                                     </f:FormElement>
@@ -90,6 +92,7 @@
                                                 value="{detailData>/item/PACKAGE_NAME}"
                                                 id="PackageName"
                                                 editable="false"
+                                                class="Blanco"
                                             />
                                         </f:fields>
                                     </f:FormElement>
@@ -98,23 +101,28 @@
                                             <m:GenericTag
                                                 text="{i18n>Request}"
                                                 status="Error"
-                                                valueState="Error"
                                                 class="sapUiSmallMarginBottom"
+                                                visible="{parts: [{path: 'STATUS'}, {value: 'R', type: 'sap.ui.model.type.String'}], formatter: 'formatter.isStatus' }"
                                             />
 
                                             <m:GenericTag
                                                 text="{i18n>Send}"
                                                 status="Success"
                                                 class="sapUiSmallMarginBottom"
+                                                visible="{parts: [{path: 'STATUS'}, {value: 'S', type: 'sap.ui.model.type.String'}], formatter: 'formatter.isStatus' }"
                                             />
+
                                             <m:GenericTag
                                                 text="{i18n>Warning}"
                                                 status="Warning"
                                                 class="sapUiSmallMarginBottom"
+                                                visible="{parts: [{path: 'STATUS'}, {value: 'A', type: 'sap.ui.model.type.String'}], formatter: 'formatter.isStatus' }"
                                             />
+
                                             <m:GenericTag
                                                 text="{i18n>Error}"
                                                 class="sapUiSmallMarginBottom"
+                                                visible="{parts: [{path: 'STATUS'}, {value: 'E', type: 'sap.ui.model.type.String'}], formatter: 'formatter.isStatus' }"
                                             />
                                         </f:fields>
                                     </f:FormElement>
@@ -131,6 +139,7 @@
                                         }"
                                                 id="PackageCreationDate"
                                                 editable="false"
+                                                class="Blanco"
                                             />
                                         </f:fields>
                                     </f:FormElement>
@@ -143,6 +152,7 @@
                                         }"
                                                 id="PackageTime"
                                                 editable="false"
+                                                class="Blanco"
                                             />
                                         </f:fields>
                                     </f:FormElement>
@@ -152,6 +162,7 @@
                                                 value="{detailData>/item/PRIORITY}"
                                                 id="PackagePriority"
                                                 editable="false"
+                                                class="Blanco"
                                             />
                                         </f:fields>
                                     </f:FormElement>
@@ -168,6 +179,7 @@
                                             }"
                                                 id="PackageProgress"
                                                 editable="false"
+                                                class="Blanco"
                                             />
                                         </f:fields>
                                     </f:FormElement>
@@ -177,6 +189,7 @@
                                                 value=""
                                                 id="PackagePrice"
                                                 editable="false"
+                                                class="Blanco"
                                             />
                                         </f:fields>
                                     </f:FormElement>
@@ -186,6 +199,7 @@
                                                 value=""
                                                 id="PackageHistory"
                                                 editable="false"
+                                                class="Blanco"
                                             />
                                         </f:fields>
                                     </f:FormElement>
@@ -194,92 +208,133 @@
                         </f:formContainers>
                     </f:Form>
                 </m:VBox>
-                <!-- <layout:VerticalLayout class="">
-                    <m:HBox>
-                        <m:Text text="ID:" />
-                        <m:Text text="{OBJID}" />
-                    </m:HBox>
-                    <m:HBox>
-                        <m:Text text="ID:" />
-                        <m:Text text="123123123123" />
-                    </m:HBox>
-                    <m:HBox>
-                        <m:Text text="ID:" />
-                        <m:Text text="123123123123" />
-                    </m:HBox>
-                </layout:VerticalLayout>
-                <layout:VerticalLayout  class="">
-                    <m:HBox>
-                        <m:Text text="ID:" />
-                        <m:Text text="123123123123" />
-                    </m:HBox>
-                    <m:HBox>
-                        <m:Text text="ID:" />
-                        <m:Text text="123123123123" />
-                    </m:HBox>
-                   
-                </layout:VerticalLayout>
-                <layout:VerticalLayout class="">
-                    <m:HBox>
-                        <m:Text text="ID:" />
-                        <m:Text text="123123123123" />
-                    </m:HBox>
-                    <m:HBox>
-                        <m:Text text="ID:" />
-                        <m:Text text="123123123123" />
-                    </m:HBox>
-                    <m:HBox>
-                        <m:Text text="ID:" />
-                        <m:Text text="123123123123" />
-                    </m:HBox>
-                </layout:VerticalLayout>
-            </m:FlexBox> -->
             </headerContent>
 
             <sections>
+                <!-- general data -->
                 <ObjectPageSection
                     titleUppercase="false"
-                    id="goals"
-                    title="2014 Goals Plan"
+                    id="GeneralData"
+                    title="{i18n>GeneralDataTab}"
                 >
                     <subSections>
                         <ObjectPageSubSection
-                            id="goalsSS1"
+                            id="employ1mentSS2"
+                            title="{i18n>GeneralDataTab}"
                             titleUppercase="false"
                         >
                             <blocks>
-                                <m:Text text="aadasd" />
-                            </blocks>
-                        </ObjectPageSubSection>
-                    </subSections>
-                </ObjectPageSection>
+                                <!-- formulario general data -->
+                                <f:Form
+                                    id="FormChangeColumn_oneGroup234"
+                                    editable="true"
+                                >
+                                    <f:title>
+                                        <core:Title
+                                            text="{i18n>GeneralDataFormTitle}"
+                                        />
+                                    </f:title>
+                                    <f:layout>
+                                        <f:ColumnLayout
+                                            columnsM="2"
+                                            columnsL="2"
+                                            columnsXL="2"
+                                        />
+                                    </f:layout>
+                                    <f:formContainers>
+                                        <f:FormContainer>
+                                            <f:formElements>
+                                                <f:FormElement
+                                                    label="{i18n>PackageID}"
+                                                >
+                                                    <f:fields>
+                                                        <m:Input
+                                                            value="{detailData>/item/OBJID}"
+                                                            id="name"
+                                                            editable="false"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
 
-                <ObjectPageSection
-                    titleUppercase="false"
-                    id="personal"
-                    title="Personal"
-                >
-                    <subSections>
-                        <ObjectPageSubSection
-                            id="personalSS1"
-                            title="Connect"
-                            titleUppercase="false"
-                        >
-                            <blocks>
-                                <m:Text text="aadasd" />
-                                <m:Text text="aadasd" />
-                            </blocks>
-                        </ObjectPageSubSection>
+                                             
 
-                        <ObjectPageSubSection
-                            id="personalSS2"
-                            title="Payment information"
-                            titleUppercase="false"
-                        >
-                            <blocks>
-                                <m:Text text="aadasd" />
+                                                <f:FormElement
+                                                    label="{i18n>PackageSummary}"
+                                                >
+                                                    <f:fields>
+                                                        <m:Input
+                                                            value="{Tel}"
+                                                            type="Tel"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                              
+                                                <f:FormElement
+                                                    label="{i18n>Company}"
+                                                >
+                                                    <f:fields>
+                                                        <m:Input
+                                                            value="{Company}"
+                                                            type="Text"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement label="{i18n>DestCountry}">
+                                                    <f:fields>
+                                                        <m:Input
+                                                            value="{DestCountry}"
+                                                            type="Text"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement label="{i18n>DestAutCom}">
+                                                    <f:fields>
+                                                        <m:Input
+                                                            value="{DestAutCom}"
+                                                            type="Text"
+                                                        />
+                                                    </f:fields>
+                                                </f:FormElement>
+                                                <f:FormElement
+                                                label="{i18n>DestProvince}"
+                                            >
+                                                <f:fields>
+                                                    <m:Input
+                                                        value="{Company}"
+                                                        type="Text"
+                                                    />
+                                                </f:fields>
+                                            </f:FormElement>
+                                                   <!-- <f:FormElement label="Country">
+                                                    <f:fields>
+                                                        <m:Select
+                                                            id="country"
+                                                            selectedKey="{Country}"
+                                                        >
+                                                            <m:items>
+                                                                <core:Item
+                                                                    text="England"
+                                                                    key="England"
+                                                                />
+                                                                <core:Item
+                                                                    text="Germany"
+                                                                    key="Germany"
+                                                                />
+                                                                <core:Item
+                                                                    text="USA"
+                                                                    key="USA"
+                                                                />
+                                                            </m:items>
+                                                        </m:Select>
+                                                    </f:fields>
+                                                </f:FormElement> -->
+                                            </f:formElements>
+                                        </f:FormContainer>
+                                    </f:formContainers>
+                                </f:Form>
                             </blocks>
                             <moreBlocks>
+                                <m:Text text="aadasd" />
                                 <m:Text text="aadasd" />
                             </moreBlocks>
                         </ObjectPageSubSection>
@@ -288,13 +343,13 @@
 
                 <ObjectPageSection
                     titleUppercase="false"
-                    id="employment"
-                    title="Employment"
+                    id="ProviderDataTab"
+                    title="{i18n>ProviderDataTab}"
                 >
                     <subSections>
                         <ObjectPageSubSection
                             id="employmentSS1"
-                            title="Job information"
+                            title=""
                             titleUppercase="false"
                         >
                             <blocks>
@@ -304,7 +359,7 @@
 
                         <ObjectPageSubSection
                             id="employmentSS2"
-                            title="Employee Details"
+                            title="{i18n>GeneralDataTab}"
                             titleUppercase="false"
                         >
                             <blocks>
@@ -339,7 +394,87 @@
                         />
                     </subSections>
                 </ObjectPageSection>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    title="{i18n>BankDataTab}"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            title="Connect"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
+
+                        <ObjectPageSubSection
+                            id="3asd3"
+                            title="Connect"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
+                        <ObjectPageSubSection
+                            id="2ads"
+                            title="Connect"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    id="Tab4"
+                    title="Tab4"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            id="123123123"
+                            title="Connect"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
+
+                        <ObjectPageSubSection
+                            id="11"
+                            title="Connect"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
+                        <ObjectPageSubSection
+                            id="12"
+                            title="Connect"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
             </sections>
         </ObjectPageLayout>
+        <m:Button
+            class="cancelDetailButton"
+            text="{i18n>Cancel}"
+        />
     </m:Page>
 </mvc:View>

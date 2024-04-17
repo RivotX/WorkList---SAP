@@ -106,10 +106,10 @@ sap.ui.define(
 					return "notime";
 				}
 			},
-			packageWithId: function (sPackage, sId) {
-				console.log("Package: ", sPackage);
-				console.log("ID: ", sId);
-				return sPackage + " (" + sId + ")";
+
+			isStatus: function (sStatus, sExpectedStatus) {
+				console.log("formateando isStatus");
+				return sStatus === sExpectedStatus;
 			},
 		};
 	}
