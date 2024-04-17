@@ -26,6 +26,7 @@
                                 text="{i18n>refreshButtonText}"
                                 iconFirst="false"
                                 class="roundedButton"
+                                press="onRefresh"
                             />
                         </contentRight>
                     </Bar>

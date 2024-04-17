@@ -128,21 +128,8 @@ sap.ui.define(
 						this.entriesCounter();
 					}.bind(this)
 				);
-				
-				// var oView = this.getView();
-				// sap.ui.require(
-				// 	["sap/ui/table/sample/TableExampleUtils"],
-				// 	function (TableExampleUtils) {
-				// 		var oTb = oView.byId("infobar");
-				// 		oTb.addContent(new ToolbarSpacer());
-				// 		oTb.addContent(
-				// 			TableExampleUtils.createInfoButton("sap/ui/table/sample/DnD")
-				// 		);
-				// 	},
-				// 	function (oError) {
-				// 		/*ignore*/
-				// 	}
-				// );
+
+		
 			},
 			getJson: function () {
 				const data = {
@@ -1318,6 +1305,7 @@ sap.ui.define(
 			moveDown: function () {
 				this.moveSelectedRow("Down");
 			},
+
 			onDetail: function (oEvent) {
 				// Get the icon that was pressed
 				var oIcon = oEvent.getSource();

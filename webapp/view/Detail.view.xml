@@ -8,138 +8,193 @@
     xmlns:l="sap.ui.layout"
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
+    core:require="{
+        formatter: 'com/myorg/myapp/model/formatter'
+    }"
 >
-    <!-- <m:Page > -->
-    <ObjectPageLayout
-        id="ObjectPageLayout"
-        enableLazyLoading="true"
-        beforeNavigate="onBeforeNavigate"
-        useIconTabBar="true"
-        showTitleInHeaderContent="true"
-        upperCaseAnchorBar="false"
-        sectionChange="onSectionChange"
-        class="DetailBackgroundColor"
+    <m:Page
+        showNavButton="true"
+        navButtonPress="onBack"
     >
-        <headerTitle>
-            <ObjectPageDynamicHeaderTitle>
-                <expandedHeading>
-                    <m:Title
-                        text="{i18n>Package}"
-                        wrapping="true"
-                    />
-                </expandedHeading>
-
-                <snappedHeading>
-                    <m:FlexBox
-                        fitContainer="true"
-                        alignItems="Center"
-                    >
+        <ObjectPageLayout
+            id="ObjectPageLayout"
+            enableLazyLoading="true"
+            beforeNavigate="onBeforeNavigate"
+            useIconTabBar="true"
+            showTitleInHeaderContent="true"
+            upperCaseAnchorBar="false"
+            sectionChange="onSectionChange"
+            class="DetailBackgroundColor"
+        >
+            <headerTitle>
+                <ObjectPageDynamicHeaderTitle>
+                    <expandedHeading>
                         <m:Title
                             text="{i18n>Package}"
                             wrapping="true"
                         />
-                    </m:FlexBox>
-                </snappedHeading>
-            </ObjectPageDynamicHeaderTitle>
-        </headerTitle>
+                    </expandedHeading>
 
-        <headerContent>
-            <m:VBox class="sapUiSmallMargin">
-                <f:Form
-                    id="FormChangeColumn_threeGroups234"
-                    editable="false"
-                >
-                    <f:title>
-                        <core:Title text="Supplier" />
-                    </f:title>
-                    <f:layout>
-                        <f:ColumnLayout
-                            columnsM="2"
-                            columnsL="3"
-                            columnsXL="4"
-                        />
-                    </f:layout>
-                    <f:formContainers>
-                        <f:FormContainer title="Address">
-                            <f:formElements>
-                                <f:FormElement label="Name">
-                                    <f:fields>
-                                        <m:Input
-                                            value="s"
-                                            id="name"
-                                            editable="false"
-                                        />
-                                    </f:fields>
-                                </f:FormElement>
-                                <f:FormElement label="Street">
-                                    <f:fields>
-                                        <m:Input value="{Street}" />
-                                    </f:fields>
-                                </f:FormElement>
-                                <f:FormElement label="Street">
-                                    <f:fields>
-                                        <m:Input value="{Street}" />
-                                    </f:fields>
-                                </f:FormElement>
-                            </f:formElements>
-                        </f:FormContainer>
-                        <f:FormContainer title="Contact">
-                            <f:formElements>
-                                <f:FormElement label="Twitter">
-                                    <f:fields>
-                                        <m:Input value="{Twitter}" />
-                                    </f:fields>
-                                </f:FormElement>
-                                <f:FormElement label="Email">
-                                    <f:fields>
-                                        <m:Input
-                                            value="{Email}"
-                                            type="Email"
-                                        />
-                                    </f:fields>
-                                </f:FormElement>
-                                <f:FormElement label="Tel.">
-                                    <f:fields>
-                                        <m:Input
-                                            value="{Tel}"
-                                            type="Tel"
-                                        />
-                                    </f:fields>
-                                </f:FormElement>
-                            </f:formElements>
-                        </f:FormContainer>
-                        <f:FormContainer title="Other">
-                            <f:formElements>
-                                <f:FormElement label="SMS">
-                                    <f:fields>
-                                        <m:Input
-                                            value="{Sms}"
-                                            type="Tel"
-                                        />
-                                    </f:fields>
-                                </f:FormElement>
-                                <f:FormElement label="Mobile">
-                                    <f:fields>
-                                        <m:Input
-                                            value="{Mobile}"
-                                            type="Tel"
-                                        />
-                                    </f:fields>
-                                </f:FormElement>
-                                <f:FormElement label="Pager">
-                                    <f:fields>
-                                        <m:Input
-                                            value="{Pager}"
-                                            type="Tel"
-                                        />
-                                    </f:fields>
-                                </f:FormElement>
-                            </f:formElements>
-                        </f:FormContainer>
-                    </f:formContainers>
-                </f:Form>
-            </m:VBox>
-            <!-- <layout:VerticalLayout class="">
+                    <snappedHeading>
+                        <m:FlexBox
+                            fitContainer="true"
+                            alignItems="Center"
+                        >
+                            <m:Title
+                                text="{i18n>Package}"
+                                wrapping="true"
+                            />
+                        </m:FlexBox>
+                    </snappedHeading>
+                </ObjectPageDynamicHeaderTitle>
+            </headerTitle>
+
+            <headerContent>
+                <m:VBox class="sapUiSmallMargin">
+                    <f:Form
+                        id="DetailForm"
+                        editable="true"
+                    >
+                        <f:layout>
+                            <f:ResponsiveGridLayout
+                                labelSpanXL="4"
+                                labelSpanL="4"
+                                labelSpanM="4"
+                                labelSpanS="12"
+                                adjustLabelSpan="false"
+                                emptySpanXL="0"
+                                emptySpanL="0"
+                                emptySpanM="0"
+                                emptySpanS="0"
+                                columnsXL="3"
+                                columnsL="3"
+                                columnsM="2"
+                                singleContainerFullSize="false"
+                            />
+                        </f:layout>
+                        <f:formContainers>
+                            <f:FormContainer>
+                                <f:formElements>
+                                    <f:FormElement label="{i18n>PackageID}">
+                                        <f:fields>
+                                            <m:Input
+                                                value="{detailData>/item/OBJID}"
+                                                id="PackageID"
+                                                editable="false"
+                                            />
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="{i18n>PackageName}">
+                                        <f:fields>
+                                            <m:Input
+                                                value="{detailData>/item/PACKAGE_NAME}"
+                                                id="PackageName"
+                                                editable="false"
+                                            />
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="{i18n>State}">
+                                        <f:fields>
+                                            <m:GenericTag
+                                                text="{i18n>Request}"
+                                                status="Error"
+                                                valueState="Error"
+                                                class="sapUiSmallMarginBottom"
+                                            />
+
+                                            <m:GenericTag
+                                                text="{i18n>Send}"
+                                                status="Success"
+                                                class="sapUiSmallMarginBottom"
+                                            />
+                                            <m:GenericTag
+                                                text="{i18n>Warning}"
+                                                status="Warning"
+                                                class="sapUiSmallMarginBottom"
+                                            />
+                                            <m:GenericTag
+                                                text="{i18n>Error}"
+                                                class="sapUiSmallMarginBottom"
+                                            />
+                                        </f:fields>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                            <f:FormContainer>
+                                <f:formElements>
+                                    <f:FormElement label="{i18n>CreationDate}">
+                                        <f:fields>
+                                            <m:Input
+                                                value="{
+                                            path: 'detailData>/item/CREATION_DATE',
+                                            formatter: 'formatter.DateFormat'
+                                        }"
+                                                id="PackageCreationDate"
+                                                editable="false"
+                                            />
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="{i18n>TimeOn}">
+                                        <f:fields>
+                                            <m:Input
+                                                value="{
+                                            path: 'detailData>/item/STIME',
+                                            formatter: 'formatter.TimeOnFormat'
+                                        }"
+                                                id="PackageTime"
+                                                editable="false"
+                                            />
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="{i18n>Priority}">
+                                        <f:fields>
+                                            <m:Input
+                                                value="{detailData>/item/PRIORITY}"
+                                                id="PackagePriority"
+                                                editable="false"
+                                            />
+                                        </f:fields>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                            <f:FormContainer>
+                                <f:formElements>
+                                    <f:FormElement label="{i18n>Progress}">
+                                        <f:fields>
+                                            <m:Input
+                                                value="{
+                                                path: 'detailData>/item/VARIABLE_02',
+                                                formatter: 'formatter.NumberFormat2'
+                                            }"
+                                                id="PackageProgress"
+                                                editable="false"
+                                            />
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="{i18n>Price}">
+                                        <f:fields>
+                                            <m:Input
+                                                value=""
+                                                id="PackagePrice"
+                                                editable="false"
+                                            />
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement label="{i18n>History}">
+                                        <f:fields>
+                                            <m:Input
+                                                value=""
+                                                id="PackageHistory"
+                                                editable="false"
+                                            />
+                                        </f:fields>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                        </f:formContainers>
+                    </f:Form>
+                </m:VBox>
+                <!-- <layout:VerticalLayout class="">
                     <m:HBox>
                         <m:Text text="ID:" />
                         <m:Text text="{OBJID}" />
@@ -179,112 +234,112 @@
                     </m:HBox>
                 </layout:VerticalLayout>
             </m:FlexBox> -->
-        </headerContent>
+            </headerContent>
 
-        <sections>
-            <ObjectPageSection
-                titleUppercase="false"
-                id="goals"
-                title="2014 Goals Plan"
-            >
-                <subSections>
-                    <ObjectPageSubSection
-                        id="goalsSS1"
-                        titleUppercase="false"
-                    >
-                        <blocks>
-                            <m:Text text="aadasd" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
+            <sections>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    id="goals"
+                    title="2014 Goals Plan"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            id="goalsSS1"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
 
-            <ObjectPageSection
-                titleUppercase="false"
-                id="personal"
-                title="Personal"
-            >
-                <subSections>
-                    <ObjectPageSubSection
-                        id="personalSS1"
-                        title="Connect"
-                        titleUppercase="false"
-                    >
-                        <blocks>
-                            <m:Text text="aadasd" />
-                            <m:Text text="aadasd" />
-                        </blocks>
-                    </ObjectPageSubSection>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    id="personal"
+                    title="Personal"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            id="personalSS1"
+                            title="Connect"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
 
-                    <ObjectPageSubSection
-                        id="personalSS2"
-                        title="Payment information"
-                        titleUppercase="false"
-                    >
-                        <blocks>
-                            <m:Text text="aadasd" />
-                        </blocks>
-                        <moreBlocks>
-                            <m:Text text="aadasd" />
-                        </moreBlocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
+                        <ObjectPageSubSection
+                            id="personalSS2"
+                            title="Payment information"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                            </blocks>
+                            <moreBlocks>
+                                <m:Text text="aadasd" />
+                            </moreBlocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
 
-            <ObjectPageSection
-                titleUppercase="false"
-                id="employment"
-                title="Employment"
-            >
-                <subSections>
-                    <ObjectPageSubSection
-                        id="employmentSS1"
-                        title="Job information"
-                        titleUppercase="false"
-                    >
-                        <blocks>
-                            <m:Text text="aadasd" />
-                        </blocks>
-                    </ObjectPageSubSection>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    id="employment"
+                    title="Employment"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            id="employmentSS1"
+                            title="Job information"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
 
-                    <ObjectPageSubSection
-                        id="employmentSS2"
-                        title="Employee Details"
-                        titleUppercase="false"
-                    >
-                        <blocks>
-                            <m:Text text="aadasd" />
-                        </blocks>
-                        <moreBlocks>
-                            <m:Text text="aadasd" />
-                            <m:Text text="aadasd" />
-                        </moreBlocks>
-                    </ObjectPageSubSection>
+                        <ObjectPageSubSection
+                            id="employmentSS2"
+                            title="Employee Details"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                            </blocks>
+                            <moreBlocks>
+                                <m:Text text="aadasd" />
+                                <m:Text text="aadasd" />
+                            </moreBlocks>
+                        </ObjectPageSubSection>
 
-                    <ObjectPageSubSection
-                        id="employmentSS3"
-                        title="Job Relationship"
-                        titleUppercase="false"
-                    >
-                        <blocks>
-                            <m:Text text="aadasd" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
-            <ObjectPageSection
-                titleUppercase="false"
-                id="connections"
-                title="Connections"
-            >
-                <subSections>
-                    <ObjectPageSubSection
-                        id="connectionsSS1"
-                        titleUppercase="false"
-                    />
-                </subSections>
-            </ObjectPageSection>
-        </sections>
-    </ObjectPageLayout>
-    <!-- </m:Page> -->
+                        <ObjectPageSubSection
+                            id="employmentSS3"
+                            title="Job Relationship"
+                            titleUppercase="false"
+                        >
+                            <blocks>
+                                <m:Text text="aadasd" />
+                            </blocks>
+                        </ObjectPageSubSection>
+                    </subSections>
+                </ObjectPageSection>
+                <ObjectPageSection
+                    titleUppercase="false"
+                    id="connections"
+                    title="Connections"
+                >
+                    <subSections>
+                        <ObjectPageSubSection
+                            id="connectionsSS1"
+                            titleUppercase="false"
+                        />
+                    </subSections>
+                </ObjectPageSection>
+            </sections>
+        </ObjectPageLayout>
+    </m:Page>
 </mvc:View>

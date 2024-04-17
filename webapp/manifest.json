@@ -32,7 +32,7 @@
     "resources": {
       "css": [
         {
-          "uri": "css/style.css"
+          "uri": "styles/styles.css"
         }
       ]
     },
@@ -90,6 +90,11 @@
           "pattern": "detail/{OBJID}",
           "name": "detail",
           "target": "detail"
+        },
+        {
+          "pattern": "NotFound",
+          "name": "NotFound",
+          "target": "NotFound"
         }
       ],
       "targets": {
@@ -98,10 +103,14 @@
           "viewId": "main",
           "viewName": "Main"
         },
-        
+
         "detail": {
           "viewId": "detail",
           "viewName": "Detail"
+        },
+        "NotFound": {
+          "viewId": "notFound",
+          "viewName": "NotFound"
         }
       }
     }

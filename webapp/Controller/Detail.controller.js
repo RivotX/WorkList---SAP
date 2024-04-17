@@ -3,11 +3,14 @@ sap.ui.define(
 		"sap/ui/core/mvc/Controller",
 		"sap/ui/core/routing/History",
 		"sap/ui/model/json/JSONModel",
+		"../model/formatter",
 	],
-	function (Controller, History, JSONModel) {
+	function (Controller, History, JSONModel, Formatter) {
 		"use strict";
 
 		return Controller.extend("com.myorg.myapp.controller.Detail", {
+			formatter: Formatter, // make the formatter available in the view
+
 			getJson: function () {
 				const data = {
 					results: [
@@ -503,36 +506,37 @@ sap.ui.define(
 			_onObjectMatched: function (oEvent) {
 				this.OBJID = oEvent.getParameter("arguments").OBJID;
 				console.log("Detail ID: ", this.OBJID); // Log the detail ID
+				if (this.onValidate()) {
+					console.log("entro al bucle")
+					// Get the "data" model
+					var oDataModel = this.getView().getModel("data");
 
-				if (this.onValidate) {
-					//meter todo aqui
-				}else{
-                    //navegar a  notfound.view.xml
-                }
-				// Get the "data" model
-				var oDataModel = this.getView().getModel("data");
+					// Get the item that matches the ID
+					var oItem = oDataModel.getProperty("/results").find(
+						function (oItem) {
+							return oItem.OBJID === this.OBJID;
+						}.bind(this)
+					);
 
-				// Get the item that matches the ID
-				var oItem = oDataModel.getData().find(
-					function (oItem) {
-						return oItem.OBJID === this.OBJID;
-					}.bind(this)
-				);
-				console.log("oItem: ", oItem);
+					// Create the "detailData" model if it doesn't exist
+					var oDetailDataModel = this.getView().getModel("detailData");
+					if (!oDetailDataModel) {
+						oDetailDataModel = new sap.ui.model.json.JSONModel();
+						this.getView().setModel(oDetailDataModel, "detailData");
+					}
 
-				// Create the "detailData" model if it doesn't exist
-				var oDetailDataModel = this.getView().getModel("detailData");
-				if (!oDetailDataModel) {
-					oDetailDataModel = new sap.ui.model.json.JSONModel();
-					this.getView().setModel(oDetailDataModel, "detailData");
+					// Set the item to the "detailData" model
+					oDetailDataModel.setProperty("/item", oItem);
+					console.log("Detail Data: ", oDetailDataModel.getData());
+				} else {
+					console.log("NONONO");
+					//navigate to notFound view
+					this.getOwnerComponent().getRouter().navTo("NotFound", null, true);
 				}
-
-				// Set the item to the "detailData" model
-				oDetailDataModel.setProperty("/item", oItem);
 			},
-			oNvalidate: function () {
+			onValidate: function () {
 				var obj = this.OBJID;
-				if (obj !== "" && obj.length() == 8) {
+				if (obj !== "" && obj.length == 8) {
 					return true;
 				} else {
 					return false;

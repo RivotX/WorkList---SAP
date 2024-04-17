@@ -1,0 +1,16 @@
+<mvc:View
+    controllerName="com.myorg.myapp.controller.NotFound"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <Page
+        title="{i18n>titleNotFound}"
+        showNavButton="true"
+        navButtonPress="onBack"
+    >
+        <content>
+            <Text text="{i18n>textNotFound}" />
+        </content>
+    </Page>
+</mvc:View>

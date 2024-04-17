@@ -20,13 +20,9 @@
         </tnt:header>
 
         <tnt:mainContents>
-            <NavContainer
-                id="pageContainer"
-                initialPage="page1"
-            >
+            <NavContainer id="pageContainer">
                 <pages>
                     <App id="app" />
-                   
                 </pages>
             </NavContainer>
         </tnt:mainContents>
