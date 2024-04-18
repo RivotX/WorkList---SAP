@@ -25,7 +25,7 @@
             upperCaseAnchorBar="false"
             sectionChange="onSectionChange"
             headerContentPinnable="false"
-            class="DetailBackgroundColor"
+            class="sapUiMediumMarginBegin sapUiMediumMarginEnd"
         >
             <headerTitle>
                 <ObjectPageDynamicHeaderTitle>
@@ -97,34 +97,36 @@
                                         </f:fields>
                                     </f:FormElement>
                                     <f:FormElement label="{i18n>State}">
-                                        <f:fields>
-                                            <m:GenericTag
-                                                text="{i18n>Request}"
-                                                status="Error"
-                                                class="sapUiSmallMarginBottom"
-                                                visible="{parts: [{path: 'STATUS'}, {value: 'R', type: 'sap.ui.model.type.String'}], formatter: 'formatter.isStatus' }"
-                                            />
+                                        <m:GenericTag
+                                            fieldGroupIds="genericTagGroup"
+                                            text="{i18n>Request}"
+                                            status="Error"
+                                            class="sapUiSmallMarginBottom customTag"
+                                            visible="{=${detailData>/item/STATUS} === 'R'}"
+                                        />
 
-                                            <m:GenericTag
-                                                text="{i18n>Send}"
-                                                status="Success"
-                                                class="sapUiSmallMarginBottom"
-                                                visible="{parts: [{path: 'STATUS'}, {value: 'S', type: 'sap.ui.model.type.String'}], formatter: 'formatter.isStatus' }"
-                                            />
+                                        <m:GenericTag
+                                            fieldGroupIds="genericTagGroup"
+                                            text="{i18n>Send}"
+                                            status="Success"
+                                            class="sapUiSmallMarginBottom customTag"
+                                            visible="{=${detailData>/item/STATUS} === 'S'}"
+                                        />
 
-                                            <m:GenericTag
-                                                text="{i18n>Warning}"
-                                                status="Warning"
-                                                class="sapUiSmallMarginBottom"
-                                                visible="{parts: [{path: 'STATUS'}, {value: 'A', type: 'sap.ui.model.type.String'}], formatter: 'formatter.isStatus' }"
-                                            />
+                                        <m:GenericTag
+                                            fieldGroupIds="genericTagGroup"
+                                            text="{i18n>Warning}"
+                                            status="Warning"
+                                            class="sapUiSmallMarginBottom customTag"
+                                            visible="{=${detailData>/item/STATUS} === 'A'}"
+                                        />
 
-                                            <m:GenericTag
-                                                text="{i18n>Error}"
-                                                class="sapUiSmallMarginBottom"
-                                                visible="{parts: [{path: 'STATUS'}, {value: 'E', type: 'sap.ui.model.type.String'}], formatter: 'formatter.isStatus' }"
-                                            />
-                                        </f:fields>
+                                        <m:GenericTag
+                                            fieldGroupIds="genericTagGroup"
+                                            text="{i18n>Error}"
+                                            class="sapUiSmallMarginBottom customTag"
+                                            visible="{=${detailData>/item/STATUS} === 'E'}"
+                                        />
                                     </f:FormElement>
                                 </f:formElements>
                             </f:FormContainer>
@@ -220,126 +222,226 @@
                     <subSections>
                         <ObjectPageSubSection
                             id="employ1mentSS2"
-                            title="{i18n>GeneralDataTab}"
                             titleUppercase="false"
                         >
                             <blocks>
                                 <!-- formulario general data -->
-                                <f:Form
-                                    id="FormChangeColumn_oneGroup234"
-                                    editable="true"
-                                >
-                                    <f:title>
-                                        <core:Title
-                                            text="{i18n>GeneralDataFormTitle}"
+                                <m:VBox>
+                                    <f:Form
+                                        id="FormChangeColumn_oneGroup234"
+                                        editable="true"
+                                    >
+                                        <f:title>
+                                            <core:Title
+                                                text="{i18n>GeneralDataFormTitle}"
+                                            />
+                                        </f:title>
+                                        <f:layout>
+                                            <f:ResponsiveGridLayout
+                                                labelSpanL="12"
+                                                labelSpanM="12"
+                                                labelSpanS="12"
+                                                emptySpanL="0"
+                                                emptySpanM="0"
+                                                emptySpanS="0"
+                                                columnsL="2"
+                                                columnsM="2"
+                                            />
+                                        </f:layout>
+                                        <f:formContainers>
+                                            <f:FormContainer>
+                                                <f:formElements>
+                                                    <f:FormElement
+                                                        label="{i18n>PackageID}"
+                                                    >
+                                                        <f:fields>
+                                                            <m:Input
+                                                                value="{detailData>/item/OBJID}"
+                                                                id="name"
+                                                                editable="false"
+                                                            />
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                </f:formElements>
+                                            </f:FormContainer>
+                                            <f:FormContainer>
+                                                <f:formElements>
+                                                    <f:FormElement
+                                                        label="{i18n>Company}"
+                                                    >
+                                                        <f:fields>
+                                                            <m:Input
+                                                                value="{Company}"
+                                                                type="Text"
+                                                            />
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                </f:formElements>
+                                            </f:FormContainer>
+                                        </f:formContainers>
+                                    </f:Form>
+                                    <m:VBox class="PackageSummaryDetail">
+                                        <m:Label text="{i18n>PackageSummary}" />
+                                        <m:TextArea
+                                            value="{PackageSummary}"
+                                            width="100%"
+                                            maxLength="250"
+                                            rows="3"
+                                            growing="true"
+                                            growingMaxLines="3"
                                         />
-                                    </f:title>
-                                    <f:layout>
-                                        <f:ColumnLayout
-                                            columnsM="2"
-                                            columnsL="2"
-                                            columnsXL="2"
-                                        />
-                                    </f:layout>
-                                    <f:formContainers>
-                                        <f:FormContainer>
-                                            <f:formElements>
-                                                <f:FormElement
-                                                    label="{i18n>PackageID}"
-                                                >
-                                                    <f:fields>
-                                                        <m:Input
-                                                            value="{detailData>/item/OBJID}"
-                                                            id="name"
-                                                            editable="false"
-                                                        />
-                                                    </f:fields>
-                                                </f:FormElement>
+                                    </m:VBox>
+                                    <!-- segundo form -->
 
-                                             
-
-                                                <f:FormElement
-                                                    label="{i18n>PackageSummary}"
-                                                >
-                                                    <f:fields>
+                                    <f:Form
+                                        id="SecondForm"
+                                        editable="true"
+                                    >
+                                        <f:layout>
+                                            <f:ResponsiveGridLayout
+                                                labelSpanXL="12"
+                                                labelSpanL="12"
+                                                labelSpanM="12"
+                                                labelSpanS="12"
+                                                adjustLabelSpan="false"
+                                                columnsXL="3"
+                                                columnsL="3"
+                                                columnsM="2"
+                                            />
+                                        </f:layout>
+                                        <f:formContainers>
+                                            <f:FormContainer>
+                                                <f:formElements>
+                                                    <f:FormElement
+                                                        label="{i18n>DestCountry}"
+                                                    >
                                                         <m:Input
-                                                            value="{Tel}"
-                                                            type="Tel"
-                                                        />
-                                                    </f:fields>
-                                                </f:FormElement>
-                                              
-                                                <f:FormElement
-                                                    label="{i18n>Company}"
-                                                >
-                                                    <f:fields>
-                                                        <m:Input
-                                                            value="{Company}"
-                                                            type="Text"
-                                                        />
-                                                    </f:fields>
-                                                </f:FormElement>
-                                                <f:FormElement label="{i18n>DestCountry}">
-                                                    <f:fields>
-                                                        <m:Input
-                                                            value="{DestCountry}"
-                                                            type="Text"
-                                                        />
-                                                    </f:fields>
-                                                </f:FormElement>
-                                                <f:FormElement label="{i18n>DestAutCom}">
-                                                    <f:fields>
-                                                        <m:Input
-                                                            value="{DestAutCom}"
-                                                            type="Text"
-                                                        />
-                                                    </f:fields>
-                                                </f:FormElement>
-                                                <f:FormElement
-                                                label="{i18n>DestProvince}"
-                                            >
-                                                <f:fields>
-                                                    <m:Input
-                                                        value="{Company}"
-                                                        type="Text"
-                                                    />
-                                                </f:fields>
-                                            </f:FormElement>
-                                                   <!-- <f:FormElement label="Country">
-                                                    <f:fields>
-                                                        <m:Select
-                                                            id="country"
-                                                            selectedKey="{Country}"
+                                                            id="productInput"
+                                                            placeholder="Enter product"
+                                                            showSuggestion="true"
+                                                            showTableSuggestionValueHelp="false"
+                                                            suggestionRows="{/countries}"
                                                         >
-                                                            <m:items>
-                                                                <core:Item
-                                                                    text="England"
-                                                                    key="England"
-                                                                />
-                                                                <core:Item
-                                                                    text="Germany"
-                                                                    key="Germany"
-                                                                />
-                                                                <core:Item
-                                                                    text="USA"
-                                                                    key="USA"
-                                                                />
-                                                            </m:items>
-                                                        </m:Select>
-                                                    </f:fields>
-                                                </f:FormElement> -->
-                                            </f:formElements>
-                                        </f:FormContainer>
-                                    </f:formContainers>
-                                </f:Form>
+                                                            <m:suggestionColumns
+                                                            >
+                                                                <m:Column>
+                                                                    <m:Label
+                                                                        text="Name"
+                                                                    />
+                                                                </m:Column>
+                                                                <m:Column
+                                                                    hAlign="Center"
+                                                                >
+                                                                    <m:Label
+                                                                        text="Product ID"
+                                                                    />
+                                                                </m:Column>
+                                                                <m:Column
+                                                                    hAlign="Center"
+                                                                >
+                                                                    <m:Label
+                                                                        text="Supplier Name"
+                                                                    />
+                                                                </m:Column>
+                                                                <m:Column
+                                                                    hAlign="End"
+                                                                >
+                                                                    <m:Label
+                                                                        text="Price"
+                                                                    />
+                                                                </m:Column>
+                                                            </m:suggestionColumns>
+
+                                                            <m:suggestionRows>
+                                                                <m:ColumnListItem
+                                                                >
+                                                                    <m:Label
+                                                                        text="{countries>country_name}"
+                                                                    />
+
+                                                                    <m:Label
+                                                                        text="{
+                                                                parts:[{path:'Price'}, {path:'CurrencyCode'}],
+                                                                type: 'sap.ui.model.type.Currency',
+                                                                formatOptions: {showMeasure: true}
+                                                            }"
+                                                                    />
+                                                                </m:ColumnListItem>
+                                                            </m:suggestionRows>
+                                                        </m:Input>
+                                                    </f:FormElement>
+                                                </f:formElements>
+                                            </f:FormContainer>
+
+                                            <f:FormContainer>
+                                                <f:formElements>
+                                                    <f:FormElement
+                                                        label="{i18n>DestAutCom}"
+                                                    >
+                                                        <f:fields>
+                                                            <m:Select
+                                                                id="country"
+                                                                selectedKey="{Country}"
+                                                            >
+                                                                <m:items>
+                                                                    <core:Item
+                                                                        text="England"
+                                                                        key="England"
+                                                                    />
+                                                                    <core:Item
+                                                                        text="Germany"
+                                                                        key="Germany"
+                                                                    />
+                                                                    <core:Item
+                                                                        text="USA"
+                                                                        key="USA"
+                                                                    />
+                                                                </m:items>
+                                                            </m:Select>
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                </f:formElements>
+                                            </f:FormContainer>
+                                            <f:FormContainer>
+                                                <f:formElements>
+                                                    <f:FormElement
+                                                        label="{i18n>DestProvince}"
+                                                    >
+                                                        <f:fields>
+                                                            <m:Select
+                                                                id="destProvince"
+                                                                selectedKey="{Country}"
+                                                            >
+                                                                <m:items>
+                                                                    <core:Item
+                                                                        text="England"
+                                                                        key="England"
+                                                                    />
+                                                                    <core:Item
+                                                                        text="Germany"
+                                                                        key="Germany"
+                                                                    />
+                                                                    <core:Item
+                                                                        text="USA"
+                                                                        key="USA"
+                                                                    />
+                                                                </m:items>
+                                                            </m:Select>
+                                                        </f:fields>
+                                                    </f:FormElement>
+                                                </f:formElements>
+                                            </f:FormContainer>
+                                        </f:formContainers>
+                                    </f:Form>
+                                </m:VBox>
                             </blocks>
-                            <moreBlocks>
-                                <m:Text text="aadasd" />
-                                <m:Text text="aadasd" />
-                            </moreBlocks>
                         </ObjectPageSubSection>
                     </subSections>
+                    <!-- tree -->
+                   
                 </ObjectPageSection>
+
+                <!-- Provider data tab -->
 
                 <ObjectPageSection
                     titleUppercase="false"

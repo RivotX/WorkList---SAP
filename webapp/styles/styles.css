@@ -108,9 +108,44 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 	border: none !important;
 	color: rgb(212, 0, 0) !important;
 	transition: background-color 0.1s ease;
-
 }
 .cancelDetailButton:hover,
 .cancelDetailButton:hover * {
 	background-color: #ebf5fe !important;
+}
+
+.cancelDetailButton:focus * {
+	outline: none !important;
+	border: none !important;
+}
+.PackageSummaryDetail {
+	padding: 1rem !important;
+}
+.hiddenTag {
+	display: none !important;
+}
+
+.sapUxAPObjectPageHeaderDetails,
+.sapFDynamicPageTitle,
+#__page1-intHeader,
+#__page1-cont,
+.sapTntToolPageContentWrapper,
+.sapFDynamicPageTitle:hover,
+#__component0---detail--ObjectPageLayout-opwrapper,
+.sapUxAPObjectPageScroll {
+	background: #F5F6F7 !important;
+}
+
+
+
+#__component0---detail--employ1mentSS2 {
+	background: white !important;
+}
+#__page0-main,
+#__page1-intHeader,
+.sapMPage .sapMPageHeader:not(.sapMIBar-CTX):after {
+	box-shadow: none !important;
+}
+#__title3{
+	color : #0064d9 !important;
 }
