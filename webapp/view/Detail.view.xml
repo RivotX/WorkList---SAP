@@ -51,144 +51,144 @@
             </headerTitle>
 
             <headerContent>
-                <m:VBox class="sapUiSmallMargin">
-                    <f:Form
-                        id="DetailForm"
-                        editable="true"
-                    >
-                        <f:layout>
-                            <f:ResponsiveGridLayout
-                                labelSpanXL="4"
-                                labelSpanL="4"
-                                labelSpanM="4"
-                                labelSpanS="12"
-                                adjustLabelSpan="false"
-                                emptySpanXL="0"
-                                emptySpanL="0"
-                                emptySpanM="0"
-                                emptySpanS="0"
-                                columnsXL="3"
-                                columnsL="2"
-                                columnsM="2"
-                                singleContainerFullSize="false"
-                            />
-                        </f:layout>
-                        <f:formContainers>
-                            <f:FormContainer>
-                                <f:formElements>
-                                    <f:FormElement label="{i18n>PackageID}">
-                                        <f:fields>
-                                            <m:Input
-                                                value="{detailData>/item/OBJID}"
-                                                id="PackageID"
-                                                editable="false"
-                                                class="Blanco"
-                                            />
-                                        </f:fields>
-                                    </f:FormElement>
-                                    <f:FormElement label="{i18n>PackageName}">
-                                        <f:fields>
-                                            <m:Input
-                                                value="{detailData>/item/PACKAGE_NAME}"
-                                                id="PackageName"
-                                                editable="false"
-                                                class="Blanco"
-                                            />
-                                        </f:fields>
-                                    </f:FormElement>
-                                    <f:FormElement label="{i18n>State}">
-                                        <m:HBox class="">
-                                            <core:Icon
-                                                src="sap-icon://color-fill"
-                                                color="{path: 'detailData>/item/STATUS', formatter: '.formatter.StatusFormat'}"
-                                                class="bottom"
-                                            />
-                                        </m:HBox>
-                                    </f:FormElement>
-                                </f:formElements>
-                            </f:FormContainer>
-                            <f:FormContainer>
-                                <f:formElements>
-                                    <f:FormElement label="{i18n>CreationDate}">
-                                        <f:fields>
-                                            <m:Input
-                                                value="{
+                <!-- <m:VBox class="sapUiSmallMargin"> -->
+                <f:Form
+                    id="DetailForm"
+                    editable="true"
+                >
+                    <f:layout>
+                        <f:ResponsiveGridLayout
+                            labelSpanXL="4"
+                            labelSpanL="4"
+                            labelSpanM="4"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="3"
+                            columnsL="2"
+                            columnsM="2"
+                            singleContainerFullSize="false"
+                        />
+                    </f:layout>
+                    <f:formContainers>
+                        <f:FormContainer>
+                            <f:formElements>
+                                <f:FormElement label="{i18n>PackageID}">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{detailData>/item/OBJID}"
+                                            id="PackageID"
+                                            editable="false"
+                                            class="Blanco"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>PackageName}">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{detailData>/item/PACKAGE_NAME}"
+                                            id="PackageName"
+                                            editable="false"
+                                            class="Blanco"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>State}">
+                                    <m:HBox class="">
+                                        <core:Icon
+                                            src="sap-icon://color-fill"
+                                            color="{path: 'detailData>/item/STATUS', formatter: '.formatter.StatusFormat'}"
+                                            class="bottom"
+                                        />
+                                    </m:HBox>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                        <f:FormContainer>
+                            <f:formElements>
+                                <f:FormElement label="{i18n>CreationDate}">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{
                                             path: 'detailData>/item/CREATION_DATE',
                                             formatter: 'formatter.DateFormat'
                                         }"
-                                                id="PackageCreationDate"
-                                                editable="false"
-                                                class="Blanco"
-                                            />
-                                        </f:fields>
-                                    </f:FormElement>
-                                    <f:FormElement label="{i18n>TimeOn}">
-                                        <f:fields>
-                                            <m:Input
-                                                value="{
+                                            id="PackageCreationDate"
+                                            editable="false"
+                                            class="Blanco"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>TimeOn}">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{
                                             path: 'detailData>/item/STIME',
                                             formatter: 'formatter.TimeOnFormat'
                                         }"
-                                                id="PackageTime"
-                                                editable="false"
-                                                class="Blanco"
+                                            id="PackageTime"
+                                            editable="false"
+                                            class="Blanco"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>Priority}">
+                                    <f:fields>
+                                        <m:HBox class="">
+                                            <core:Icon
+                                                src="sap-icon://color-fill"
+                                                color="{path: 'detailData>/item/PRIORITY', formatter: '.formatter.PriorityFormatDetail'}"
+                                                class="bottom"
                                             />
-                                        </f:fields>
-                                    </f:FormElement>
-                                    <f:FormElement label="{i18n>Priority}">
-                                        <f:fields>
-                                            <m:HBox class="">
-                                                <core:Icon
-                                                    src="sap-icon://color-fill"
-                                                    color="{path: 'detailData>/item/PRIORITY', formatter: '.formatter.PriorityFormatDetail'}"
-                                                    class="bottom"
-                                                />
-                                            </m:HBox>
-                                        </f:fields>
-                                    </f:FormElement>
-                                </f:formElements>
-                            </f:FormContainer>
-                            <f:FormContainer>
-                                <f:formElements>
-                                    <f:FormElement label="{i18n>Progress}">
-                                        <f:fields>
-                                            <m:Input
-                                                value="{
+                                        </m:HBox>
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                        <f:FormContainer>
+                            <f:formElements>
+                                <f:FormElement label="{i18n>Progress}">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{
                                                 path: 'detailData>/item/VARIABLE_01',
                                                 formatter: 'formatter.NumberFormat2'
                                             }"
-                                                id="PackageProgress"
-                                                editable="false"
-                                                class="Blanco"
-                                            />
-                                        </f:fields>
-                                    </f:FormElement>
-                                    <f:FormElement label="{i18n>Price}">
-                                        <f:fields>
-                                            <m:Input
-                                                value="{
+                                            id="PackageProgress"
+                                            editable="false"
+                                            class="Blanco"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>Price}">
+                                    <f:fields>
+                                        <m:Input
+                                            value="{
                                                 path: 'detailData>/item/VARIABLE_02',
                                                 formatter: '.formatter.NumberFormatt'
                                                 }"
-                                                class="Blanco"
-                                            />
-                                        </f:fields>
-                                    </f:FormElement>
-                                    <f:FormElement label="{i18n>History}">
-                                        <f:fields>
-                                            <m:Input
-                                                value=""
-                                                id="PackageHistory"
-                                                editable="false"
-                                                class="Blanco"
-                                            />
-                                        </f:fields>
-                                    </f:FormElement>
-                                </f:formElements>
-                            </f:FormContainer>
-                        </f:formContainers>
-                    </f:Form>
-                </m:VBox>
+                                            class="Blanco"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement label="{i18n>History}">
+                                    <f:fields>
+                                        <m:Input
+                                            value=""
+                                            id="PackageHistory"
+                                            editable="false"
+                                            class="Blanco"
+                                        />
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                    </f:formContainers>
+                </f:Form>
+                <!-- </m:VBox> -->
             </headerContent>
 
             <sections>
@@ -250,10 +250,11 @@
                                                     >
                                                         <f:fields>
                                                             <m:Input
+                                                                id="companyInput"
                                                                 value="{Company}"
                                                                 type="Text"
                                                                 showValueHelp="true"
-                                                                valueHelpRequest="onValueHelpRequest"
+                                                                valueHelpRequest="onOpenCompany"
                                                             />
                                                         </f:fields>
                                                     </f:FormElement>
@@ -264,6 +265,7 @@
                                     <m:VBox class="PackageSummaryDetail">
                                         <m:Label text="{i18n>PackageSummary}" />
                                         <m:TextArea
+                                        id="PackageSummary"
                                             value="{PackageSummary}"
                                             width="100%"
                                             maxLength="250"
@@ -296,60 +298,22 @@
                                                     <f:FormElement
                                                         label="{i18n>DestCountry}"
                                                     >
-                                                        <m:Input
-                                                            id="productInput"
-                                                            placeholder="Enter product"
-                                                            showSuggestion="true"
-                                                            showTableSuggestionValueHelp="false"
-                                                            suggestionRows="{/countries}"
-                                                        >
-                                                            <m:suggestionColumns
-                                                            >
-                                                                <m:Column>
-                                                                    <m:Label
-                                                                        text="Name"
-                                                                    />
-                                                                </m:Column>
-                                                                <m:Column
-                                                                    hAlign="Center"
-                                                                >
-                                                                    <m:Label
-                                                                        text="Product ID"
-                                                                    />
-                                                                </m:Column>
-                                                                <m:Column
-                                                                    hAlign="Center"
-                                                                >
-                                                                    <m:Label
-                                                                        text="Supplier Name"
-                                                                    />
-                                                                </m:Column>
-                                                                <m:Column
-                                                                    hAlign="End"
-                                                                >
-                                                                    <m:Label
-                                                                        text="Price"
-                                                                    />
-                                                                </m:Column>
-                                                            </m:suggestionColumns>
-
-                                                            <m:suggestionRows>
-                                                                <m:ColumnListItem
-                                                                >
-                                                                    <m:Label
-                                                                        text="{countries>country_name}"
-                                                                    />
-
-                                                                    <m:Label
-                                                                        text="{
-                                                                parts:[{path:'Price'}, {path:'CurrencyCode'}],
-                                                                type: 'sap.ui.model.type.Currency',
-                                                                formatOptions: {showMeasure: true}
+                                                        <m:ComboBox
+                                                            id="countryComboBox"
+                                                            width="350px"
+                                                            change=".onCountryChange"
+                                                            items="{
+                                                                path: 'country>/countries',
+                                                                sorter: { path: 'country_name' }
                                                             }"
-                                                                    />
-                                                                </m:ColumnListItem>
-                                                            </m:suggestionRows>
-                                                        </m:Input>
+                                                        >
+                                                            <m:items>
+                                                                <core:Item
+                                                                    key="{country>country_id}"
+                                                                    text="{country>country_name}"
+                                                                />
+                                                            </m:items>
+                                                        </m:ComboBox>
                                                     </f:FormElement>
                                                 </f:formElements>
                                             </f:FormContainer>
@@ -360,25 +324,18 @@
                                                         label="{i18n>DestAutCom}"
                                                     >
                                                         <f:fields>
-                                                            <m:Select
-                                                                id="country"
-                                                                selectedKey="{Country}"
+                                                            <m:ComboBox
+                                                                id="autonomousCommunitiesComboBox"
+                                                                change="onAutonomousCommunityChange"
+                                                                width="350px"
                                                             >
                                                                 <m:items>
                                                                     <core:Item
-                                                                        text="England"
-                                                                        key="England"
-                                                                    />
-                                                                    <core:Item
-                                                                        text="Germany"
-                                                                        key="Germany"
-                                                                    />
-                                                                    <core:Item
-                                                                        text="USA"
-                                                                        key="USA"
+                                                                        key=""
+                                                                        text=""
                                                                     />
                                                                 </m:items>
-                                                            </m:Select>
+                                                            </m:ComboBox>
                                                         </f:fields>
                                                     </f:FormElement>
                                                 </f:formElements>
@@ -389,25 +346,20 @@
                                                         label="{i18n>DestProvince}"
                                                     >
                                                         <f:fields>
-                                                            <m:Select
-                                                                id="destProvince"
-                                                                selectedKey="{Country}"
+                                                            <m:MultiComboBox
+                                                                id="Province"
+                                                                width="350px"
+                                                                selectionChange="handleSelectionChange"
+                                                                selectionFinish="handleSelectionFinish"
+                                                                items="{
+                                                                    path: 'country>/countries/0/autonomous_communities/1/provinces'
+                                                                }"
                                                             >
-                                                                <m:items>
-                                                                    <core:Item
-                                                                        text="England"
-                                                                        key="England"
-                                                                    />
-                                                                    <core:Item
-                                                                        text="Germany"
-                                                                        key="Germany"
-                                                                    />
-                                                                    <core:Item
-                                                                        text="USA"
-                                                                        key="USA"
-                                                                    />
-                                                                </m:items>
-                                                            </m:Select>
+                                                                <core:Item
+                                                                    key="{country>province_id}"
+                                                                    text="{country>province_name}"
+                                                                />
+                                                            </m:MultiComboBox>
                                                         </f:fields>
                                                     </f:FormElement>
                                                 </f:formElements>
@@ -418,7 +370,6 @@
                             </blocks>
                         </ObjectPageSubSection>
                     </subSections>
-                    <!-- tree -->
                 </ObjectPageSection>
 
                 <!-- Provider data tab -->
@@ -557,6 +508,15 @@
         <m:Button
             class="cancelDetailButton"
             text="{i18n>Cancel}"
+        />
+        <m:Button
+            class="saveDetailButton"
+            text="{i18n>Save}"
+        />
+        <m:Button
+            class="saveDetailButton"
+            text="{i18n>Save}"
+            press="onSave"
         />
     </m:Page>
 </mvc:View>

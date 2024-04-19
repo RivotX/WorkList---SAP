@@ -25,13 +25,7 @@
 .h40px {
 	height: 90px !important;
 }
-/* QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO
 
-#__component0---main--page-cont{
-	overflow: hidden !important;
-}  
-
-QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 .roundedButton > span {
 	border-radius: 20px;
 	background-color: rgb(255, 255, 255) !important;
@@ -81,9 +75,6 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 	padding-right: 4rem !important;
 }
 
-/* .sapMInputBaseInner{
-	background-color: #FFFFFF !important;
-} */
 .Blanco * {
 	background-color: #ffffff !important;
 }
@@ -93,16 +84,13 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 .rec1 * {
 	margin-left: -2px !important;
 }
-/* .R {
-	background-color: red !important;
-} */
 
-.bottom{
-	margin-top: 7px!important;
-
+.bottom {
+	margin-top: 6px !important;
 }
+
 .cancelDetailButton {
-	position: absolute !important;
+	position: fixed !important; 
 	bottom: 20px !important;
 	left: 0px !important;
 	border-radius: 20px;
@@ -114,6 +102,7 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 	padding-bottom: 1px !important;
 	transition: background-color 0.1s ease;
 }
+
 .cancelDetailButton > span {
 	border: none !important;
 	color: rgb(212, 0, 0) !important;
@@ -128,6 +117,37 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 	outline: none !important;
 	border: none !important;
 }
+.saveDetailButton {
+	position: fixed !important; 
+	bottom: 20px !important;
+	right: 0px !important;
+	border-radius: 20px;
+	background-color: rgb(255, 255, 255) !important;
+	border: 0.15rem solid rgb(34, 59, 204) !important;
+	padding-left: 16px !important;
+	padding-right: 16px !important;
+	padding-top: 1px !important;
+	padding-bottom: 1px !important;
+	transition: background-color 0.1s ease;
+}
+
+.saveDetailButton > span {
+	border: none !important;
+	color: rgb(34, 59, 204) !important;
+	transition: background-color 0.1s ease;
+}
+.saveDetailButton:hover,
+.saveDetailButton:hover * {
+	background-color: #ebf5fe !important;
+}
+
+.saveDetailButton:focus * {
+	outline: none !important;
+	border: none !important;
+}
+
+
+
 .PackageSummaryDetail {
 	padding: 1rem !important;
 }
@@ -156,4 +176,33 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 }
 #__title3 {
 	color: #0064d9 !important;
+}
+
+.cancelDetailButton2 {
+	position: absolute !important;
+	bottom: 20px !important;
+	left: 0px !important;
+	border-radius: 20px;
+	background-color: rgb(255, 255, 255) !important;
+	border: 0.15rem solid rgb(212, 0, 0) !important;
+	padding-left: 16px !important;
+	padding-right: 16px !important;
+	padding-top: 1px !important;
+	padding-bottom: 1px !important;
+	transition: background-color 0.1s ease;
+}
+
+.cancelDetailButton2 > span {
+	border: none !important;
+	color: rgb(212, 0, 0) !important;
+	transition: background-color 0.1s ease;
+}
+.cancelDetailButton2:hover,
+.cancelDetailButton2:hover * {
+	background-color: #ebf5fe !important;
+}
+
+.cancelDetailButton2:focus * {
+	outline: none !important;
+	border: none !important;
 }

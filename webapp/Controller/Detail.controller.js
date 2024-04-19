@@ -4,8 +4,17 @@ sap.ui.define(
 		"sap/ui/core/routing/History",
 		"sap/ui/model/json/JSONModel",
 		"../model/formatter",
+		"sap/m/MessageBox",
+		"sap/m/MessageToast",
 	],
-	function (Controller, History, JSONModel, Formatter) {
+	function (
+		Controller,
+		History,
+		JSONModel,
+		Formatter,
+		MessageBox,
+		MessageToast
+	) {
 		"use strict";
 
 		return Controller.extend("com.myorg.myapp.controller.Detail", {
@@ -25220,7 +25229,6 @@ sap.ui.define(
 											province_id: "GI",
 											province_name: "Girona",
 										},
-										// Add more provinces here...
 									],
 								},
 								{
@@ -25235,17 +25243,49 @@ sap.ui.define(
 											province_id: "SE",
 											province_name: "Seville",
 										},
-										// Add more provinces here...
+										{
+											province_id: "CA",
+											province_name: "Cadiz",
+										},
 									],
 								},
-								// Add more autonomous communities here...
 							],
 						},
 						{
 							country_id: "FR",
 							country_name: "France",
 							autonomous_communities: [
-								// Add autonomous communities for France here...
+								{
+									community_id: "BFC",
+									community_name: "Bourgogne-Franche-Comté",
+									provinces: [
+										{
+											province_id: "21",
+											province_name: "Côte-d'Or",
+										},
+										{
+											province_id: "25",
+											province_name: "Doubs",
+										},
+										// Puedes agregar más provincias aquí...
+									],
+								},
+								{
+									community_id: "NAQ",
+									community_name: "Nouvelle-Aquitaine",
+									provinces: [
+										{
+											province_id: "24",
+											province_name: "Dordogne",
+										},
+										{
+											province_id: "33",
+											province_name: "Gironde",
+										},
+										// Puedes agregar más provincias aquí...
+									],
+								},
+								// Puedes agregar más comunidades autónomas aquí...
 							],
 						},
 						// Add more countries here...
@@ -25275,6 +25315,9 @@ sap.ui.define(
 							PRIORITY: "X",
 							VARIABLE_01: "20.000",
 							VARIABLE_02: "0.000",
+							COUNTRY_ID: "ESP",
+							COUNTRY_DESC: "espa",
+							PROVINCIA: [{ PROVINCIA_ID: "B", PROVINCIA_DESC: "Barcelona" }],
 						},
 						{
 							PACKAGE_ID: "PCK/50187479",
@@ -25355,6 +25398,7 @@ sap.ui.define(
 							VARIABLE_02: "45.030",
 						},
 						{
+							//esteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 							PACKAGE_ID: "PCK/50185636",
 							OBJID: "50185636",
 							ENTITY: "PCK",
@@ -25373,6 +25417,12 @@ sap.ui.define(
 							PRIORITY: "",
 							VARIABLE_01: "00.320",
 							VARIABLE_02: "17.630",
+
+							COMPANY: "nose",
+							DESTCOUNTRY: "OOWE (thailand)",
+							DESTAUTCOM: "SD",
+							PROVINCIA: [{ PROVINCIA_ID: "B", PROVINCIA_DESC: "Barcelona" }],
+							//esteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 						},
 						{
 							PACKAGE_ID: "PCK/50185659",
@@ -25744,7 +25794,7 @@ sap.ui.define(
 				this.getView().setModel(new JSONModel(data), "data");
 				this.getView().setModel(new JSONModel(countryData), "country");
 				this.getView().setModel(new JSONModel(companyData), "company");
-				console.log(this.getView().getModel("company").getData());
+				console.log(this.getView().getModel("country").getData());
 
 				this.getOwnerComponent()
 					.getRouter()
@@ -25777,6 +25827,9 @@ sap.ui.define(
 					//navigate to notFound view
 					this.getOwnerComponent().getRouter().navTo("NotFound", null, true);
 				}
+			},
+			onAfterRendering: function () {
+				var oTreeTable = sap.ui.getCore().byId("companyTable");
 			},
 			onValidate: function () {
 				var obj = this.OBJID;
@@ -25848,7 +25901,7 @@ sap.ui.define(
 				return null;
 			},
 
-			onValueHelpRequest: function (oEvent) {
+			onOpenCompany: function (oEvent) {
 				if (!this._oValueHelpDialog) {
 					this._oValueHelpDialog = sap.ui.xmlfragment(
 						"com.myorg.myapp.fragments.CompanyTable",
@@ -25857,12 +25910,12 @@ sap.ui.define(
 					this.getView().addDependent(this._oValueHelpDialog);
 					var jsonData = this.getJsonCompany();
 					var organizedData = this.organizeData(jsonData.results);
-					console.log("aa", this.getJsonCompany().results);
-					console.log("organizedData", organizedData);
 
 					var oModel = new JSONModel();
 					oModel.setData(organizedData);
 					this._oValueHelpDialog.setModel(oModel);
+					var oTreeTable = sap.ui.getCore().byId("companyTable");
+					oTreeTable.expandToLevel(3);
 				}
 				this._oValueHelpDialog.open();
 			},
@@ -25885,10 +25938,216 @@ sap.ui.define(
 				for (var i = 0; i < aColumns.length; i++) {
 					aColumns[i].setFiltered(false);
 					aColumns[i].filter("");
-
 				}
 				//set the filter input text to ""
+			},
+			onCancel: function () {
+				//close dialog with id companyDialog
+				sap.ui.getCore().byId("companyDialog").close();
+			},
+			onAdd: function () {
+				if (!this._oValueHelpDialog) {
+					this._oValueHelpDialog = sap.ui.xmlfragment(
+						"com.myorg.myapp.fragments.CompanyTable",
+						this
+					);
+					this.getView().addDependent(this._oValueHelpDialog);
+				}
+				// Get the TreeTable control
+				var oTreeTable = sap.ui.getCore().byId("companyTable");
+				var oInput = this.byId("companyInput");
+				console.log(oInput);
 
+				// Get the indices of the selected rows
+				var aSelectedIndices = oTreeTable.getSelectedIndices();
+
+				// Get the object of the first selected row
+				if (aSelectedIndices.length > 0) {
+					var oContext = oTreeTable.getContextByIndex(aSelectedIndices[0]);
+					var oSelectedItem = oContext.getObject();
+					console.log(oSelectedItem);
+					oInput.setValue(oSelectedItem.Title);
+					this._oValueHelpDialog.close();
+				} else {
+					MessageBox.error("Please select a row");
+				}
+			},
+			handleSelectionChange: function (oEvent) {
+				var changedItem = oEvent.getParameter("changedItem");
+				var isSelected = oEvent.getParameter("selected");
+
+				var state = "Selected";
+				if (!isSelected) {
+					state = "Deselected";
+				}
+
+				MessageToast.show(
+					"Event 'selectionChange': " +
+						state +
+						" '" +
+						changedItem.getText() +
+						"'",
+					{
+						width: "auto",
+					}
+				);
+			},
+
+			handleSelectionFinish: function (oEvent) {
+				var selectedItems = oEvent.getParameter("selectedItems");
+				var messageText = "Event 'selectionFinished': [";
+
+				for (var i = 0; i < selectedItems.length; i++) {
+					messageText += "'" + selectedItems[i].getText() + "'";
+					if (i != selectedItems.length - 1) {
+						messageText += ",";
+					}
+				}
+
+				messageText += "]";
+
+				MessageToast.show(messageText, {
+					width: "auto",
+				});
+			},
+			onCountryChange: function (oEvent) {
+				// Get the MultiComboBox for provinces
+				var oProvincesMultiComboBox = this.byId("Province");
+				oProvincesMultiComboBox.setValue(""); // clear the input field
+				oProvincesMultiComboBox.removeAllSelectedItems(); // remove all selected items
+				oProvincesMultiComboBox.destroyItems();
+
+				// Get the ComboBox
+				var oComboBox = oEvent.getSource();
+
+				// Get the ComboBox for autonomous communities
+				var oAutonomousCommunitiesComboBox = this.byId(
+					"autonomousCommunitiesComboBox"
+				);
+				oAutonomousCommunitiesComboBox.setValue(""); // clear the input field
+				oAutonomousCommunitiesComboBox.destroyItems();
+
+				// Get the selected country
+				var oSelectedItem = oComboBox.getSelectedItem();
+				if (!oSelectedItem) {
+					console.log("!selecteditem");
+					return;
+				}
+				var sKey = oSelectedItem.getKey(); //ES FR
+
+				// Find the index of the selected country in the countries array
+				var oCountryModel = this.getView().getModel("country");
+				var aCountries = oCountryModel.getProperty("/countries");
+				//Index(numero) en el que countryID ===sKey
+				var iIndex = aCountries.findIndex(function (oCountry) {
+					return oCountry.country_id === sKey;
+				});
+
+				//findIndex function returns -1 if it doesn't find an element in the array
+				if (iIndex === -1) {
+					return;
+				}
+
+				// Set the binding path for the items aggregation
+				var sPath = "/countries/" + iIndex + "/autonomous_communities";
+
+				oAutonomousCommunitiesComboBox.bindItems({
+					path: "country>" + sPath,
+					sorter: { path: "community_name" },
+					template: new sap.ui.core.Item({
+						key: "{country>community_id}",
+						text: "{country>community_name}",
+					}),
+				});
+			},
+			onAutonomousCommunityChange: function (oEvent) {
+				// Get the ComboBox
+				var oComboBox = oEvent.getSource();
+
+				// Get the MultiComboBox for provinces
+				var oProvincesMultiComboBox = this.byId("Province");
+				oProvincesMultiComboBox.setValue(""); // clear the input field
+				oProvincesMultiComboBox.removeAllSelectedItems(); // remove all selected items
+
+				// Get the selected autonomous community
+				var oSelectedItem = oComboBox.getSelectedItem();
+				if (!oSelectedItem) {
+					console.log("entro bucle");
+					oProvincesMultiComboBox.destroyItems();
+					return;
+				}
+				var sKey = oSelectedItem.getKey(); // CAT, AND, etc.
+
+				// Find the index of the selected autonomous community in the autonomous_communities array
+				var oCountryModel = this.getView().getModel("country");
+				var sCountryPath = oComboBox.getBinding("items").sPath; // /countries/0 or /countries/1
+				var aAutonomousCommunities = oCountryModel.getProperty(sCountryPath);
+				var iIndex = aAutonomousCommunities.findIndex(function (
+					oAutonomousCommunity
+				) {
+					return oAutonomousCommunity.community_id === sKey;
+				});
+
+				if (iIndex === -1) {
+					return;
+				}
+
+				// Set the binding path for the items aggregation
+				var sPath = sCountryPath + "/" + iIndex + "/provinces";
+
+				oProvincesMultiComboBox.bindItems({
+					path: "country>" + sPath,
+					sorter: { path: "province_name" },
+					template: new sap.ui.core.Item({
+						key: "{country>province_id}",
+						text: "{country>province_name}",
+					}),
+				});
+			},
+			onSave: function () {
+				var oDetailDataModel = this.getView().getModel("detailData");
+
+				// Get the ComboBoxes and MultiComboBox
+				var oCountryComboBox = this.byId("countryComboBox");
+				var oAutonomousCommunitiesComboBox = this.byId(
+					"autonomousCommunitiesComboBox"
+				);
+				var oProvincesMultiComboBox = this.byId("Province");
+			
+				var oPackageIDInput = this.byId("name");
+				var oCompanyInput = this.byId("companyInput");
+				var oPackageSummaryTextArea = this.byId("PackageSummary");
+
+				// Get the selected keys
+				var sCountryKey = oCountryComboBox.getSelectedKey();
+				var sAutonomousCommunityKey =
+					oAutonomousCommunitiesComboBox.getSelectedKey();
+				var aProvinceKeys = oProvincesMultiComboBox.getSelectedKeys();
+				var sPackageID = oPackageIDInput.getValue();
+				var sCompany = oCompanyInput.getValue();
+				var sPackageSummary = oPackageSummaryTextArea.getValue();
+
+
+				if (
+					sPackageID == "" ||
+					sCompany == "" ||
+					sPackageSummary == "" ||
+					sCountryKey == "" ||
+					sAutonomousCommunityKey == "" ||
+					aProvinceKeys.length == 0
+				) {
+					MessageToast.show("Please fill all the fields");
+				} else {
+				// set Model
+					oDetailDataModel.setProperty("/item/DESTCOUNTRY", sCountryKey);
+					oDetailDataModel.setProperty("/item/DESTAUTCOM", sAutonomousCommunityKey);
+					oDetailDataModel.setProperty("/item/COMPANY", sCompany);
+					oDetailDataModel.setProperty("/item/DESCRIPTION", sPackageSummary);
+					oDetailDataModel.setProperty("/item/PROVINCIA", aProvinceKeys);
+				}
+
+				// Log the updated model
+				console.log(oDetailDataModel.getData());
 			},
 		});
 	}

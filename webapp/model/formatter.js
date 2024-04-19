@@ -51,7 +51,6 @@ sap.ui.define(
 			},
 
 			StatusFormat: function (status) {
-				console.log("eeeeeyyeyeyepeq");
 				if (status === "S") {
 					return "#6cd331";
 				} else if (status === "E") {

@@ -6,6 +6,7 @@
     <Dialog
         title="Select a Company"
         class="sapUiContentPadding"
+        id="companyDialog"
     >
         <HBox
             justifyContent="End"
@@ -58,5 +59,17 @@
                 </t:Column>
             </t:columns>
         </t:TreeTable>
+        <HBox justifyContent="End">
+            <Button
+                text="Add"
+                press=".onAdd"
+                class="sapUiSmallMarginBegin"
+            />
+            <Button
+                text="Cancel"
+                press=".onCancel"
+                class="sapUiSmallMarginBegin"
+            />
+        </HBox>
     </Dialog>
 </core:FragmentDefinition>
