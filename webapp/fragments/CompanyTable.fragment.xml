@@ -1,0 +1,62 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:t="sap.ui.table"
+>
+    <Dialog
+        title="Select a Company"
+        class="sapUiContentPadding"
+    >
+        <HBox
+            justifyContent="End"
+            class="sapUISmallMarginBottom"
+        >
+            <Button
+                icon="sap-icon://navigation-down-arrow"
+                text="Expand All"
+                press=".onExpandAll"
+                class="sapUiSmallMarginBegin"
+            />
+            <Button
+                icon="sap-icon://navigation-right-arrow"
+                text="Collapse All"
+                press=".onCollapseAll"
+                class="sapUiSmallMarginBegin"
+            />
+            <Button
+                icon="sap-icon://clear-filter"
+                text="{i18n>ClearFiltersText}"
+                press=".onClearFilters"
+                class="sapUiSmallMarginBegin"
+            />
+        </HBox>
+
+        <t:TreeTable
+            id="companyTable"
+            selectionMode="Single"
+            enableSelectAll="false"
+            rows="{path: '/', parameters: {arrayNames: ['children']}}"
+        >
+            <t:columns>
+                <t:Column
+                    sortProperty="Title"
+                    filterProperty="Title"
+                >
+                    <Label text="{i18n>Name}" />
+                    <t:template>
+                        <Text text="{Title}" />
+                    </t:template>
+                </t:Column>
+                <t:Column
+                    sortProperty="Id"
+                    filterProperty="Id"
+                >
+                    <Label text="ID" />
+                    <t:template>
+                        <Text text="{Id}" />
+                    </t:template>
+                </t:Column>
+            </t:columns>
+        </t:TreeTable>
+    </Dialog>
+</core:FragmentDefinition>

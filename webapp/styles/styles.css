@@ -90,7 +90,17 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 .sapMInputBaseContentWrapper {
 	box-shadow: none !important;
 }
+.rec1 * {
+	margin-left: -2px !important;
+}
+/* .R {
+	background-color: red !important;
+} */
 
+.bottom{
+	margin-top: 7px!important;
+
+}
 .cancelDetailButton {
 	position: absolute !important;
 	bottom: 20px !important;
@@ -133,10 +143,8 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 .sapFDynamicPageTitle:hover,
 #__component0---detail--ObjectPageLayout-opwrapper,
 .sapUxAPObjectPageScroll {
-	background: #F5F6F7 !important;
+	background: #f5f6f7 !important;
 }
-
-
 
 #__component0---detail--employ1mentSS2 {
 	background: white !important;
@@ -146,6 +154,6 @@ QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO QUITAR COMENTADO*/
 .sapMPage .sapMPageHeader:not(.sapMIBar-CTX):after {
 	box-shadow: none !important;
 }
-#__title3{
-	color : #0064d9 !important;
+#__title3 {
+	color: #0064d9 !important;
 }

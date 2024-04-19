@@ -42,8 +42,16 @@ sap.ui.define(
 					return "sap-icon://alert";
 				}
 			},
+			PriorityFormatDetail: function (priority) {
+				if (priority === "X") {
+					return "#6CD331";
+				}else{
+					return "red";
+				}
+			},
 
 			StatusFormat: function (status) {
+				console.log("eeeeeyyeyeyepeq");
 				if (status === "S") {
 					return "#6cd331";
 				} else if (status === "E") {
@@ -55,6 +63,10 @@ sap.ui.define(
 				} else {
 					return "transparent";
 				}
+			},
+
+			formatStatusClass: function (sStatus) {
+				return sStatus === "R" ? "R" : "";
 			},
 
 			NumberFormatt: function (number) {

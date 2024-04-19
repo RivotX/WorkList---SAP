@@ -25745,20 +25745,15 @@ sap.ui.define(
 				this.getView().setModel(new JSONModel(countryData), "country");
 				this.getView().setModel(new JSONModel(companyData), "company");
 				console.log(this.getView().getModel("company").getData());
-				console.log(this.getView().getModel("country").getData());
 
 				this.getOwnerComponent()
 					.getRouter()
 					.getRoute("detail")
 					.attachPatternMatched(this._onObjectMatched, this);
-
-				this.updateTagVisibility();
 			},
 			_onObjectMatched: function (oEvent) {
 				this.OBJID = oEvent.getParameter("arguments").OBJID;
-				console.log("Detail ID: ", this.OBJID); // Log the detail ID
 				if (this.onValidate()) {
-					console.log("entro al bucle");
 					// Get the "data" model
 					var oDataModel = this.getView().getModel("data");
 
@@ -25778,9 +25773,7 @@ sap.ui.define(
 
 					// Set the item to the "detailData" model
 					oDetailDataModel.setProperty("/item", oItem);
-					console.log("Detail Data: ", oDetailDataModel.getData());
 				} else {
-					console.log("NONONO");
 					//navigate to notFound view
 					this.getOwnerComponent().getRouter().navTo("NotFound", null, true);
 				}
@@ -25805,19 +25798,97 @@ sap.ui.define(
 					this.getOwnerComponent().getRouter().navTo("main", null, true);
 				}
 			},
-			updateTagVisibility: function () {
-				var aGenericTags =
-					this.getView().getControlsByFieldGroupId("genericTagGroup");
-				aGenericTags.forEach(function (oGenericTag) {
-					var oParent = oGenericTag.$().parent();
-					if (oGenericTag.getVisible()) {
-						console.log("ENTRO", oParent)
-						oParent.removeClass("hiddenTag");
+
+			// Función para organizar los datos en una estructura de árbol
+			organizeData: function (rawData) {
+				var treeData = [];
+				var that = this; // Almacena el contexto actual
+
+				// Mapear los datos y organizarlos en una estructura de árbol
+				rawData.forEach(function (item) {
+					if (item.Level === "00") {
+						// Elemento de nivel superior
+						treeData.push({
+							Id: item.Id,
+							IdOnly: item.IdOnly,
+							Title: item.Title,
+							children: [],
+						});
 					} else {
-						console.log("noentro")
-						oParent.addClass("hiddenTag");
+						// Buscar el padre del elemento actual
+						var parentNode = that.findNode(treeData, item.Parent);
+
+						// Agregar el elemento actual como hijo del nodo padre
+						if (parentNode) {
+							parentNode.children.push({
+								Id: item.Id,
+								IdOnly: item.IdOnly,
+								Title: item.Title,
+								children: [],
+							});
+						}
 					}
 				});
+
+				return treeData;
+			},
+			// Función para buscar un nodo en el árbol
+			findNode: function (tree, parentId) {
+				for (var i = 0; i < tree.length; i++) {
+					if (tree[i].Id === parentId) {
+						return tree[i];
+					}
+					if (tree[i].children.length > 0) {
+						var node = this.findNode(tree[i].children, parentId);
+						if (node) {
+							return node;
+						}
+					}
+				}
+				return null;
+			},
+
+			onValueHelpRequest: function (oEvent) {
+				if (!this._oValueHelpDialog) {
+					this._oValueHelpDialog = sap.ui.xmlfragment(
+						"com.myorg.myapp.fragments.CompanyTable",
+						this
+					);
+					this.getView().addDependent(this._oValueHelpDialog);
+					var jsonData = this.getJsonCompany();
+					var organizedData = this.organizeData(jsonData.results);
+					console.log("aa", this.getJsonCompany().results);
+					console.log("organizedData", organizedData);
+
+					var oModel = new JSONModel();
+					oModel.setData(organizedData);
+					this._oValueHelpDialog.setModel(oModel);
+				}
+				this._oValueHelpDialog.open();
+			},
+			onExpandAll: function () {
+				var oTreeTable = sap.ui.getCore().byId("companyTable");
+				oTreeTable.expandToLevel(100);
+			},
+			onCollapseAll: function () {
+				var oTreeTable = sap.ui.getCore().byId("companyTable");
+
+				oTreeTable.collapseAll();
+			},
+			onClearFilters: function () {
+				// Clear all the filters from the sapui5 table
+				var oTable = sap.ui.getCore().byId("companyTable");
+				oTable.getBinding("rows").filter([]);
+
+				// Set every column's sorted and filtered attribute to false
+				var aColumns = oTable.getColumns();
+				for (var i = 0; i < aColumns.length; i++) {
+					aColumns[i].setFiltered(false);
+					aColumns[i].filter("");
+
+				}
+				//set the filter input text to ""
+
 			},
 		});
 	}

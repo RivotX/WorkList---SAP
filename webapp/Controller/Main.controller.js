@@ -818,6 +818,8 @@ sap.ui.define(
 				var aColumns = oTable.getColumns();
 				for (var i = 0; i < aColumns.length; i++) {
 					aColumns[i].setFiltered(false);
+					aColumns[i].filter("");
+
 				}
 			},
 

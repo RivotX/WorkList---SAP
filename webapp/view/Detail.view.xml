@@ -97,36 +97,13 @@
                                         </f:fields>
                                     </f:FormElement>
                                     <f:FormElement label="{i18n>State}">
-                                        <m:GenericTag
-                                            fieldGroupIds="genericTagGroup"
-                                            text="{i18n>Request}"
-                                            status="Error"
-                                            class="sapUiSmallMarginBottom customTag"
-                                            visible="{=${detailData>/item/STATUS} === 'R'}"
-                                        />
-
-                                        <m:GenericTag
-                                            fieldGroupIds="genericTagGroup"
-                                            text="{i18n>Send}"
-                                            status="Success"
-                                            class="sapUiSmallMarginBottom customTag"
-                                            visible="{=${detailData>/item/STATUS} === 'S'}"
-                                        />
-
-                                        <m:GenericTag
-                                            fieldGroupIds="genericTagGroup"
-                                            text="{i18n>Warning}"
-                                            status="Warning"
-                                            class="sapUiSmallMarginBottom customTag"
-                                            visible="{=${detailData>/item/STATUS} === 'A'}"
-                                        />
-
-                                        <m:GenericTag
-                                            fieldGroupIds="genericTagGroup"
-                                            text="{i18n>Error}"
-                                            class="sapUiSmallMarginBottom customTag"
-                                            visible="{=${detailData>/item/STATUS} === 'E'}"
-                                        />
+                                        <m:HBox class="">
+                                            <core:Icon
+                                                src="sap-icon://color-fill"
+                                                color="{path: 'detailData>/item/STATUS', formatter: '.formatter.StatusFormat'}"
+                                                class="bottom"
+                                            />
+                                        </m:HBox>
                                     </f:FormElement>
                                 </f:formElements>
                             </f:FormContainer>
@@ -160,12 +137,13 @@
                                     </f:FormElement>
                                     <f:FormElement label="{i18n>Priority}">
                                         <f:fields>
-                                            <m:Input
-                                                value="{detailData>/item/PRIORITY}"
-                                                id="PackagePriority"
-                                                editable="false"
-                                                class="Blanco"
-                                            />
+                                            <m:HBox class="">
+                                                <core:Icon
+                                                    src="sap-icon://color-fill"
+                                                    color="{path: 'detailData>/item/PRIORITY', formatter: '.formatter.PriorityFormatDetail'}"
+                                                    class="bottom"
+                                                />
+                                            </m:HBox>
                                         </f:fields>
                                     </f:FormElement>
                                 </f:formElements>
@@ -176,7 +154,7 @@
                                         <f:fields>
                                             <m:Input
                                                 value="{
-                                                path: 'detailData>/item/VARIABLE_02',
+                                                path: 'detailData>/item/VARIABLE_01',
                                                 formatter: 'formatter.NumberFormat2'
                                             }"
                                                 id="PackageProgress"
@@ -188,9 +166,10 @@
                                     <f:FormElement label="{i18n>Price}">
                                         <f:fields>
                                             <m:Input
-                                                value=""
-                                                id="PackagePrice"
-                                                editable="false"
+                                                value="{
+                                                path: 'detailData>/item/VARIABLE_02',
+                                                formatter: '.formatter.NumberFormatt'
+                                                }"
                                                 class="Blanco"
                                             />
                                         </f:fields>
@@ -273,6 +252,8 @@
                                                             <m:Input
                                                                 value="{Company}"
                                                                 type="Text"
+                                                                showValueHelp="true"
+                                                                valueHelpRequest="onValueHelpRequest"
                                                             />
                                                         </f:fields>
                                                     </f:FormElement>
@@ -438,7 +419,6 @@
                         </ObjectPageSubSection>
                     </subSections>
                     <!-- tree -->
-                   
                 </ObjectPageSection>
 
                 <!-- Provider data tab -->
