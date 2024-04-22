@@ -25224,10 +25224,12 @@ sap.ui.define(
 										{
 											province_id: "B",
 											province_name: "Barcelona",
+											province_Desc: "barcelona muy bonita ",
 										},
 										{
 											province_id: "GI",
 											province_name: "Girona",
+											province_Desc: "Girona muy bonita ",
 										},
 									],
 								},
@@ -25238,14 +25240,17 @@ sap.ui.define(
 										{
 											province_id: "MA",
 											province_name: "Málaga",
+											province_Desc: "Malaga muy bonita ",
 										},
 										{
 											province_id: "SE",
 											province_name: "Seville",
+											province_Desc: "Seville muy bonita ",
 										},
 										{
 											province_id: "CA",
 											province_name: "Cadiz",
+											province_Desc: "Cadiz muy bonita ",
 										},
 									],
 								},
@@ -26095,7 +26100,6 @@ sap.ui.define(
 
 				var aCompanies = oCompanyModel.getProperty("/");
 				var oSelectedCompany = this.findCompany(aCompanies, sCompanyName);
-			
 
 				if (!oSelectedCompany) {
 					// Handle the error: the entered company name was not found in the model
@@ -26134,7 +26138,14 @@ sap.ui.define(
 						oSelectedCompany.IdOnly
 					);
 					oDetailDataModel.setProperty("/item/DESCRIPTION", sPackageSummary);
-					oDetailDataModel.setProperty("/item/PROVINCIA", aProvinceKeys);
+
+					var aProvinces = aProvinceKeys.map((sProvinceKey) => {
+						return {
+							PROVINCIA_ID: sProvinceKey,
+							PROVINCIA_DESC: this.getProvinceDescription(sProvinceKey),
+						};
+					});
+					oDetailDataModel.setProperty("/item/PROVINCIA", aProvinces);
 				}
 
 				// Log the updated model
@@ -26159,6 +26170,25 @@ sap.ui.define(
 
 				return null;
 			},
+			getProvinceDescription: function (sProvinceId) {
+				var oModelData = this.getView().getModel("country").getProperty("/");
+				var aCountries = oModelData.countries;
+
+				for (var i = 0; i < aCountries.length; i++) {
+					var aCommunities = aCountries[i].autonomous_communities;
+					for (var j = 0; j < aCommunities.length; j++) {
+						var aProvinces = aCommunities[j].provinces;
+						for (var k = 0; k < aProvinces.length; k++) {
+							if (aProvinces[k].province_id === sProvinceId) {
+								return aProvinces[k].province_Desc;
+							}
+						}
+					}
+				}
+
+				return null; // return null if the province was not found
+			},
+
 			handleUploadComplete: function (oEvent) {
 				var sResponse = oEvent.getParameter("response"),
 					aRegexResult = /\d{4}/.exec(sResponse),
