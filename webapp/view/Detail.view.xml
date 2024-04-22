@@ -383,12 +383,7 @@
                 >
                     <subSections>
                         <ObjectPageSubSection>
-                            <u:FileUploader
-                                id="fileUploader"
-                                name="myFileUpload"
-                                uploadUrl="upload/"
-                                tooltip="Upload your file to the local server"
-                                uploadComplete="handleUploadComplete"/>
+                            <u:FileUploader id="fileUploader" name="myFileUpload" uploadUrl="http://localhost:8081/upload" />
                         <m:Button
                             text="Upload File"
                             press="handleUploadPress"/>
