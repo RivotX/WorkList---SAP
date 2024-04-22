@@ -25418,7 +25418,7 @@ sap.ui.define(
 							VARIABLE_01: "00.320",
 							VARIABLE_02: "17.630",
 
-							COMPANY: "nose",
+							COMPANY: [{ id: "nose", name: "nose" }],
 							DESTCOUNTRY: "OOWE (thailand)",
 							DESTAUTCOM: "SD",
 							PROVINCIA: [{ PROVINCIA_ID: "B", PROVINCIA_DESC: "Barcelona" }],
@@ -25913,7 +25913,9 @@ sap.ui.define(
 
 					var oModel = new JSONModel();
 					oModel.setData(organizedData);
+
 					this._oValueHelpDialog.setModel(oModel);
+					console.log(oModel);
 					var oTreeTable = sap.ui.getCore().byId("companyTable");
 					oTreeTable.expandToLevel(3);
 				}
@@ -25972,7 +25974,7 @@ sap.ui.define(
 					MessageBox.error("Please select a row");
 				}
 			},
-			
+
 			onCountryChange: function (oEvent) {
 				// Get the MultiComboBox for provinces
 				var oProvincesMultiComboBox = this.byId("Province");
@@ -26070,30 +26072,46 @@ sap.ui.define(
 			onSave: function () {
 				var oDetailDataModel = this.getView().getModel("detailData");
 
-				// Get the ComboBoxes and MultiComboBox
+				var jsonData = this.getJsonCompany();
+				var organizedData = this.organizeData(jsonData.results);
+
+				var oModel = new JSONModel();
+				oModel.setData(organizedData);
+				this.getView().setModel(oModel, "company");
+				var oCompanyModel = this.getView().getModel("company");
+
 				var oCountryComboBox = this.byId("countryComboBox");
 				var oAutonomousCommunitiesComboBox = this.byId(
 					"autonomousCommunitiesComboBox"
 				);
 				var oProvincesMultiComboBox = this.byId("Province");
-			
+
 				var oPackageIDInput = this.byId("name");
 				var oCompanyInput = this.byId("companyInput");
 				var oPackageSummaryTextArea = this.byId("PackageSummary");
 
 				// Get the selected keys
+				var sCompanyName = oCompanyInput.getValue();
+
+				var aCompanies = oCompanyModel.getProperty("/");
+				var oSelectedCompany = this.findCompany(aCompanies, sCompanyName);
+			
+
+				if (!oSelectedCompany) {
+					// Handle the error: the entered company name was not found in the model
+					console.error("Company not found: " + sCompanyName);
+					return;
+				}
+
 				var sCountryKey = oCountryComboBox.getSelectedKey();
 				var sAutonomousCommunityKey =
 					oAutonomousCommunitiesComboBox.getSelectedKey();
 				var aProvinceKeys = oProvincesMultiComboBox.getSelectedKeys();
 				var sPackageID = oPackageIDInput.getValue();
-				var sCompany = oCompanyInput.getValue();
 				var sPackageSummary = oPackageSummaryTextArea.getValue();
-
 
 				if (
 					sPackageID == "" ||
-					sCompany == "" ||
 					sPackageSummary == "" ||
 					sCountryKey == "" ||
 					sAutonomousCommunityKey == "" ||
@@ -26101,10 +26119,20 @@ sap.ui.define(
 				) {
 					MessageToast.show("Please fill all the fields");
 				} else {
-				// set Model
+					// set Model
 					oDetailDataModel.setProperty("/item/DESTCOUNTRY", sCountryKey);
-					oDetailDataModel.setProperty("/item/DESTAUTCOM", sAutonomousCommunityKey);
-					oDetailDataModel.setProperty("/item/COMPANY", sCompany);
+					oDetailDataModel.setProperty(
+						"/item/DESTAUTCOM",
+						sAutonomousCommunityKey
+					);
+					oDetailDataModel.setProperty(
+						"/item/COMPANY/0/name",
+						oSelectedCompany.Title
+					);
+					oDetailDataModel.setProperty(
+						"/item/COMPANY/0/id",
+						oSelectedCompany.IdOnly
+					);
 					oDetailDataModel.setProperty("/item/DESCRIPTION", sPackageSummary);
 					oDetailDataModel.setProperty("/item/PROVINCIA", aProvinceKeys);
 				}
@@ -26112,28 +26140,58 @@ sap.ui.define(
 				// Log the updated model
 				console.log(oDetailDataModel.getData());
 			},
-			handleUploadComplete: function(oEvent) {
-			var sResponse = oEvent.getParameter("response"),
-				aRegexResult = /\d{4}/.exec(sResponse),
-				iHttpStatusCode = aRegexResult && parseInt(aRegexResult[0]),
-				sMessage;
+			findCompany: function (aCompanies, sCompanyName) {
+				for (var i = 0; i < aCompanies.length; i++) {
+					if (aCompanies[i].Title === sCompanyName) {
+						return aCompanies[i];
+					}
 
-			if (sResponse) {
-				sMessage = iHttpStatusCode === 200 ? sResponse + " (Upload Success)" : sResponse + " (Upload Error)";
-				MessageToast.show(sMessage);
-			}
-		},
+					if (aCompanies[i].children) {
+						var oCompany = this.findCompany(
+							aCompanies[i].children,
+							sCompanyName
+						);
+						if (oCompany) {
+							return oCompany;
+						}
+					}
+				}
 
-		handleUploadPress: function() {
-			var oFileUploader = this.byId("fileUploader");
-			oFileUploader.checkFileReadable().then(function() {
-				oFileUploader.upload();
-			}, function(error) {
-				MessageToast.show("The file cannot be read. It may have changed.");
-			}).then(function() {
-				oFileUploader.clear();
-			});
-		}
+				return null;
+			},
+			handleUploadComplete: function (oEvent) {
+				var sResponse = oEvent.getParameter("response"),
+					aRegexResult = /\d{4}/.exec(sResponse),
+					iHttpStatusCode = aRegexResult && parseInt(aRegexResult[0]),
+					sMessage;
+
+				if (sResponse) {
+					sMessage =
+						iHttpStatusCode === 200
+							? sResponse + " (Upload Success)"
+							: sResponse + " (Upload Error)";
+					MessageToast.show(sMessage);
+				}
+			},
+
+			handleUploadPress: function () {
+				var oFileUploader = this.byId("fileUploader");
+				oFileUploader
+					.checkFileReadable()
+					.then(
+						function () {
+							oFileUploader.upload();
+						},
+						function (error) {
+							MessageToast.show(
+								"The file cannot be read. It may have changed."
+							);
+						}
+					)
+					.then(function () {
+						oFileUploader.clear();
+					});
+			},
 		});
 	}
 );

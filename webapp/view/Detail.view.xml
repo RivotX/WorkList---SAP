@@ -12,7 +12,6 @@
         formatter: 'com/myorg/myapp/model/formatter'
     }"
     xmlns:u="sap.ui.unified"
-
 >
     <m:Page
         showNavButton="true"
@@ -267,7 +266,7 @@
                                     <m:VBox class="PackageSummaryDetail">
                                         <m:Label text="{i18n>PackageSummary}" />
                                         <m:TextArea
-                                        id="PackageSummary"
+                                            id="PackageSummary"
                                             value="{PackageSummary}"
                                             width="100%"
                                             maxLength="250"
@@ -383,17 +382,18 @@
                 >
                     <subSections>
                         <ObjectPageSubSection>
-                            <u:FileUploader id="fileUploader" name="myFileUpload" uploadUrl="http://localhost:8081/upload" />
-                        <m:Button
-                            text="Upload File"
-                            press="handleUploadPress"/>
+                            <u:FileUploader
+                                id="fileUploader"
+                                name="myFileUpload"
+                                uploadUrl="http://localhost:8081/upload"
+                            />
+                            <m:Button
+                                text="Upload File"
+                                press="handleUploadPress"
+                            />
                         </ObjectPageSubSection>
                     </subSections>
                 </ObjectPageSection>
-
-
-
-
 
                 <!-- no -->
                 <ObjectPageSection
@@ -450,5 +450,6 @@
             text="{i18n>Save}"
             press="onSave"
         />
+        <m:Text text="{detailData>/item/OBJID}" />
     </m:Page>
 </mvc:View>

@@ -9,7 +9,7 @@
         formatter: 'com/myorg/myapp/model/formatter'
     }"
 >
-    <Page id="page">
+    <Page id="page1">
         <customHeader>
             <Bar class="">
                 <contentMiddle>

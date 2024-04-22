@@ -12,6 +12,7 @@
 .sapTntToolPage {
 	padding: 0px !important;
 }
+
 .sapMSFSSI {
 	display: none !important;
 }
@@ -26,7 +27,7 @@
 	height: 90px !important;
 }
 
-.roundedButton > span {
+ .roundedButton > span {
 	border-radius: 20px;
 	background-color: rgb(255, 255, 255) !important;
 	border: 0.0625rem solid #bcc3ca !important;
@@ -78,6 +79,7 @@
 .Blanco * {
 	background-color: #ffffff !important;
 }
+
 .sapMInputBaseContentWrapper {
 	box-shadow: none !important;
 }
@@ -90,7 +92,7 @@
 }
 
 .cancelDetailButton {
-	position: fixed !important; 
+	position: fixed !important;
 	bottom: 20px !important;
 	left: 0px !important;
 	border-radius: 20px;
@@ -117,10 +119,11 @@
 	outline: none !important;
 	border: none !important;
 }
+
 .saveDetailButton {
-	position: fixed !important; 
+	position: fixed !important;
 	bottom: 20px !important;
-	right: 0px !important;
+	right: 20px !important;
 	border-radius: 20px;
 	background-color: rgb(255, 255, 255) !important;
 	border: 0.15rem solid rgb(34, 59, 204) !important;
@@ -145,8 +148,6 @@
 	outline: none !important;
 	border: none !important;
 }
-
-
 
 .PackageSummaryDetail {
 	padding: 1rem !important;
@@ -176,33 +177,4 @@
 }
 #__title3 {
 	color: #0064d9 !important;
-}
-
-.cancelDetailButton2 {
-	position: absolute !important;
-	bottom: 20px !important;
-	left: 0px !important;
-	border-radius: 20px;
-	background-color: rgb(255, 255, 255) !important;
-	border: 0.15rem solid rgb(212, 0, 0) !important;
-	padding-left: 16px !important;
-	padding-right: 16px !important;
-	padding-top: 1px !important;
-	padding-bottom: 1px !important;
-	transition: background-color 0.1s ease;
-}
-
-.cancelDetailButton2 > span {
-	border: none !important;
-	color: rgb(212, 0, 0) !important;
-	transition: background-color 0.1s ease;
-}
-.cancelDetailButton2:hover,
-.cancelDetailButton2:hover * {
-	background-color: #ebf5fe !important;
-}
-
-.cancelDetailButton2:focus * {
-	outline: none !important;
-	border: none !important;
 }

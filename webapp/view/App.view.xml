@@ -6,7 +6,7 @@
     xmlns:tnt="sap.tnt"
     xmlns:core="sap.ui.core"
 >
-    <tnt:ToolPage>
+    <tnt:ToolPage class="">
         <tnt:header>
             <tnt:ToolHeader
                 id="shellLikeToolHeader"
