@@ -654,34 +654,41 @@ sap.ui.define(
 			},
 
 			onAddProduct: function () {
-				if (!this.oAddProductDialog) {
-					this.oAddProductDialog = sap.ui.xmlfragment(
-						this.getView().getId(),
-						"com.myorg.myapp.fragments.AddPackage",
-						this
-					);
-					this.getView().addDependent(this.oAddProductDialog);
 
-					var oDate = new Date();
-					var sFormattedDate = oDate.toLocaleDateString("en-GB");
-					// Create a new JSON model
-					var oModel = new sap.ui.model.json.JSONModel({
-						Name: "",
-						Description: "",
-						Status: "Red",
-						Creation_date: sFormattedDate,
-						Progress: null,
-						Amount: null,
-						Type: "Normal",
-						Priority: true,
-					});
+				this.getRouter().navTo("AddPackage");
 
-					var oSwitch = this.byId("switchPrio"); // Replace with the ID of your switch
-					oSwitch.setState(true);
-					// Set the model to the dialog
-					this.getView().setModel(oModel, "selectModel");
-				}
-				this.oAddProductDialog.open();
+
+
+
+				
+				// if (!this.oAddProductDialog) {
+				// 	this.oAddProductDialog = sap.ui.xmlfragment(
+				// 		this.getView().getId(),
+				// 		"com.myorg.myapp.fragments.AddPackage",
+				// 		this
+				// 	);
+				// 	this.getView().addDependent(this.oAddProductDialog);
+
+				// 	var oDate = new Date();
+				// 	var sFormattedDate = oDate.toLocaleDateString("en-GB");
+				// 	// Create a new JSON model
+				// 	var oModel = new sap.ui.model.json.JSONModel({
+				// 		Name: "",
+				// 		Description: "",
+				// 		Status: "Red",
+				// 		Creation_date: sFormattedDate,
+				// 		Progress: null,
+				// 		Amount: null,
+				// 		Type: "Normal",
+				// 		Priority: true,
+				// 	});
+
+				// 	var oSwitch = this.byId("switchPrio"); // Replace with the ID of your switch
+				// 	oSwitch.setState(true);
+				// 	// Set the model to the dialog
+				// 	this.getView().setModel(oModel, "selectModel");
+				// }
+				// this.oAddProductDialog.open();
 			},
 			onConfirm: function () {
 				// Get the model data

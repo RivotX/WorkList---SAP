@@ -25801,40 +25801,78 @@ sap.ui.define(
 				this.getView().setModel(new JSONModel(companyData), "company");
 				console.log(this.getView().getModel("country").getData());
 
+				this.routeMatchedPromise = new Promise((resolve) => {
+					this.resolveRouteMatched = resolve;
+				});
+			
 				this.getOwnerComponent()
 					.getRouter()
 					.getRoute("detail")
 					.attachPatternMatched(this._onObjectMatched, this);
+			
+				this.getOwnerComponent()
+					.getRouter()
+					.getRoute("AddPackage")
+					.attachPatternMatched(this._onObjectMatched, this);
 			},
 			_onObjectMatched: function (oEvent) {
-				this.OBJID = oEvent.getParameter("arguments").OBJID;
-				if (this.onValidate()) {
-					// Get the "data" model
-					var oDataModel = this.getView().getModel("data");
+				//
+				this.currentRouteName = oEvent.getParameter("name");
+				this.resolveRouteMatched();
+				var oArgs = oEvent.getParameter("arguments");
 
-					// Get the item that matches the ID
-					var oItem = oDataModel.getProperty("/results").find(
-						function (oItem) {
-							return oItem.OBJID === this.OBJID;
-						}.bind(this)
-					);
-
-					// Create the "detailData" model if it doesn't exist
-					var oDetailDataModel = this.getView().getModel("detailData");
-					if (!oDetailDataModel) {
-						oDetailDataModel = new sap.ui.model.json.JSONModel();
-						this.getView().setModel(oDetailDataModel, "detailData");
-					}
-
-					// Set the item to the "detailData" model
-					oDetailDataModel.setProperty("/item", oItem);
+				if (this.currentRouteName === "AddPackage") {
+					
+					this.isAddPackageRouteMatched = true;
 				} else {
-					//navigate to notFound view
-					this.getOwnerComponent().getRouter().navTo("NotFound", null, true);
+					// Change the Detail view for the Detail route
+					this.OBJID = oArgs.OBJID;
+
+					if (this.onValidate()) {
+						// Get the "data" model
+						var oDataModel = this.getView().getModel("data");
+
+						// Get the item that matches the ID
+						var oItem = oDataModel.getProperty("/results").find(
+							function (oItem) {
+								return oItem.OBJID === this.OBJID;
+							}.bind(this)
+						);
+
+						// Create the "detailData" model if it doesn't exist
+						var oDetailDataModel = this.getView().getModel("detailData");
+						if (!oDetailDataModel) {
+							oDetailDataModel = new sap.ui.model.json.JSONModel();
+							this.getView().setModel(oDetailDataModel, "detailData");
+						}
+
+						// Set the item to the "detailData" model
+						oDetailDataModel.setProperty("/item", oItem);
+					} else {
+						//navigate to notFound view
+						this.getOwnerComponent().getRouter().navTo("NotFound", null, true);
+					}
+				}
+			},
+
+			onSave: function () {
+				if (this.currentRouteName === "AddPackage") {
+					// Change the behavior of onSave for the AddPackage route
+					// Add your code here
+				} else {
+					// Change the behavior of onSave for the Detail route
+					// Add your code here
 				}
 			},
 			onAfterRendering: function () {
-				var oTreeTable = sap.ui.getCore().byId("companyTable");
+				this.routeMatchedPromise.then(() => {
+					if (this.currentRouteName === "AddPackage") {
+						var oInput = this.getView().byId("name");
+						if (oInput) {
+							oInput.setEditable(true);
+						}
+					}else{}
+				});
 			},
 			onValidate: function () {
 				var obj = this.OBJID;
@@ -26075,81 +26113,85 @@ sap.ui.define(
 				});
 			},
 			onSave: function () {
-				var oDetailDataModel = this.getView().getModel("detailData");
-
-				var jsonData = this.getJsonCompany();
-				var organizedData = this.organizeData(jsonData.results);
-
-				var oModel = new JSONModel();
-				oModel.setData(organizedData);
-				this.getView().setModel(oModel, "company");
-				var oCompanyModel = this.getView().getModel("company");
-
-				var oCountryComboBox = this.byId("countryComboBox");
-				var oAutonomousCommunitiesComboBox = this.byId(
-					"autonomousCommunitiesComboBox"
-				);
-				var oProvincesMultiComboBox = this.byId("Province");
-
-				var oPackageIDInput = this.byId("name");
-				var oCompanyInput = this.byId("companyInput");
-				var oPackageSummaryTextArea = this.byId("PackageSummary");
-
-				// Get the selected keys
-				var sCompanyName = oCompanyInput.getValue();
-
-				var aCompanies = oCompanyModel.getProperty("/");
-				var oSelectedCompany = this.findCompany(aCompanies, sCompanyName);
-
-				if (!oSelectedCompany) {
-					// Handle the error: the entered company name was not found in the model
-					console.error("Company not found: " + sCompanyName);
-					return;
-				}
-
-				var sCountryKey = oCountryComboBox.getSelectedKey();
-				var sAutonomousCommunityKey =
-					oAutonomousCommunitiesComboBox.getSelectedKey();
-				var aProvinceKeys = oProvincesMultiComboBox.getSelectedKeys();
-				var sPackageID = oPackageIDInput.getValue();
-				var sPackageSummary = oPackageSummaryTextArea.getValue();
-
-				if (
-					sPackageID == "" ||
-					sPackageSummary == "" ||
-					sCountryKey == "" ||
-					sAutonomousCommunityKey == "" ||
-					aProvinceKeys.length == 0
-				) {
-					MessageToast.show("Please fill all the fields");
+				if (this.currentRouteName === "AddPackage") {
+					console.log("holiwis uwu");
 				} else {
-					// set Model
-					oDetailDataModel.setProperty("/item/DESTCOUNTRY", sCountryKey);
-					oDetailDataModel.setProperty(
-						"/item/DESTAUTCOM",
-						sAutonomousCommunityKey
-					);
-					oDetailDataModel.setProperty(
-						"/item/COMPANY/0/name",
-						oSelectedCompany.Title
-					);
-					oDetailDataModel.setProperty(
-						"/item/COMPANY/0/id",
-						oSelectedCompany.IdOnly
-					);
-					oDetailDataModel.setProperty("/item/DESCRIPTION", sPackageSummary);
+					var oDetailDataModel = this.getView().getModel("detailData");
 
-					var aProvinces = aProvinceKeys.map((sProvinceKey) => {
-						return {
-							PROVINCIA_ID: sProvinceKey,
-							PROVINCIA_DESC: this.getProvinceDescription(sProvinceKey),
-						};
-					});
-					oDetailDataModel.setProperty("/item/PROVINCIA", aProvinces);
+					var jsonData = this.getJsonCompany();
+					var organizedData = this.organizeData(jsonData.results);
+
+					var oModel = new JSONModel();
+					oModel.setData(organizedData);
+					this.getView().setModel(oModel, "company");
+					var oCompanyModel = this.getView().getModel("company");
+
+					var oCountryComboBox = this.byId("countryComboBox");
+					var oAutonomousCommunitiesComboBox = this.byId(
+						"autonomousCommunitiesComboBox"
+					);
+					var oProvincesMultiComboBox = this.byId("Province");
+
+					var oPackageIDInput = this.byId("name");
+					var oCompanyInput = this.byId("companyInput");
+					var oPackageSummaryTextArea = this.byId("PackageSummary");
+
+					// Get the selected keys
+					var sCompanyName = oCompanyInput.getValue();
+
+					var aCompanies = oCompanyModel.getProperty("/");
+					var oSelectedCompany = this.findCompany(aCompanies, sCompanyName);
+
+					if (!oSelectedCompany) {
+						// Handle the error: the entered company name was not found in the model
+						console.error("Company not found: " + sCompanyName);
+						return;
+					}
+
+					var sCountryKey = oCountryComboBox.getSelectedKey();
+					var sAutonomousCommunityKey =
+						oAutonomousCommunitiesComboBox.getSelectedKey();
+					var aProvinceKeys = oProvincesMultiComboBox.getSelectedKeys();
+					var sPackageID = oPackageIDInput.getValue();
+					var sPackageSummary = oPackageSummaryTextArea.getValue();
+
+					if (
+						sPackageID == "" ||
+						sPackageSummary == "" ||
+						sCountryKey == "" ||
+						sAutonomousCommunityKey == "" ||
+						aProvinceKeys.length == 0
+					) {
+						MessageToast.show("Please fill all the fields");
+					} else {
+						// set Model
+						oDetailDataModel.setProperty("/item/DESTCOUNTRY", sCountryKey);
+						oDetailDataModel.setProperty(
+							"/item/DESTAUTCOM",
+							sAutonomousCommunityKey
+						);
+						oDetailDataModel.setProperty(
+							"/item/COMPANY/0/name",
+							oSelectedCompany.Title
+						);
+						oDetailDataModel.setProperty(
+							"/item/COMPANY/0/id",
+							oSelectedCompany.IdOnly
+						);
+						oDetailDataModel.setProperty("/item/DESCRIPTION", sPackageSummary);
+
+						var aProvinces = aProvinceKeys.map((sProvinceKey) => {
+							return {
+								PROVINCIA_ID: sProvinceKey,
+								PROVINCIA_DESC: this.getProvinceDescription(sProvinceKey),
+							};
+						});
+						oDetailDataModel.setProperty("/item/PROVINCIA", aProvinces);
+					}
+
+					// Log the updated model
+					console.log(oDetailDataModel.getData());
 				}
-
-				// Log the updated model
-				console.log(oDetailDataModel.getData());
 			},
 			findCompany: function (aCompanies, sCompanyName) {
 				for (var i = 0; i < aCompanies.length; i++) {

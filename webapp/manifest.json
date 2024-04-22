@@ -95,6 +95,11 @@
           "pattern": "NotFound",
           "name": "NotFound",
           "target": "NotFound"
+        },
+        {
+          "pattern": "AddPackage",
+          "name": "AddPackage",
+          "target": ["detail"]
         }
       ],
       "targets": {
