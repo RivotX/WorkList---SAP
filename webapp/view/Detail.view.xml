@@ -11,6 +11,8 @@
     core:require="{
         formatter: 'com/myorg/myapp/model/formatter'
     }"
+    xmlns:u="sap.ui.unified"
+
 >
     <m:Page
         showNavButton="true"
@@ -380,90 +382,25 @@
                     title="{i18n>ProviderDataTab}"
                 >
                     <subSections>
-                        <ObjectPageSubSection
-                            id="employmentSS1"
-                            title=""
-                            titleUppercase="false"
-                        >
-                            <blocks>
-                                <m:Text text="aadasd" />
-                            </blocks>
-                        </ObjectPageSubSection>
-
-                        <ObjectPageSubSection
-                            id="employmentSS2"
-                            title="{i18n>GeneralDataTab}"
-                            titleUppercase="false"
-                        >
-                            <blocks>
-                                <m:Text text="aadasd" />
-                            </blocks>
-                            <moreBlocks>
-                                <m:Text text="aadasd" />
-                                <m:Text text="aadasd" />
-                            </moreBlocks>
-                        </ObjectPageSubSection>
-
-                        <ObjectPageSubSection
-                            id="employmentSS3"
-                            title="Job Relationship"
-                            titleUppercase="false"
-                        >
-                            <blocks>
-                                <m:Text text="aadasd" />
-                            </blocks>
+                        <ObjectPageSubSection>
+                            <u:FileUploader
+                                id="fileUploader"
+                                name="myFileUpload"
+                                uploadUrl="upload/"
+                                tooltip="Upload your file to the local server"
+                                uploadComplete="handleUploadComplete"/>
+                        <m:Button
+                            text="Upload File"
+                            press="handleUploadPress"/>
                         </ObjectPageSubSection>
                     </subSections>
                 </ObjectPageSection>
-                <ObjectPageSection
-                    titleUppercase="false"
-                    id="connections"
-                    title="Connections"
-                >
-                    <subSections>
-                        <ObjectPageSubSection
-                            id="connectionsSS1"
-                            titleUppercase="false"
-                        />
-                    </subSections>
-                </ObjectPageSection>
-                <ObjectPageSection
-                    titleUppercase="false"
-                    title="{i18n>BankDataTab}"
-                >
-                    <subSections>
-                        <ObjectPageSubSection
-                            title="Connect"
-                            titleUppercase="false"
-                        >
-                            <blocks>
-                                <m:Text text="aadasd" />
-                                <m:Text text="aadasd" />
-                            </blocks>
-                        </ObjectPageSubSection>
 
-                        <ObjectPageSubSection
-                            id="3asd3"
-                            title="Connect"
-                            titleUppercase="false"
-                        >
-                            <blocks>
-                                <m:Text text="aadasd" />
-                                <m:Text text="aadasd" />
-                            </blocks>
-                        </ObjectPageSubSection>
-                        <ObjectPageSubSection
-                            id="2ads"
-                            title="Connect"
-                            titleUppercase="false"
-                        >
-                            <blocks>
-                                <m:Text text="aadasd" />
-                                <m:Text text="aadasd" />
-                            </blocks>
-                        </ObjectPageSubSection>
-                    </subSections>
-                </ObjectPageSection>
+
+
+
+
+                <!-- no -->
                 <ObjectPageSection
                     titleUppercase="false"
                     id="Tab4"
