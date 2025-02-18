@@ -1,6 +1,6 @@
 # SAP UI5 Application
 
-This project is a small practice exercise I completed with SAPUI5 before starting my first job as a developer.
+This project is a small practice exercise I completed with SAPUI5.
 
 
 ## Requirements
